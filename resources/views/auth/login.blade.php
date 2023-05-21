@@ -36,12 +36,12 @@
             </div>
 
             <div class="row justify-content-center">
-                <div class="col-4">
-                    <button type="submit" class="btn btn-primary btn-block">{{ __('Login') }}</button>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary btn-block">{{ __('Login') ad}}</button>
                 </div>
+                <!-- /.col -->
             </div>
         </form>
-
     </div>
     <!-- /.login-card-body -->
 @endsection
