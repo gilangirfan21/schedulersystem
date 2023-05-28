@@ -17,61 +17,33 @@
     <!-- CUSTOME STYLE -->
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 
-    @yield('styles')
+    <style>
+
+    </style>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
 
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <nav class="main-header navbar navbar-expand navbar-white mhs-margin mhs-nav mhs-base-color px-3" >
         <!-- Left navbar links -->
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                <a href="#" role="button"><i class="fas fa-bars mhs-base-color"></i></a>
             </li>
         </ul>
 
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
-                <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-                    {{(Auth::user()->email)}}
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" style="left: inherit; right: 0px;">
-                    <a href="{{ route('profile.show') }}" class="dropdown-item">
-                        <i class="mr-2 fas fa-file"></i>
-                        {{ __('My profile') }}
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <a href="{{ route('logout') }}" class="dropdown-item"
-                           onclick="event.preventDefault(); this.closest('form').submit();">
-                            <i class="mr-2 fas fa-sign-out-alt"></i>
-                            {{ __('Log Out') }}
-                        </a>
-                    </form>
-                </div>
+               <span class="mhs-base-color">Halaman Mahasiswa</span>
             </li>
         </ul>
     </nav>
     <!-- /.navbar -->
 
-    <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <!-- Brand Logo -->
-        <a href="#" class="brand-link">
-            <img src="{{ asset('images/main.png') }}" alt="Logo Apps"
-                 class="brand-image img-circle elevation-3"
-                 style="opacity: .8">
-            <span class="brand-text font-weight-light">NEW SYSTEM</span>
-        </a>
-
-        @include('layouts.navigation')
-    </aside>
-
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper mhs-margin">
         @yield('content')
     </div>
     <!-- /.content-wrapper -->
@@ -87,10 +59,10 @@
     <!-- /.control-sidebar -->
 
     <!-- Main Footer -->
-    <footer class="main-footer navbar-white navbar-light">
+    <footer class="main-footer navbar-white mhs-base-color mhs-margin">
         <!-- Coppyright Center -->
         <div class="d-flex justify-content-center">
-            <span >Copyright &copy; 2023 - Fitriana Indah Mitasari</span>
+            <span class="mhs-base-color">Copyright &copy; 2023 - Fitriana Indah Mitasari</span>
         </div>
     </footer>
 </div>
@@ -98,7 +70,7 @@
 
 <!-- REQUIRED SCRIPTS -->
 
-@vite('resources/js/app.js')
+{{-- @vite('resources/js/app.js') --}}
 <!-- AdminLTE App -->
 <script src="{{ asset('js/adminlte.min.js') }}" defer></script>
 <!-- JQuery -->

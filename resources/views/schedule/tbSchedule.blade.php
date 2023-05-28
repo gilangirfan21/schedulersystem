@@ -1,0 +1,2 @@
+@section('table')
+@endsection

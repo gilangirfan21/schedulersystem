@@ -20,14 +20,14 @@
                 </a>
             </li> --}}
 
-            {{-- <li class="nav-item">
+            <li class="nav-item">
                 <a href="{{ route('users.index') }}" class="nav-link">
                     <i class="nav-icon fas fa-users"></i>
                     <p>
                         {{ __('Users') }}
                     </p>
                 </a>
-            </li> --}}
+            </li>
 
             {{-- <li class="nav-item">
                 <a href="{{ route('about') }}" class="nav-link">
@@ -38,7 +38,7 @@
                 </a>
             </li> --}}
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-circle nav-icon"></i>
                     <p>
@@ -56,7 +56,28 @@
                         </a>
                     </li>
                 </ul>
+            </li> --}}
+
+            {{-- START SIDE NAVBAR CUSTOM--}}
+            <li class="nav-item">
+                <a href="{{ route('home') }}" class="nav-link">
+                    <i class="nav-icon fa fa-calendar" aria-hidden="true"></i>
+                    <p>
+                        JADWAL
+                    </p>
+                </a>
             </li>
+
+            <li class="nav-item">
+                <a href="{{ route('daftar') }}" class="nav-link">
+                    <i class="nav-icon fa fa-plus-square" aria-hidden="true"></i>
+                    <p>
+                        DAFTAR
+                    </p>
+                </a>
+            </li>
+
+            {{-- END SIDEBAR CUSTOM --}}
         </ul>
     </nav>
     <!-- /.sidebar-menu -->

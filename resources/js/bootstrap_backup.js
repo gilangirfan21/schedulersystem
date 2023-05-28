@@ -1,13 +1,7 @@
-import Popper from "@popperjs/core/dist/umd/popper.js";
-import jQuery from "jquery";
-import axios from "axios";
-import "bootstrap";
-
-// START SELECT2
-import select2 from "select2";
-$(".select2").select2();
-import "/node_modules/select2/dist/css/select2.css";
-// END SELECT2
+import Popper from '@popperjs/core/dist/umd/popper.js';
+import jQuery from 'jquery';
+import axios from 'axios';
+import 'bootstrap';
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -26,7 +20,7 @@ window.$ = window.jQuery = jQuery;
 
 window.axios = axios;
 
-window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

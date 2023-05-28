@@ -24,11 +24,6 @@ Route::get('/', function () {
     return view('login');
 });
 
-// Route::get('/daftar', function () {
-//     return view('auth.register');
-// });
-
-
 Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -41,10 +36,4 @@ Route::middleware('auth')->group(function () {
 
     Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
     Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
-
-    Route::get('/daftar',[App\Http\Controllers\Auth\RegisterController::class, 'index'])->name('daftar');
-    Route::post('/daftar',[App\Http\Controllers\Auth\RegisterController::class, 'index'])->name('tamabah');
 });
-
-Route::get('/mahasiswa',[\App\Http\Controllers\MahasiswaController::class, 'index'])->name('mahasiswa');
-// Route::get('/mahasiswa/search',[\App\Http\Controllers\MahasiswaController::class, 'search'])->name('mahasiswa.search');
