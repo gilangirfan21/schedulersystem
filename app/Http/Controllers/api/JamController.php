@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Psr7\Response;
-use Illuminate\Database\QueryException;
+use App\Models\Jam;
 use Illuminate\Http\Request;
-use App\Models\Dosen;
 
-class DosenController extends Controller
+class JamController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,20 +15,22 @@ class DosenController extends Controller
      */
     public function index()
     {
-        //selet all data
-        try {
-            $dosen = Dosen::all();
-            // return response()->json($dosen);
-            return response()->json([
-                'status' => '200',
-                'dosen' => $dosen
-            ]);
-        } catch (QueryException $e) {
-            $error = [
-                'error' => $e->getMessage()
-            ];
-            return response()->json($error);
-        }
+        $jam = Jam::all();
+
+        return response()->json([
+            'status' => true,
+            'jam' => $jam
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -47,10 +47,21 @@ class DosenController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Jam  $jam
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Jam $jam)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Jam  $jam
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Jam $jam)
     {
         //
     }
@@ -59,10 +70,10 @@ class DosenController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Jam  $jam
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Jam $jam)
     {
         //
     }
@@ -70,10 +81,10 @@ class DosenController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Jam  $jam
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Jam $jam)
     {
         //
     }

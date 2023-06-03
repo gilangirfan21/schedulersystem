@@ -19,15 +19,7 @@
                     </p>
                 </a>
             </li> --}}
-
-            <li class="nav-item">
-                <a href="{{ route('users.index') }}" class="nav-link">
-                    <i class="nav-icon fas fa-users"></i>
-                    <p>
-                        {{ __('Users') }}
-                    </p>
-                </a>
-            </li>
+            
 
             {{-- <li class="nav-item">
                 <a href="{{ route('about') }}" class="nav-link">
@@ -68,6 +60,8 @@
                 </a>
             </li>
 
+            @if( in_array(Auth::user()->role, [1,2]))
+
             <li class="nav-item">
                 <a href="{{ route('daftar') }}" class="nav-link">
                     <i class="nav-icon fa fa-plus-square" aria-hidden="true"></i>
@@ -76,6 +70,18 @@
                     </p>
                 </a>
             </li>
+
+            
+            <li class="nav-item">
+                
+                <a href="{{ route('users.index') }}" class="nav-link">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>
+                        {{ __('Users') }}
+                    </p>
+                </a>
+            </li>
+            @endif
 
             {{-- END SIDEBAR CUSTOM --}}
         </ul>

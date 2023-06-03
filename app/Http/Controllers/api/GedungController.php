@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Psr7\Response;
-use Illuminate\Database\QueryException;
+use App\Models\Ruangan;
 use Illuminate\Http\Request;
-use App\Models\Dosen;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
 
-class DosenController extends Controller
+
+class GedungController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,11 +20,15 @@ class DosenController extends Controller
     {
         //selet all data
         try {
-            $dosen = Dosen::all();
-            // return response()->json($dosen);
+            // $gedung = Ruangan::all();
+            // return response()->json($gedung);
+            $gedung = Ruangan::select(DB::raw("SUBSTRING(kode, 1, 2) AS kodeGedung"))
+                    ->where('lokasi','=','E')
+                    ->groupBy('kodeGedung')
+                    ->get();
             return response()->json([
                 'status' => '200',
-                'dosen' => $dosen
+                'gedung' => $gedung
             ]);
         } catch (QueryException $e) {
             $error = [
@@ -47,10 +52,10 @@ class DosenController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Ruangan  $gedung
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Ruangan $ruangan)
     {
         //
     }
@@ -59,10 +64,10 @@ class DosenController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Ruangan  $ruangan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Ruangan $ruangan)
     {
         //
     }
@@ -70,10 +75,10 @@ class DosenController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Ruangan  $ruangan
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Ruangan $ruangan)
     {
         //
     }

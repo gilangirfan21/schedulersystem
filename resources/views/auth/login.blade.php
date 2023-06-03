@@ -42,6 +42,12 @@
                 <!-- /.col -->
             </div>
         </form>
+        <div class="row justify-content-center mt-2">
+            <div class="col-12 text-center">
+                <a href="{{ route('mahasiswa') }}" class="">{{ __('Halaman Mahasiswa')}}</a>
+            </div>
+            <!-- /.col -->
+        </div>
     </div>
     <!-- /.login-card-body -->
 @endsection

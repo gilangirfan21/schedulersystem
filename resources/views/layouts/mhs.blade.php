@@ -17,9 +17,7 @@
     <!-- CUSTOME STYLE -->
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 
-    <style>
-
-    </style>
+    @yield('styles')
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -29,7 +27,7 @@
         <!-- Left navbar links -->
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a href="#" role="button"><i class="fas fa-bars mhs-base-color"></i></a>
+                <a href="{{ route('login') }}" role="button"><i class="fa fa-home mhs-base-color" aria-hidden="true"></i></a>
             </li>
         </ul>
 
@@ -70,7 +68,7 @@
 
 <!-- REQUIRED SCRIPTS -->
 
-{{-- @vite('resources/js/app.js') --}}
+@vite('resources/js/app.js')
 <!-- AdminLTE App -->
 <script src="{{ asset('js/adminlte.min.js') }}" defer></script>
 <!-- JQuery -->

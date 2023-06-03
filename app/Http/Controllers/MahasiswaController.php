@@ -33,7 +33,7 @@ class MahasiswaController extends Controller
                     ->leftJoin('ref_kelas', 'jadwal.kode_kelas', '=', 'ref_kelas.kode')
                     ->where('jadwal.kode_dosen', 'like', '%' . $request->search . '%')
                     ->orWhere('ref_dosen.dosen', 'like', '%' . $request->search . '%')
-                    ->where('jadwal.kode_matkul', 'like', '%' . $request->search . '%')
+                    ->orWhere('jadwal.kode_matkul', 'like', '%' . $request->search . '%')
                     ->orWhere('ref_matkul.matkul', 'like', '%' . $request->search . '%')
                     ->orWhere('jadwal.kode_kelas', 'like', '%' . $request->search . '%')
                     ->paginate(10);
@@ -47,7 +47,7 @@ class MahasiswaController extends Controller
         // get data jadwal
         // $jadwal = Jadwal::paginate(15);
 
-        // dd($jadwal);
+        // dd(explode(";",$jadwal[0]->keterangan));
         
         return view('mahasiswa', ['jadwal' => $jadwal]);
     }

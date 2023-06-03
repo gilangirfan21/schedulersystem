@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SchedulerController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\MahasiswaController;
+use Illuminate\Console\Scheduling\Schedule;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,11 +21,9 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-Route::get('/', function () {
-    return view('login');
+Route::get('/', [SchedulerController::class, 'index']);
+Route::get('/login', function () {
+    return view('login')->name('login');
 });
 
 // Route::get('/daftar', function () {
@@ -30,21 +32,27 @@ Route::get('/', function () {
 
 
 Auth::routes();
-
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/home', [App\Http\Controllers\SchedulerController::class, 'index'])->name('home');
-
 Route::middleware('auth')->group(function () {
+
+    // Main Page
+    Route::get('/home', [SchedulerController::class, 'index'])->name('home');
+    Route::get('/home/search',[SchedulerController::class, 'index'])->name('home.search');
+    
+    // Default
     Route::view('about', 'about')->name('about');
+    Route::get('users', [UserController::class, 'index'])->name('users.index');
+    Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
 
-    Route::get('users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+    // Add new account
+    Route::get('/daftar',[RegisterController::class, 'index'])->name('daftar');
+    Route::post('/daftar',[RegisterController::class, 'index'])->name('tamabah');
 
-    Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
-    Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    // check
+    Route::get('check',[SchedulerController::class, 'check'])->name('check');
 
-    Route::get('/daftar',[App\Http\Controllers\Auth\RegisterController::class, 'index'])->name('daftar');
-    Route::post('/daftar',[App\Http\Controllers\Auth\RegisterController::class, 'index'])->name('tamabah');
 });
 
-Route::get('/mahasiswa',[\App\Http\Controllers\MahasiswaController::class, 'index'])->name('mahasiswa');
-// Route::get('/mahasiswa/search',[\App\Http\Controllers\MahasiswaController::class, 'search'])->name('mahasiswa.search');
+// Page for Mahasiswa
+Route::get('/mahasiswa',[MahasiswaController::class, 'index'])->name('mahasiswa');
+Route::get('/mahasiswa/search',[MahasiswaController::class, 'index'])->name('mahasiswa.search');

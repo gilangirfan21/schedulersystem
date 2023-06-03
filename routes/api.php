@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\DosenController;
+use App\Http\Controllers\api\GedungController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,4 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('dosen',DosenController::class);
+Route::apiResource('/dosen',DosenController::class);
+Route::apiResource('/gedung',GedungController::class);

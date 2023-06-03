@@ -25,5 +25,15 @@ class Jadwal extends Model
         return $this->BelongsTo(Hari::class, 'kode_hari', 'kode');
     }
 
+    public function tb_jam() : BelongsTo
+    {
+        return $this->BelongsTo(Hari::class, 'kode_jam', 'kode');
+    }
+
+    public function tb_ruangan() : BelongsTo
+    {
+        return $this->BelongsTo(Ruangan::class, 'kode_ruangan', 'kode');
+    }
+
     protected $table = "jadwal";
 }

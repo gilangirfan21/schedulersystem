@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">{{ __('About us') }}</h1>
+                    <h1 class="m-0">{{ __('Daftar') }}</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -189,7 +189,7 @@
             success: function(data) {
                 var select = $('#name');
 
-                $.each(data, function(index, item) {
+                $.each(data.dosen, function(index, item) {
                 console.log(item);
                     var option = $('<option></option>');
                     option.val(item.kode);
