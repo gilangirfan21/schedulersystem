@@ -33,4 +33,5 @@ Route::post('/gedung', [GedungController::class, 'show']);
 Route::post('/lantai', [LantaiController::class, 'show']);
 Route::post('/ruangan', [RuanganController::class, 'show']);
 Route::post('/jadwal', [JadwalController::class, 'show']);
+Route::put('/jadwal', [JadwalController::class, 'update']);
 Route::post('/jadwalavailable', [JadwalavailableController::class, 'show']);

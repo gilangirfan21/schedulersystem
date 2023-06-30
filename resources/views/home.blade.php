@@ -138,7 +138,11 @@ $(document).ready( function () {
         var type = $(this).text();
         $('#type').val(type);
         console.log(type);
-        var listId = $(this).closest('tr').find('td:nth-child(5)').text();
+        var tmpId = $(this).attr('id');
+        listId = tmpId.substring(6);
+        listId = listId.replace(/-/g, '/');
+
+        // var listId = $(this).closest('tr').find('td:nth-child(5)').text();
         $('#listId').val(listId);
         console.log(listId);
         // input data hidden

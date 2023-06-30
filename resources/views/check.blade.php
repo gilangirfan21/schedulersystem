@@ -59,7 +59,7 @@
                                         <div class="input-group row mb-2">
                                             <div class="col-lg-2"></div>
                                             <div class="col lg 4">
-                                                <h5 id="titlePerubahanJadwal" class="text-center">PERUBAHAN JADWAL SEMENTARA</h5>
+                                                <h5 id="titlePerubahanJadwal" class="text-center">PERUBAHAN JADWAL {{ strtoupper($perubahanData['type']) }}</h5>
                                             </div>
                                         </div>
                                         <form id="formFilter">
@@ -94,10 +94,10 @@
                                                 <label for="" class="col-sm-2 col-form-label">Tanggal</label>
                                                 <input type="date" data-date="" data-date-format="DD MMMM YYYY" value="2023-01-01" name="startDate" id="startDate" data-provide="datepicker" class="col-sm-5 datepicker form-control">
                                                 <label for="" class="col-sm-1 col-form-label text-center">sd</label>
-                                                <input type="date" data-date="" data-date-format="DD MMMM YYYY" value="2023-01-01" name="endDate" id="endDate" data-provide="datepicker" class="col-sm-5 datepicker form-control">
+                                                <input type="date" data-date="" data-date-format="DD MMMM YYYY" value="2030-12-31" name="endDate" id="endDate" data-provide="datepicker" class="col-sm-5 datepicker form-control">
                                             </div>
                                             
-                                            <div class="input-group row mb-2">
+                                            {{-- <div class="input-group row mb-2">
                                                 <label class="col-sm-2 col-form-label">Waktu</label> 
                                                 <select name="timeStart" id="timeStart" class="custom-select select2" aria-label="Default select example">
                                                     <option selected value="-">Pilih Semua</option>
@@ -126,8 +126,7 @@
                                                     <option value="9">9 | 15:30-16:30</option>
                                                     <option value="10">10 | 16:30-17:30</option>
                                                 </select>
-
-                                            </div>
+                                            </div> --}}
                                             <div class="text-right mr-2">
                                                 <button id="submitBtn" type="submit" class="btn btn-primary btn-custom-submit">Submit</button>
                                             </div>
@@ -206,8 +205,9 @@
             {{-- End Modal --}}
             <div id="hiddenData">
                 <input type="hidden" name="type" id="type" value="{{ $perubahanData['type'] }}">
-                <input type="hidden" name="listId" id="listId" value="{{ $perubahanData['listId'] }}">
                 <input type="hidden" name="count_time" id="count_time" value="{{ $perubahanData['count_time'] }}">
+                <input type="hidden" name="listId" id="listId" value="{{ $perubahanData['listId'] }}">
+                <input type="hidden" name="listIdBaru" id="listIdBaru" value="">
             </div>
         </div><!-- /.container-fluid -->
     </div>
@@ -219,8 +219,8 @@
 $( document ).ready(function() {
     var type = $('#type').val();
     var count_time = $('#count_time').val();
-    console.log(type);
-    console.log(count_time);
+    var listId = $('#listId').val()
+    var listIdBaru = $('#listIdBaru').val()
     var tmpDosen = $('#dosen').val();
     var userRole = $('#userRole').val();
     var dosen = (userRole == 3) ? tmpDosen : '-';
@@ -248,27 +248,27 @@ $( document ).ready(function() {
     });
 
     /** START BLOCK VALIDATE WAKTU **/ 
-    $('#timeStart').change(function() {
-    startTime = parseInt($(this).val());
-    // Remove options in timeEnd select that are less than the selected start time
-    $('#timeEnd option').each(function() {
-        endTime = parseInt($(this).val());
-        if (endTime < startTime) {
-            $(this).remove();
-        }
-        });
-    });
+    // $('#timeStart').change(function() {
+    // startTime = parseInt($(this).val());
+    // // Remove options in timeEnd select that are less than the selected start time
+    // $('#timeEnd option').each(function() {
+    //     endTime = parseInt($(this).val());
+    //     if (endTime < startTime) {
+    //         $(this).remove();
+    //     }
+    //     });
+    // });
 
-    $('#timeStart, #timeEnd').change(function() {
-    startTime = parseInt($('#timeStart').val());
-    endTime = parseInt($('#timeEnd').val());
-    if (startTime > endTime) {
-        alertify.alert("Perhatian","Invalid time range. Start time cannot be greater than end time.");
-        // Reset the values to the default option
-        $('#timeStart').val('-');
-        $('#timeEnd').val('-');
-        }
-    });
+    // $('#timeStart, #timeEnd').change(function() {
+    // startTime = parseInt($('#timeStart').val());
+    // endTime = parseInt($('#timeEnd').val());
+    // if (startTime > endTime) {
+    //     alertify.alert("Perhatian","Invalid time range. Start time cannot be greater than end time.");
+    //     // Reset the values to the default option
+    //     $('#timeStart').val('-');
+    //     $('#timeEnd').val('-');
+    //     }
+    // });
     /** END BLOCK VALIDATE WAKTU **/ 
 
 
@@ -286,10 +286,71 @@ $( document ).ready(function() {
     load();
 
     $(document).on('click', '.open-modal', function() {
-        // var elementText = $(this).text();
-        // $('#titleModal').html("Perubahan " + elementText + " " + type);
-        // $('#myModal').show();
+        var tmpId = $(this).attr('id');
+        listIdBaru = tmpId.substring(9);
+        listIdBaru = listIdBaru.replace(/-/g, '/');
+
+        alertify.confirm("PERINGATAN","Apakah anda yakin?",
+        function(){
+            // UPDATE JADWAL VIA API
+            var dataParam = { kode_dosen: dosen, list_id_awal: listId , list_id_baru: listIdBaru};
+            var data = $.param(dataParam);
+            $.ajax({
+                url: 'api/jadwal',
+                method: 'PUT',
+                data: data,
+                beforeSend: function () {
+                    // $('#content').hide();
+                    // $('#loading').show();
+                    console.log("before update");
+                },
+                success: function(data) {
+                    console.log("after update");
+                    console.log(data.status);
+                    if (data.status == '200') {
+                        alertify.success('Update berhasil');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        },
+        function(){
+            alertify.error('Cancel');
+        });
+        // if (isUpdate == 'Y') {
+        //     console.log('update');
+        //     updateJadwal(dosen, listId, listIdBaru);
+        // }
     });
+
+    // UPDATE JADWAL VIA API
+    // function updateJadwal(kode_dosen, list_id_awal, list_id_baru) {
+    //     var dataParam = { kode_dosen: dosen, list_id_awal: list_id_awal , list_id_baru:list_id_baru};
+    //     var data = $.param(dataParam);
+    //     $.ajax({
+    //         url: 'api/jadwal',
+    //         method: 'PUT',
+    //         data: data,
+    //         beforeSend: function () {
+    //             // $('#content').hide();
+    //             // $('#loading').show();
+    //             console.log("before update");
+    //         },
+    //         success: function(data) {
+    //             console.log("after update");
+    //             console.log(data.status);
+    //             if (data.status == '200') {
+    //                 window.status = '200';
+    //             }
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.log(error);
+    //         }
+    //     });
+    // }
+
 
     $(document).keydown(function(e) {
         // Check if the escape key was pressed (key code 27)
@@ -361,11 +422,6 @@ $( document ).ready(function() {
 
 
 
-
-
-
-
-
     // DATA GEDUNG FROM API
     function loadGedung(lokasi) {
         var dataParam = { kodeLokasi: lokasi, available: 'Y' };
@@ -377,10 +433,10 @@ $( document ).ready(function() {
             beforeSend: function () {
                 // $('#content').hide();
                 // $('#loading').show();
-                console.log("before gedung");
+                // console.log("before gedung");
             },
             success: function(data) {
-                console.log("after gedung");
+                // console.log("after gedung");
                 // console.log(data);
                 var selGedung = $('#selGedung');
                 selGedung.empty();
@@ -439,10 +495,10 @@ $( document ).ready(function() {
             beforeSend: function () {
                 // $('#content').hide();
                 // $('#loading').show();
-                console.log("before ruangan");
+                // console.log("before ruangan");
             },
             success: function(data) {
-                console.log("after ruangan");
+                // console.log("after ruangan");
                 // console.log(data);
                 var selRuangan = $('#selRuangan');
                 selRuangan.empty();
@@ -459,6 +515,7 @@ $( document ).ready(function() {
         });
     }
 
+    // DETAIL DOSEN FROM API
     function detailDosen(dosen) {
         var dataParam = { kodeDosen: dosen };
         var encodeDataDosen = $.param(dataParam);
@@ -478,29 +535,15 @@ $( document ).ready(function() {
         });
     }
 
+    // LOAD DATA JADWAL AVAILABLE FROM API
     function loadJadwalAvailable(dataParam) {
-        // var dataParam = {
-        //     type: type,
-        //     kode_dosen: dosen,
-        //     kode_lokasi: 'E',
-        //     kode_gedung: '3',
-        //     kode_lantai: '3',
-        //     kode_ruangan: 'E338',
-        //     start_date: '2001-01-01',
-        //     end_date: '2030-12-30',
-        //     start_time: '1',
-        //     end_time: '2',
-        //     count_time: count_time
-        // };
         var data = $.param(dataParam);
         $.ajax({
             type: 'POST',
             url: '/api/jadwalavailable',
-            // dataType: "json",
             data: data,
             beforeSend: function() {
-                // setting a timeout
-                console.log("berfore get jadwal availabe");
+                console.log("berfore get jadwal available");
             },
             success: function(data) {
             $('#dataTable').DataTable().destroy();
@@ -509,7 +552,6 @@ $( document ).ready(function() {
             var i = 1;
                 $('#dataTable').DataTable({
                     "data": data.jadwalavailable,
-                    // "responsive": true,
                     "columns": [{
                         "data": "no",
                         "render": function(data, type, row, meta) {
@@ -540,17 +582,10 @@ $( document ).ready(function() {
         });
     }
 
-    function verification() {
-        // if () {
-            
-        // }
-        return true;
-    }
+
 
     $("#submitBtn").click(function(event){   
         event.preventDefault();
-        if (verification()) {
-        }
         var dataParam = {
             type: type,
             kode_dosen: dosen,
@@ -560,16 +595,12 @@ $( document ).ready(function() {
             kode_ruangan: ruangan,
             start_date: startDate,
             end_date: endDate,
-            start_time: startTime,
-            end_time: endTime,
             count_time: count_time
         };
         console.log(dataParam);
         loadJadwalAvailable(dataParam);
-        console.log('lokasi ' + lokasi + ' gedung ' + gedung + ' lantai ' + lantai);
-        console.log('tanggal mulai ' + startDate + ' tanggal selesai ' + endDate);
-        console.log('waktu mulai ' + startTime + ' waktu selesai ' + endTime);
-        // $("#formFilter").submit(); // Submit the form
+        // console.log('lokasi ' + lokasi + ' gedung ' + gedung + ' lantai ' + lantai);
+        // console.log('tanggal mulai ' + startDate + ' tanggal selesai ' + endDate);
     });
 
 });

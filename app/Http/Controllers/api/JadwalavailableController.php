@@ -49,8 +49,8 @@ class JadwalavailableController extends Controller
                     ->leftJoin('ref_matkul', 'jadwal.kode_matkul', '=', 'ref_matkul.kode')
                     ->leftJoin('ref_ruangan', 'jadwal.kode_ruangan', '=', 'ref_ruangan.kode')
                     ->whereNull('jadwal.kode_dosen')
-                    // ->whereNotNull('jadwal.kode_ruangan')
                     ->where('jadwal.kode_ruangan', '=', $request->kode_ruangan)
+                    ->whereBetween('jadwal.tanggal', [$request->start_date, $request->end_date])
                     ->get();
                 } else {
                     if (isset($request->kode_lokasi) && $request->kode_lokasi != '-') {
@@ -64,6 +64,7 @@ class JadwalavailableController extends Controller
                                         ->where('ref_ruangan.lokasi', '=', $request->kode_lokasi)
                                         ->where('ref_ruangan.gedung', '=', $request->kode_gedung)
                                         ->where('ref_ruangan.lantai', '=', $request->kode_lantai)
+                                        ->whereBetween('jadwal.tanggal', [$request->start_date, $request->end_date])
                                         ->get();
                             } else {
                                 $jadwalavailable = Jadwal::leftJoin('ref_dosen', 'jadwal.kode_dosen', '=', 'ref_dosen.kode')
@@ -73,6 +74,7 @@ class JadwalavailableController extends Controller
                                         ->whereNotNull('jadwal.kode_ruangan')
                                         ->where('ref_ruangan.lokasi', '=', $request->kode_lokasi)
                                         ->where('ref_ruangan.gedung', '=', $request->kode_gedung)
+                                        ->whereBetween('jadwal.tanggal', [$request->start_date, $request->end_date])
                                         ->get();
                             }
                         } else {
@@ -82,6 +84,7 @@ class JadwalavailableController extends Controller
                                     ->whereNull('jadwal.kode_dosen')
                                     ->whereNotNull('jadwal.kode_ruangan')
                                     ->where('ref_ruangan.lokasi', '=', $request->kode_lokasi)
+                                    ->whereBetween('jadwal.tanggal', [$request->start_date, $request->end_date])
                                     ->get();
                         }
                     } else {
@@ -90,7 +93,7 @@ class JadwalavailableController extends Controller
                                 ->leftJoin('ref_ruangan', 'jadwal.kode_ruangan', '=', 'ref_ruangan.kode')
                                 ->whereNull('jadwal.kode_dosen')
                                 ->whereNotNull('jadwal.kode_ruangan')
-                                // ->limit(10)
+                                ->whereBetween('jadwal.tanggal', [$request->start_date, $request->end_date])
                                 ->get();
                     }
                 }

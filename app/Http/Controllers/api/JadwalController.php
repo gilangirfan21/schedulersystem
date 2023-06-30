@@ -101,9 +101,51 @@ class JadwalController extends Controller
      * @param  \App\Models\Jadwal  $jadwal
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Jadwal $jadwal)
+    public function update(Request $request)
     {
-        //
+        $listAwalArr = explode('/', $request->list_id_awal);
+        $listBaruArr = explode('/', $request->list_id_baru);
+        // "kode_dosen" => "DSN327"
+        // "list_id_old" => "3/4/5"
+        // "list_id_new" => "15/16/17"
+
+        
+
+
+        try {
+            for ($i=0; $i < count($listAwalArr); $i++) { 
+                $dataAwal = Jadwal::findOrFail($listAwalArr[$i]);
+                $dataBaru = Jadwal::findOrFail($listBaruArr[$i]);
+                    // Copy to new schadule
+                    $dataBaru->kode_kelas = $dataAwal->kode_kelas;
+                    $dataBaru->kode_matkul = $dataAwal->kode_matkul;
+                    $dataBaru->pertemuan = $dataAwal->pertemuan;
+                    $dataBaru->kode_dosen = $dataAwal->kode_dosen;
+                    $dataBaru->ket_jadwal = $dataAwal->tanggal . ';' . $request->list_id_awal . ';' . $dataAwal->kode_ruangan;
+                    $dataBaru->save();
+        
+                    // Remove old schadule
+                    $dataAwal->kode_kelas = null;
+                    $dataAwal->kode_matkul = null;
+                    $dataAwal->pertemuan = null;
+                    $dataAwal->kode_dosen = null;
+                    $dataAwal->ket_jadwal = 'PINDAH;' . $dataBaru->tanggal . ';' . $request->list_id_baru . ';' . $dataBaru->kode_ruangan;;
+                    $dataAwal->save();
+        
+            
+            }
+                
+        } catch (QueryException $e) {
+            $error = [
+                'error' => $e->getMessage()
+            ];
+            return response()->json($error);
+        }
+
+        return response()->json([
+            'status' => '200',
+            'message' => 'Update berhasil'
+        ]);
     }
 
     /**
