@@ -22,24 +22,10 @@
                     <div class="card">
                         <div class="card-body">
                             <p class="card-text">
-                                <div class="row justify-content-end">
-                                    <div class="col-lg-3">
-                                        <form action="{{ route('mahasiswa.search') }}" method="GET">
-                                            <div class="input-group mb-3">
-                                                <label class="form-label" for="search"></label>
-                                                <input type="search" name="search" id="search" class="form-control"  placeholder="Kelas / Dosen / Mata Kuliah" aria-label="Kelas / Dosen / Mata Kuliah" aria-describedby="basic-addon2">
-                                                <div class="input-group-append">
-                                                  <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                
-                                <div class="row">
+                                <div class="row mt-3">
                                     <div class="col-lg-12">
                                         <div class="table-responsive">
-                                            <table class="table">
+                                            <table id="dataTable" class="table w100p">
                                                 <thead>
                                                     <tr>
                                                         <th>No</th>
@@ -55,82 +41,9 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @php($no=$jadwal->firstItem())
-                                                    
-                                                    @foreach($jadwal as $item)
-                                                        <tr>
-                                                            <td>{{ $no++ }}</td>
-                                                            <td>{{ $item->tb_hari->hari }}</td>
-                                                            <td>{{ $item->tanggal }}</td>
-                                                            <td>{{ $item->tb_matkul->matkul }}</td>
-                                                            <td>{{ $item->kode_jam }}</td>
-                                                            <td>{{ $item->kode_ruangan }}</td>
-                                                            <td>{{ $item->kode_kelas }}</td>
-                                                            <td>{{ $item->kode_dosen }}</td>
-                                                            <td>{{ $item->tb_dosen->dosen }}</td>
-                                                            <td>
-                                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg{{ $item->id }}">Detail </button>
-                                                                <div class="modal fade bd-example-modal-lg{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog modal-lg">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title">Detail Jadwal</h5>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                              <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                          </div>
-                                                                          <div class="modal-body">
-                                                                            {{-- @dd($item->keterangan) --}}
-                                                                            @if($item->keterangan !== NULL && $item->keterangan !== '')
-                                                                            <?php $ket = explode(";",$item->keterangan) ?>
-                                                                            <ul>
-                                                                                <li class="list-decorate-none">Kode Kelas : {{ $item->kode_kelas }}</li>
-                                                                                <li class="list-decorate-none">Kode Dosen : {{ $item->kode_dosen }}</li>
-                                                                                <li class="list-decorate-none">Nama Dosen : {{ $item->tb_dosen->dosen }}</li>
-                                                                                <li class="list-decorate-none color-salmon">Tanggal Awal : {{ $ket[0] }}</li>
-                                                                                <li class="list-decorate-none color-salmon">Waktu Awal : {{ $ket[1] }}</li>
-                                                                                <li class="list-decorate-none color-salmon">Ruang Awal : {{ $ket[2] }}</li>
-                                                                            </ul>
-                                                                            @else
-                                                                            <ul>
-                                                                                <li style="list-decorate-none; ">Tidak ada keterangan tambahan.</li>
-                                                                            </ul>
-                                                                            @endif
-                                                                          </div>
-                                                                          {{-- <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-primary">Save changes</button>
-                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                          </div> --}}
-                                                                    </div>
-                                                                </div>
-                                                                </div>
-                                                                {{-- <form method="POST" action="/check">
-                                                                    <input type="hidden" value="{{ $item->id }}">
-                                                                    <button type="submit" class="btn btn-warning">Permanen</button>
-                                                                    
-                                                                </form> --}}
-                                                                {{-- <form action="{{ route('check') }}">
-                                                                    <input class="btn btn-secondary" type="hidden" name="id" value="12" />
-                                                                    <button class="btn btn-secondary" type="submit">Premanen</button>
-                                                                </form> --}}
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
+
                                                 </tbody>
                                             </table>
-                                            
-                                            @if(count($jadwal) > 0)
-                                            <div>
-                                                <div class="float-left">
-                                                    Showing {{ $jadwal->firstItem() }} to {{ $jadwal->lastItem() }} of {{ $jadwal->total() }} enteries
-                                                </div>
-                                                <div class="float-right">
-                                                    {{ $jadwal->links() }}
-                                                </div> 
-                                            </div>
-                                            @else
-                                                <h5 class="text-center">Data Not Found</h5>
-                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -140,7 +53,167 @@
                 </div>
             </div>
             <!-- /.row -->
+            {{-- Modal --}}
+            <div id="myModal" class="modal" tabindex='-1'>
+                <div class="modal-content">
+                    <span class="close btnModalClose">&times;</span>
+                    <!-- Modal content -->
+                    <h2 class="text-center mb-2">Detail Jadwal</h2>
+                    <div id="perubahanFalse" class="text-center">
+                        <ul>
+                            <li class="list-decorate-none">Tidak ada keterangan tambahan.</li>
+                        </ul>
+                    </div>
+                    <div id="perubahanTrue" >
+                        <ul>
+                            <li id="kdKelas" class="list-decorate-none">Kode Kelas : </li>
+                            <li id="kdDosen" class="list-decorate-none">Kode Dosen : </li>
+                            <li id="nmDosen" class="list-decorate-none">Nama Dosen : </li>
+                            <li id="tglAwal" class="list-decorate-none color-salmon">Tanggal Awal : </li>
+                            <li id="wktAwal" class="list-decorate-none color-salmon">Waktu Awal : </li>
+                            <li id="rgAwal" class="list-decorate-none color-salmon">Ruang Awal : </li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btnModalClose" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+            {{-- End Modal --}}
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
+@endsection
+
+@section('scripts')
+<script>
+$(document).ready(function () {
+
+    function load() {
+        jadwal();   
+    }
+
+    load();
+
+    $(document).on('click', '.open-modal', function() {
+    // Code to display the modal here
+            
+        // Load sugest Jadwal
+        // loadDetail();
+
+        // get detail row
+        let rowData = this.parentElement.parentElement.childNodes;
+        let kodeKelas = rowData[6].textContent;
+        let kodeDosen = rowData[7].textContent;
+        let namaDosen = rowData[8].textContent;
+
+        let ketJadwal = this.id;
+        let arrKetJadwal = ketJadwal.split("|");
+        let detailKet = arrKetJadwal[1];
+        // console.log(detailKet);
+        if (detailKet != 'null') {
+            // console.log('masuk if');
+            let detailPerubahan = detailKet;
+            let arrDetail = detailPerubahan.split(";");
+            let exTanggal = arrDetail[0];
+            let exWaktu = arrDetail[1];
+            let exRuangan = arrDetail[2];
+
+            // Isi detial jadwal
+            $('#perubahanFalse').hide();
+            $('#perubahanTrue').show();
+            $('#kdKelas').text('Kode Kelas : ' + kodeKelas);
+            $('#kdDosen').text('Kode Dosen : ' + kodeDosen);
+            $('#nmDosen').text('Nama Dosen : ' + namaDosen);
+            $('#tglAwal').text('Tanggal Awal : ' + exTanggal);
+            $('#wktAwal').text('Waktu Awal : ' + exWaktu);
+            $('#rgAwal').text('Ruangan Awal : ' + exRuangan);
+            
+        } else {
+            // console.log("masuk else");
+            $('#perubahanTrue').hide();
+            $('#perubahanFalse').show();
+        }
+        
+
+        
+        // let modalTarget = 
+        $('#myModal').show();
+        // Update modal content dynamically if needed
+        });
+
+        $(document).keydown(function(e) {
+            // Check if the escape key was pressed (key code 27)
+            if (e.which === 27) {
+                $('#myModal').hide();
+            }
+        });
+
+        // Close button click event handler
+        $('.btnModalClose').click(function() {
+            $('#myModal').hide();
+        });
+
+
+
+    function jadwal() {
+        $.ajax({
+            type: 'POST',
+            url: '/api/jadwal',
+            // dataType: "json",
+            beforeSend: function() {
+                // setting a timeout
+                console.log("beforeSend");
+            },
+            success: function(data) {
+            console.log(data);
+            var i = 1;
+                $('#dataTable').DataTable({
+                    "data": data.jadwal,
+                    // "responsive": true,
+                    "columns": [{
+                        "data": "no",
+                        "render": function(data, type, row, meta) {
+                            return i++;
+                        }
+                    },
+                    {
+                        "data": "hari"
+                    },
+                    {
+                        "data": "tanggal"
+                    },
+                    {
+                        "data": "matkul"
+                    },
+                    {
+                        "data": "concat_jam"
+                    },
+                    {
+                        "data": "kode_ruangan"
+                    },
+                    {
+                        "data": "kode_kelas"
+                    },
+                    {
+                        "data": "kode_dosen"
+                    },
+                    {
+                        "data": "dosen"
+                    },
+                    {
+                        "data": "ket_jadwal", "width" : "50px", 
+                        "render": function (data) {
+                            return '<button type="button" id="btnDetail' + i + '|' + data + '" class="btn btn-primary m-1 open-modal btnDetail" data-toggle="modal">Detail</button>'
+                        }
+                    }
+                ]
+                });
+            }
+        });
+    }
+
+
+});
+</script>
 @endsection

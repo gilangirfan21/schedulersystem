@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Psr7\Response;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use App\Models\Dosen;
+use Illuminate\Database\QueryException;
+use App\Models\Ruangan;
+use App\Models\Jadwal;
 
-class DosenController extends Controller
+class LokasiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class DosenController extends Controller
      */
     public function index()
     {
-        //
+        // 
     }
 
     /**
@@ -37,18 +37,17 @@ class DosenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
     public function show(Request $request)
     {
-        if(isset($request->kodeDosen) && $request->kodeDosen != '-') {
-            $kode = $request->kodeDosen;
+        if (strtoupper($request->available) == 'Y') {
             try {
-                $dosen = Dosen::where('kode','=',$kode)
-                        ->first();
-                return response()->json([
-                    'status' => '200',
-                    'dosen' => $dosen
-                ]);
+                $lokasi = Jadwal::leftJoin('ref_ruangan', 'jadwal.kode_ruangan', '=', 'ref_ruangan.kode')
+                        ->select('ref_ruangan.lokasi')
+                        ->whereNull('jadwal.kode_dosen')
+                        ->whereNotNull('ref_ruangan.lokasi')
+                        ->groupBy('ref_ruangan.lokasi')
+                        ->get();
+                return response()->json($lokasi);
             } catch (QueryException $e) {
                 $error = [
                     'error' => $e->getMessage()
@@ -56,12 +55,12 @@ class DosenController extends Controller
                 return response()->json($error);
             }
         } else {
+            // GENERAL DATA LOKASI
             try {
-                $dosen = Dosen::all();
-                return response()->json([
-                    'status' => '200',
-                    'dosen' => $dosen
-                ]);
+                $lokasi = Ruangan::select('lokasi')
+                        ->groupBy('lokasi')
+                        ->get();
+                return response()->json($lokasi);
             } catch (QueryException $e) {
                 $error = [
                     'error' => $e->getMessage()

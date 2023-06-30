@@ -10,6 +10,7 @@ use App\Models\Jadwal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Jad;
+use PhpParser\Node\Stmt\TryCatch;
 
 class SchedulerController extends Controller
 {
@@ -30,42 +31,11 @@ class SchedulerController extends Controller
      */
     public function index(Request $request)
     {
-        // $id = 1;
-        // $jadwalAwal = Jadwal::findOrFail($id);
-        // // print_r;exit($jadwalAwal);
-        
-                    
-        
-        // $jadwalBaru = Jadwal::where('kode_jam', '!=', $jadwalAwal->kode_jam)
-        //             ->where('kode_ruangan', '!=', $jadwalAwal->kode_ruangan)
-        //             ->get();
-        
+        return view('home');
+    }
 
-        // dd($jadwalBaru);
-
-
-        // PUKUL
-        $jadwal = Jadwal::leftJoin('ref_dosen', 'jadwal.kode_dosen', '=', 'ref_dosen.kode')
-                ->get();
-        $jam = $jadwal[0]->kode_jam;
-        // dd($jam);
-        $arrJam = explode('/',$jam);
-        $x = 1;
-        $data = [];
-        foreach($arrJam as $j) {
-
-            // dd($j);
-            $pukul = Jam::where('kode',$j)->first();
-            // $pukul = $pukul[0];
-            $data[$x]['jam'] = $pukul->jam;
-            $data[$x]['jam_mulai'] = $pukul->jam;
-            $data[$x]['jam_selesai'] = $pukul->jam;
-            $x++;
-        }
-
-        // dd($data);
-
-
+    public function show(Request $request)
+    {
         // name = kode dosen
         $kode_dosen = $request->user()->name;
 
@@ -74,46 +44,123 @@ class SchedulerController extends Controller
                 ->where('name', '=', $kode_dosen)
                 ->get();
         
-        // IF search
-        if($request->filled('search')){
-
-            // IF admin or staff
-            if (in_array($request->user()->role, [1,2])) {
-                $jadwal = Jadwal::leftJoin('ref_dosen', 'jadwal.kode_dosen', '=', 'ref_dosen.kode')
-                        ->leftJoin('ref_matkul', 'jadwal.kode_matkul', '=', 'ref_matkul.kode')
-                        ->leftJoin('ref_kelas', 'jadwal.kode_kelas', '=', 'ref_kelas.kode')
-                        ->where('jadwal.kode_dosen', 'like', '%' . $request->search . '%')
-                        ->orWhere('jadwal.kode_matkul', 'like', '%' . $request->search . '%')
-                        ->orWhere('ref_matkul.matkul', 'like', '%' . $request->search . '%')
-                        ->orWhere('jadwal.kode_kelas', 'like', '%' . $request->search . '%')
-                        ->paginate(10);
-
-            } else {
-                $jadwal = Jadwal::leftJoin('ref_dosen', 'jadwal.kode_dosen', '=', 'ref_dosen.kode')
-                        ->leftJoin('ref_matkul', 'jadwal.kode_matkul', '=', 'ref_matkul.kode')
-                        ->leftJoin('ref_kelas', 'jadwal.kode_kelas', '=', 'ref_kelas.kode')
-                        ->leftJoin('ref_hari', 'jadwal.kode_hari', '=', 'ref_hari.kode')
-                        ->where('ref_dosen.kode', '=',  $kode_dosen )
-                        ->where(function ($query) use ($request) {
-                            $query->where('jadwal.kode_matkul', 'like', '%' . $request->search . '%')
-                            ->orWhere('ref_matkul.matkul', 'like', '%' . $request->search . '%')
-                            ->orWhere('jadwal.kode_kelas', 'like', '%' . $request->search . '%')
-                            ->orWhere('ref_hari.hari', 'like', '%' . $request->search . '%');
-                        })
-                        ->paginate(10);
-            }
-
-        }else{
-            if (in_array($request->user()->role, [1,2])) {
-                $jadwal = Jadwal::leftJoin('ref_dosen', 'jadwal.kode_dosen', '=', 'ref_dosen.kode')
-                        ->paginate(10);
-            } else {
-                $jadwal = Jadwal::leftJoin('ref_dosen', 'jadwal.kode_dosen', '=', 'ref_dosen.kode')
-                    ->where('ref_dosen.kode', '=', $kode_dosen)
+        if (in_array($request->user()->role, [1,2])) {
+            $jadwal = Jadwal::leftJoin('ref_dosen', 'jadwal.kode_dosen', '=', 'ref_dosen.kode')
+                    ->where('jadwal.kode_dosen', '!=', null)
                     ->paginate(10);
-            }
             
+        } else {
+            $jadwal = Jadwal::leftJoin('ref_dosen', 'jadwal.kode_dosen', '=', 'ref_dosen.kode')
+                ->where('ref_dosen.kode', '=', $kode_dosen)
+                ->where('jadwal.kode_dosen', '!=', null)
+                ->paginate(10);
+
         }
+
+        $i=0;
+        for ($j=0; $j < count($jadwal); $j++) { 
+                $arrJadwal[$i]['kode_kelas'] = $jadwal[$j]['kode_kelas'];
+                $arrJadwal[$i]['kode_dosen'] = $jadwal[$j]['kode_dosen'];
+                $arrJadwal[$i]['dosen'] = $jadwal[$j]['dosen'];
+                $arrJadwal[$i]['kode_matkul'] = $jadwal[$j]['kode_matkul'];
+                $arrJadwal[$i]['pertemuan'] = $jadwal[$j]['pertemuan'];
+                $arrJadwal[$i]['kode_ruangan'] = $jadwal[$j]['kode_ruangan'];
+                $arrJadwal[$i]['hari'] = $jadwal[$j]['hari'];
+                $arrJadwal[$i]['tanggal'] = $jadwal[$j]['tanggal'];
+                $arrJadwal[$i]['kode_jam'] = [$jadwal[$j]['id'] => $jadwal[$j]['kode_jam']];
+                $tmp = $j;
+                $tmp++;
+
+                if ($tmp < count($jadwal)) {
+                    if ($arrJadwal[$i]['kode_kelas'] == $jadwal[$tmp]['kode_kelas']) {
+
+                        $arrJadwal[$i]['kode_jam'][$jadwal[$tmp]['id']] = $jadwal[$tmp]['kode_jam'];
+                        $j++;
+                        $tmp++;
+
+                        // dd($arrJadwal[$i]['kode_kelas']);
+                        // dd($jadwal[$tmp]['kode_kelas']);
+                        if ($tmp < count($jadwal)) {
+                            if ($arrJadwal[$i]['kode_kelas'] == $jadwal[$tmp]['kode_kelas']) {                                
+                                $arrJadwal[$i]['kode_jam'][$jadwal[$tmp]['id']] = $jadwal[$tmp]['kode_jam'];
+                                $j++;
+                                $tmp++;
+
+                                if ($tmp < count($jadwal)) {
+                                    if ($arrJadwal[$i]['kode_kelas'] == $jadwal[$tmp]['kode_kelas']) {                                
+                                        $arrJadwal[$i]['kode_jam'][$jadwal[$tmp]['id']] = $jadwal[$tmp]['kode_jam'];
+                                        $j++;
+                                        $tmp++;
+                    
+                                        
+                                    }
+                                }
+            
+                                
+                            }
+                        }
+                    }
+                }
+            $i++;
+        }
+        
+
+        // foreach($jadwal as $key => $value) {
+
+        //     $arrJadwal[$i]['kode_kelas'] = $value['kode_kelas'];
+        //     $arrJadwal[$i]['hari'] = $value['hari'];
+        //     $arrJadwal[$i]['kode_dosen'] = $value['kode_dosen'];
+        //     $arrJadwal[$i]['kode_jam'] = [];
+        //     array_push($arrJadwal[$i]['kode_jam'],$value['kode_jam']);
+
+        //     for ($key; $key < strlen($jadwal)-$key; $key++) { 
+        //         if($arrJadwal[$i]['kode_kelas'] == $jadwal[$i+1]['kode_kelas'])
+        //         array_push($arrJadwal[$i]['kode_jam'],$jadwal[$i+1]['kode_jam']);
+        //     }
+            
+            
+        //     $i++;
+        // }
+        // $arr = [];
+
+        // for ($j=0; $j < count($jadwal); $j++) { 
+        //     $arrJadwal[$i]['kode_kelas'] = $jadwal[$j]['kode_kelas'];
+        //     $arrJadwal[$i]['kode_dosen'] = $jadwal[$j]['kode_dosen'];
+        //     $arrJadwal[$i]['hari'] = $jadwal[$j]['hari'];
+        //     $arrJadwal[$i]['kode_jam'] = $jadwal[$j]['kode_jam'];
+        //     // dd($arrJadwal);
+
+        //     $tmp = $j;
+            
+        //     $tmp++;
+        //     // dd($tmp);
+        //     if ($tmp < count($jadwal)) {
+        //         // dd($arrJadwal[$i]['kode_kelas']);
+        //         // dd($jadwal[$tmp]['kode_kelas']);
+        //         while ($arrJadwal[$i]['kode_kelas'] == $jadwal[$tmp]['kode_kelas']) {
+        //             // $arrJadwal[$i]['kode_jam'] = $arrJadwal[$i]['kode_jam'] . ";" . $jadwal[$tmp]['kode_jam'];
+        //             $j++;
+        //             $tmp++;
+        //             dd($tmp);
+        //         }
+        //     }
+            // dd(count($jadwal));
+            // do  {
+            //     echo "test";
+            //     // dd( $jadwal[$tmp]['kode_kelas']);
+                
+
+            // } while ($tmp < count($jadwal)) {
+            //     # code...
+            // }
+            
+
+        //     $i++;
+        // }
+
+
+        // dd($arrJadwal);
+        $jadwal = $arrJadwal;
 
         // CONVERT KODE JAM to JAM
         // foreach
@@ -124,10 +171,14 @@ class SchedulerController extends Controller
 
     public function check(Request $request)
     {
-        // dd($request);
-        $jadwal = Jadwal::find($request->id);
-        // dd($jadwal);
-        return view('check',['jadwal' => $jadwal]);
+        $countArr = explode('/', $request->listId);
+        $count_time = count($countArr);
+        $perubahanData = [
+            'type' => $request->type,
+            'listId' => $request->listId,
+            'count_time' => $count_time
+        ];
+        return view('check',['perubahanData' => $perubahanData]);
     }
 
 }

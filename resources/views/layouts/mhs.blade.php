@@ -7,15 +7,27 @@
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
     <!-- SELECT 2 -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ secure_asset('https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css') }}" />
+    <!-- DATATABLE -->
+    <link rel="stylesheet" href="{{ secure_asset('https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css') }}" />
     <!-- CUSTOME STYLE -->
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    {{-- START Alertify --}}
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ secure_asset('https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css') }}"/>
+    <!-- Default theme -->
+    <link rel="stylesheet" href="{{ secure_asset('https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css') }}"/>
+    <!-- Semantic UI theme -->
+    <link rel="stylesheet" href="{{ secure_asset('https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css') }}"/>
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="{{ secure_asset('https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css') }}"/>
+    {{-- END Alertify --}}
 
     @yield('styles')
 </head>
@@ -34,7 +46,7 @@
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
-               <span class="mhs-base-color">Halaman Mahasiswa</span>
+                <span class="mhs-base-color">Halaman Mahasiswa</span>
             </li>
         </ul>
     </nav>
@@ -68,14 +80,17 @@
 
 <!-- REQUIRED SCRIPTS -->
 
-@vite('resources/js/app.js')
+{{-- @vite('resources/js/app.js') --}}
 <!-- AdminLTE App -->
 <script src="{{ asset('js/adminlte.min.js') }}" defer></script>
 <!-- JQuery -->
-<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+<script src="{{ secure_asset('https://code.jquery.com/jquery-3.7.0.js') }}" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 <!-- Select 2 -->
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
+<script src="{{ secure_asset('https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js') }}"></script>
+<!-- Datatable -->
+<script src="{{ secure_asset('https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js') }}"></script>
+<!-- Alertify -->
+<script src="{{ secure_asset('https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js') }}"></script>
 @yield('scripts')
 </body>
 </html>

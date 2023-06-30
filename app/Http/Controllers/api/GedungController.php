@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Ruangan;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
+use App\Models\Ruangan;
+use App\Models\Jadwal;
 
 
 class GedungController extends Controller
@@ -18,24 +19,7 @@ class GedungController extends Controller
      */
     public function index()
     {
-        //selet all data
-        try {
-            // $gedung = Ruangan::all();
-            // return response()->json($gedung);
-            $gedung = Ruangan::select(DB::raw("SUBSTRING(kode, 1, 2) AS kodeGedung"))
-                    ->where('lokasi','=','E')
-                    ->groupBy('kodeGedung')
-                    ->get();
-            return response()->json([
-                'status' => '200',
-                'gedung' => $gedung
-            ]);
-        } catch (QueryException $e) {
-            $error = [
-                'error' => $e->getMessage()
-            ];
-            return response()->json($error);
-        }
+        //
     }
 
     /**
@@ -55,9 +39,83 @@ class GedungController extends Controller
      * @param  \App\Models\Ruangan  $gedung
      * @return \Illuminate\Http\Response
      */
-    public function show(Ruangan $ruangan)
+    public function show(Request $request)
     {
-        //
+        if (strtoupper($request->available) == 'Y') {
+            if (isset($request->kodeLokasi) && $request->kodeLokasi != '-') {
+                try {
+                    $gedung = Jadwal::leftJoin('ref_ruangan', 'jadwal.kode_ruangan', '=', 'ref_ruangan.kode')
+                            ->select('ref_ruangan.gedung')
+                            ->whereNull('jadwal.kode_dosen')
+                            ->whereNotNull('ref_ruangan.gedung')
+                            ->where('ref_ruangan.lokasi', '=', $request->kodeLokasi)
+                            ->groupBy('ref_ruangan.gedung')
+                            ->get();
+                    return response()->json([
+                        'status' => '200',
+                        'gedung' => $gedung
+                    ]);
+                } catch (QueryException $e) {
+                    $error = [
+                        'error' => $e->getMessage()
+                    ];
+                    return response()->json($error);
+                }   
+            } else {
+                try {
+                $gedung = Jadwal::leftJoin('ref_ruangan', 'jadwal.kode_ruangan', '=', 'ref_ruangan.kode')
+                        ->select('ref_ruangan.gedung')
+                        ->whereNull('jadwal.kode_dosen')
+                        ->whereNotNull('ref_ruangan.lokasi')
+                        ->whereNotNull('ref_ruangan.gedung')
+                        ->groupBy('ref_ruangan.gedung')
+                        ->get();
+                return response()->json([
+                    'status' => '200',
+                    'gedung' => $gedung
+                ]);
+                } catch (QueryException $e) {
+                    $error = [
+                        'error' => $e->getMessage()
+                    ];
+                    return response()->json($error);
+                }   
+            }
+        } else {
+            //GENERAL DATA GEDUNG
+            if (isset($request->kodeLokasi) && $request->kodeLokasi != '-') {
+                try {
+                    $gedung = Ruangan::select('gedung')
+                            ->where('lokasi','=', $request->kodeLokasi)
+                            ->groupBy('gedung')
+                            ->get();
+                    return response()->json([
+                        'status' => '200',
+                        'gedung' => $gedung
+                    ]);
+                } catch (QueryException $e) {
+                    $error = [
+                        'error' => $e->getMessage()
+                    ];
+                    return response()->json($error);
+                }   
+            } else {
+                try {
+                $gedung = Ruangan::select('gedung')
+                        ->groupBy('gedung')
+                        ->get();
+                return response()->json([
+                    'status' => '200',
+                    'gedung' => $gedung
+                ]);
+                } catch (QueryException $e) {
+                    $error = [
+                        'error' => $e->getMessage()
+                    ];
+                    return response()->json($error);
+                }   
+            }
+        }
     }
 
     /**

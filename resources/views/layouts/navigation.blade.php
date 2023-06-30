@@ -63,8 +63,18 @@
             @if( in_array(Auth::user()->role, [1,2]))
 
             <li class="nav-item">
+                
+                <a href="{{ route('tambahjadwal') }}" class="nav-link">
+                    <i class="nav-icon fa fa-calendar-plus"></i>
+                    <p>
+                        TAMBAH JADWAL
+                    </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a href="{{ route('daftar') }}" class="nav-link">
-                    <i class="nav-icon fa fa-plus-square" aria-hidden="true"></i>
+                    <i class="nav-icon fa fa-user-plus" aria-hidden="true"></i>
                     <p>
                         DAFTAR
                     </p>
@@ -77,7 +87,7 @@
                 <a href="{{ route('users.index') }}" class="nav-link">
                     <i class="nav-icon fas fa-users"></i>
                     <p>
-                        {{ __('Users') }}
+                        USERS
                     </p>
                 </a>
             </li>

@@ -2,10 +2,10 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SchedulerController;
+use App\Http\Controllers\TambahJadwalController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\MahasiswaController;
 use Illuminate\Console\Scheduling\Schedule;
@@ -34,22 +34,28 @@ Route::get('/login', function () {
 Auth::routes();
 Route::middleware('auth')->group(function () {
 
-    // Main Page
-    Route::get('/home', [SchedulerController::class, 'index'])->name('home');
-    Route::get('/home/search',[SchedulerController::class, 'index'])->name('home.search');
+    
     
     // Default
     Route::view('about', 'about')->name('about');
-    Route::get('users', [UserController::class, 'index'])->name('users.index');
+    Route::get('users', [UserController::class, 'index'])->name('users.index'); //Menu (USERS)
     Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
 
-    // Add new account
-    Route::get('/daftar',[RegisterController::class, 'index'])->name('daftar');
-    Route::post('/daftar',[RegisterController::class, 'index'])->name('tamabah');
+    // LIST MENU
+    // Main Page (JADWAL)
+    Route::get('/home', [SchedulerController::class, 'index'])->name('home');
+    Route::get('/home/search', [SchedulerController::class, 'index'])->name('home.search');
 
-    // check
-    Route::get('check',[SchedulerController::class, 'check'])->name('check');
+    // Export Schedule (TAMBAH JADWAL)
+    Route::get('/tambahjadwal', [TambahjadwalController::class, 'index'])->name('tambahjadwal');
+
+    // Add new account (DAFTAR)
+    Route::get('/daftar',[RegisterController::class, 'index'])->name('daftar');
+    Route::post('/daftar',[RegisterController::class, 'index'])->name('tambah');
+
+    // Resadule Manual 
+    Route::get('/check',[SchedulerController::class, 'check'])->name('check');
 
 });
 

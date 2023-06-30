@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+
 
 class RegisterController extends Controller
 {
@@ -76,6 +78,13 @@ class RegisterController extends Controller
 
     public function index()
     {
-        return view('auth/register');
+        $listAccess = [1,2];
+
+        if(!in_array(Auth::user()->role, $listAccess)) {
+            return  view('home');
+
+        } else {
+            return view('auth/register');
+        }
     }
 }
