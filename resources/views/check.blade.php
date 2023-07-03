@@ -282,7 +282,7 @@ $( document ).ready(function() {
         $('#loading').hide();
         $('#content').show();
     }
-
+    // INIT LOAD ALL DATA
     load();
 
     $(document).on('click', '.open-modal', function() {
@@ -293,7 +293,7 @@ $( document ).ready(function() {
         alertify.confirm("PERINGATAN","Apakah anda yakin?",
         function(){
             // UPDATE JADWAL VIA API
-            var dataParam = { kode_dosen: dosen, list_id_awal: listId , list_id_baru: listIdBaru};
+            var dataParam = { type: type, kode_dosen: dosen, list_id_awal: listId , list_id_baru: listIdBaru};
             var data = $.param(dataParam);
             $.ajax({
                 url: 'api/jadwal',
@@ -306,9 +306,9 @@ $( document ).ready(function() {
                 },
                 success: function(data) {
                     console.log("after update");
-                    console.log(data.status);
                     if (data.status == '200') {
                         alertify.success('Update berhasil');
+                        window.location.href = '\home';
                     }
                 },
                 error: function(xhr, status, error) {
@@ -319,38 +319,7 @@ $( document ).ready(function() {
         function(){
             alertify.error('Cancel');
         });
-        // if (isUpdate == 'Y') {
-        //     console.log('update');
-        //     updateJadwal(dosen, listId, listIdBaru);
-        // }
     });
-
-    // UPDATE JADWAL VIA API
-    // function updateJadwal(kode_dosen, list_id_awal, list_id_baru) {
-    //     var dataParam = { kode_dosen: dosen, list_id_awal: list_id_awal , list_id_baru:list_id_baru};
-    //     var data = $.param(dataParam);
-    //     $.ajax({
-    //         url: 'api/jadwal',
-    //         method: 'PUT',
-    //         data: data,
-    //         beforeSend: function () {
-    //             // $('#content').hide();
-    //             // $('#loading').show();
-    //             console.log("before update");
-    //         },
-    //         success: function(data) {
-    //             console.log("after update");
-    //             console.log(data.status);
-    //             if (data.status == '200') {
-    //                 window.status = '200';
-    //             }
-    //         },
-    //         error: function(xhr, status, error) {
-    //             console.log(error);
-    //         }
-    //     });
-    // }
-
 
     $(document).keydown(function(e) {
         // Check if the escape key was pressed (key code 27)
@@ -519,16 +488,13 @@ $( document ).ready(function() {
     function detailDosen(dosen) {
         var dataParam = { kodeDosen: dosen };
         var encodeDataDosen = $.param(dataParam);
-        console.log(encodeDataDosen);
         $.ajax({
             type: 'POST',
             url: '/api/dosen',
             data: encodeDataDosen,
             beforeSend: function() {
-                // console.log("beforeSend");
             },
             success: function(data) {
-                // console.log(data);
                 $('#kodeDosen').html('Kode Dosen : ' + data.dosen.kode);
                 $('#namaDosen').html('Nama Dosen : ' + data.dosen.dosen);
             }

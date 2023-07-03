@@ -37,6 +37,7 @@
                                                         <th>Kode Kelas</th>
                                                         <th>Kode Dosen</th>
                                                         <th>Dosen</th>
+                                                        <th>Pertemuan</th>
                                                         <th>Detail</th>
                                                     </tr>
                                                 </thead>
@@ -200,6 +201,9 @@ $(document).ready(function () {
                     },
                     {
                         "data": "dosen"
+                    },
+                    {
+                        "data": "pertemuan"
                     },
                     {
                         "data": "ket_jadwal", "width" : "50px", 

@@ -70,7 +70,7 @@ class JadwalController extends Controller
                 // $tmp = $j;
                 // $tmp++;
                 $tmp = $j + 1; // Start the inner loop from the next index
-                while ($tmp < $length && $arrJadwal[$i]['kode_kelas'] == $jadwal[$tmp]['kode_kelas'] && $arrJadwal[$i]['tanggal'] == $jadwal[$tmp]['tanggal']) {
+                while ($tmp < $length && $arrJadwal[$i]['kode_kelas'] == $jadwal[$tmp]['kode_kelas'] && $arrJadwal[$i]['tanggal'] == $jadwal[$tmp]['tanggal'] && $arrJadwal[$i]['pertemuan'] == $jadwal[$tmp]['pertemuan']) {
                     $arrJadwal[$i]['concat_kode_jam'] .= '-' . $jadwal[$tmp]['id'];
                     $arrJadwal[$i]['concat_jam'] .= '/' . $jadwal[$tmp]['kode_jam'];
                     $arrJadwal[$i]['kode_jam'][$jadwal[$tmp]['id']] = $jadwal[$tmp]['kode_jam'];
@@ -108,44 +108,51 @@ class JadwalController extends Controller
         // "kode_dosen" => "DSN327"
         // "list_id_old" => "3/4/5"
         // "list_id_new" => "15/16/17"
+        $type = $request->type;
 
-        
-
-
-        try {
-            for ($i=0; $i < count($listAwalArr); $i++) { 
-                $dataAwal = Jadwal::findOrFail($listAwalArr[$i]);
-                $dataBaru = Jadwal::findOrFail($listBaruArr[$i]);
-                    // Copy to new schadule
-                    $dataBaru->kode_kelas = $dataAwal->kode_kelas;
-                    $dataBaru->kode_matkul = $dataAwal->kode_matkul;
-                    $dataBaru->pertemuan = $dataAwal->pertemuan;
-                    $dataBaru->kode_dosen = $dataAwal->kode_dosen;
-                    $dataBaru->ket_jadwal = $dataAwal->tanggal . ';' . $request->list_id_awal . ';' . $dataAwal->kode_ruangan;
-                    $dataBaru->save();
-        
-                    // Remove old schadule
-                    $dataAwal->kode_kelas = null;
-                    $dataAwal->kode_matkul = null;
-                    $dataAwal->pertemuan = null;
-                    $dataAwal->kode_dosen = null;
-                    $dataAwal->ket_jadwal = 'PINDAH;' . $dataBaru->tanggal . ';' . $request->list_id_baru . ';' . $dataBaru->kode_ruangan;;
-                    $dataAwal->save();
-        
+        if (strtoupper($type) == 'SEMENTARA') {
             
-            }
+            try {
+                for ($i=0; $i < count($listAwalArr); $i++) { 
+                    $dataAwal = Jadwal::findOrFail($listAwalArr[$i]);
+                    $dataBaru = Jadwal::findOrFail($listBaruArr[$i]);
+                        // Copy to new schadule
+                        $dataBaru->kode_kelas = $dataAwal->kode_kelas;
+                        $dataBaru->kode_matkul = $dataAwal->kode_matkul;
+                        $dataBaru->pertemuan = $dataAwal->pertemuan;
+                        $dataBaru->kode_dosen = $dataAwal->kode_dosen;
+                        $dataBaru->ket_jadwal = $dataAwal->tanggal . ';' . $request->list_id_awal . ';' . $dataAwal->kode_ruangan;
+                        $dataBaru->save();
+            
+                        // Remove old schadule
+                        $dataAwal->kode_kelas = null;
+                        $dataAwal->kode_matkul = null;
+                        $dataAwal->pertemuan = null;
+                        $dataAwal->kode_dosen = null;
+                        $dataAwal->ket_jadwal = 'PINDAH;' . $dataBaru->tanggal . ';' . $request->list_id_baru . ';' . $dataBaru->kode_ruangan;;
+                        $dataAwal->save();
+            
                 
-        } catch (QueryException $e) {
+                }
+            } catch (QueryException $e) {
+                $error = [
+                    'error' => $e->getMessage()
+                ];
+                return response()->json($error);
+            }
+    
+            return response()->json([
+                'status' => '200',
+                'message' => 'Update berhasil'
+            ]);
+        } elseif (strtoupper($type) == 'PERMANEN') {
+            # code...
+        } else {
             $error = [
-                'error' => $e->getMessage()
+                'error' => 'Type is required!'
             ];
             return response()->json($error);
         }
-
-        return response()->json([
-            'status' => '200',
-            'message' => 'Update berhasil'
-        ]);
     }
 
     /**

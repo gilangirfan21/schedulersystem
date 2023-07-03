@@ -6,9 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Models\Jadwal;
+use App\Models\TanggalMerah;
 
 
-class JadwalavailableController extends Controller
+class JadwalAvailableController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -40,6 +41,12 @@ class JadwalavailableController extends Controller
     public function show(Request $request)
     {
         $maxCount = $request->count_time;
+        $listTanggalMerah = [];
+        $queryTanggalMerah = TanggalMerah::select('tanggal_merah')
+                        ->get();
+        foreach ($queryTanggalMerah as $tanggal) {
+            array_push($listTanggalMerah, $tanggal['tanggal_merah']);
+        }
 
         if (strtoupper($request->type) == 'SEMENTARA') {
             //selet all data
@@ -136,11 +143,11 @@ class JadwalavailableController extends Controller
                 }
         
                 $resultArrJadwal = [];
-                // Remove kode_jam not match array with count_time
-                foreach ($arrJadwal as $key => $value) {
-                    $cekCountArr = count($value['kode_jam']);
-                    if ($cekCountArr == $maxCount) {
-                        array_push($resultArrJadwal, $value);
+                // Remove kode_jam not match array with count_time, sunday, and public holidays
+                foreach ($arrJadwal as $jadwal) {
+                    $cekCountArr = count($jadwal['kode_jam']);
+                    if ($cekCountArr == $maxCount && (!in_array($jadwal['tanggal'], $listTanggalMerah)) && strtoupper($jadwal['hari']) != 'MINGGU') {
+                        array_push($resultArrJadwal, $jadwal);
                     }
                 }
         
