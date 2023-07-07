@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Jadwal;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TambahJadwalController extends Controller
 {
@@ -16,7 +17,19 @@ class TambahJadwalController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Request $request) {
-        return view('tambahjadwal');
+    public function index() {
+        // $jadwal = Jadwal::all();
+        $jadwal = Jadwal::limit(10)
+                ->get();
+        return view('tambahjadwal', ['jadwal' => $jadwal]);
+    }
+
+    public function export() {
+        return Excel::download(new JadwalExport, 'jadwal.xlsx');
+    }
+
+    public function import() {
+        Excel::import(new JadwalImport, request()->file('file'));
+        return back();
     }
 }

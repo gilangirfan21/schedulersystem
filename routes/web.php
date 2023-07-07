@@ -46,17 +46,17 @@ Route::middleware('auth')->group(function () {
     // Main Page (JADWAL)
     Route::get('/home', [SchedulerController::class, 'index'])->name('home');
     Route::get('/home/search', [SchedulerController::class, 'index'])->name('home.search');
-
+    
     // Export Schedule (TAMBAH JADWAL)
     Route::get('/tambahjadwal', [TambahjadwalController::class, 'index'])->name('tambahjadwal');
-
+    
     // Add new account (DAFTAR)
     Route::get('/daftar',[RegisterController::class, 'index'])->name('daftar');
     Route::post('/daftar',[RegisterController::class, 'index'])->name('tambah');
-
+    
     // Resadule Manual 
     Route::get('/check',[SchedulerController::class, 'check'])->name('check');
-
+    
 });
 
 // Page for Mahasiswa

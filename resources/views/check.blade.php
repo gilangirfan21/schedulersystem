@@ -220,6 +220,7 @@ $( document ).ready(function() {
     var type = $('#type').val();
     var count_time = $('#count_time').val();
     var listId = $('#listId').val()
+    console.log(listId);
     var listIdBaru = $('#listIdBaru').val()
     var tmpDosen = $('#dosen').val();
     var userRole = $('#userRole').val();
@@ -554,6 +555,7 @@ $( document ).ready(function() {
         event.preventDefault();
         var dataParam = {
             type: type,
+            list_id: listId,
             kode_dosen: dosen,
             kode_lokasi: lokasi,
             kode_gedung: gedung,

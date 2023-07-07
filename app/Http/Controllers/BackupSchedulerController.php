@@ -11,7 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Jad;
 
-class SchedulerController extends Controller
+class BackupSchedulerController extends Controller
+// class SchedulerController extends Controller
 {
     /**
      * Create a new controller instance.

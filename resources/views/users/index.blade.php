@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">{{ __('Users') }}</h1>
+                    <h1 class="m-0">Halaman Daftar Pengguna</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -18,19 +18,14 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-
-                    <div class="alert alert-info">
-                        Sample table page
-                    </div>
-
                     <div class="card">
                         <div class="card-body p-0">
-
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
+                                        <th>Kode Dosen</th>
                                         <th>Role</th>
+                                        <th>Nama</th>
                                         <th>Email</th>
                                     </tr>
                                 </thead>
@@ -39,6 +34,7 @@
                                     <tr>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->role }}</td>
+                                        <td>{{ $user->nama }}</td>
                                         <td>{{ $user->email }}</td>
                                     </tr>
                                 @endforeach
@@ -46,12 +42,10 @@
                             </table>
                         </div>
                         <!-- /.card-body -->
-
                         <div class="card-footer clearfix">
                             {{ $users->links() }}
                         </div>
                     </div>
-
                 </div>
             </div>
             <!-- /.row -->

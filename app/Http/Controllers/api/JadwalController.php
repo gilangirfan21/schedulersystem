@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Jadwal;
-use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
+use App\Models\Jadwal;
+use App\Models\TanggalMerah;
 
 class JadwalController extends Controller
 {
@@ -41,6 +42,13 @@ class JadwalController extends Controller
         // check kode_dosen
         $kode_dosen = (isset($request->kode_dosen) && $request->kode_dosen != '-') ? $request->kode_dosen : null;
         $symbolCheck = (isset($request->kode_dosen) && $request->kode_dosen != '-') ? '=' : '!=';
+
+        $listTanggalMerah = [];
+        $queryTanggalMerah = TanggalMerah::select('tanggal_merah')
+                        ->get();
+        foreach ($queryTanggalMerah as $tanggal) {
+            array_push($listTanggalMerah, $tanggal['tanggal_merah']);
+        }
         
         //selet all data
         try {
@@ -62,15 +70,21 @@ class JadwalController extends Controller
                 $arrJadwal[$i]['kode_ruangan'] = $jadwal[$j]['kode_ruangan'];
                 $arrJadwal[$i]['hari'] = $jadwal[$j]['hari'];
                 $arrJadwal[$i]['tanggal'] = $jadwal[$j]['tanggal'];
+                $arrJadwal[$i]['flag'] = null;
                 $arrJadwal[$i]['concat_kode_jam'] = $jadwal[$j]['id'];
                 $arrJadwal[$i]['concat_jam'] = $jadwal[$j]['kode_jam'];
                 $arrJadwal[$i]['kode_jam'] = [$jadwal[$j]['id'] => $jadwal[$j]['kode_jam']];
                 $arrJadwal[$i]['ket_jadwal'] = $jadwal[$j]['ket_jadwal'];
 
+                // flagging tidak boleh ada kegiatan perkuliahan (tanggal merah, uas, uts, ...)
+                if (in_array($arrJadwal[$i]['tanggal'], $listTanggalMerah)) {
+                    $arrJadwal[$i]['flag'] = 'L';
+                }
+
                 // $tmp = $j;
                 // $tmp++;
                 $tmp = $j + 1; // Start the inner loop from the next index
-                while ($tmp < $length && $arrJadwal[$i]['kode_kelas'] == $jadwal[$tmp]['kode_kelas'] && $arrJadwal[$i]['tanggal'] == $jadwal[$tmp]['tanggal'] && $arrJadwal[$i]['pertemuan'] == $jadwal[$tmp]['pertemuan']) {
+                while ($tmp < $length && $arrJadwal[$i]['kode_kelas'] == $jadwal[$tmp]['kode_kelas'] && $arrJadwal[$i]['kode_ruangan'] == $jadwal[$tmp]['kode_ruangan'] && $arrJadwal[$i]['kode_dosen'] == $jadwal[$tmp]['kode_dosen']  && $arrJadwal[$i]['tanggal'] == $jadwal[$tmp]['tanggal'] && $arrJadwal[$i]['pertemuan'] == $jadwal[$tmp]['pertemuan']) {
                     $arrJadwal[$i]['concat_kode_jam'] .= '-' . $jadwal[$tmp]['id'];
                     $arrJadwal[$i]['concat_jam'] .= '/' . $jadwal[$tmp]['kode_jam'];
                     $arrJadwal[$i]['kode_jam'][$jadwal[$tmp]['id']] = $jadwal[$tmp]['kode_jam'];
@@ -129,7 +143,7 @@ class JadwalController extends Controller
                         $dataAwal->kode_matkul = null;
                         $dataAwal->pertemuan = null;
                         $dataAwal->kode_dosen = null;
-                        $dataAwal->ket_jadwal = 'PINDAH;' . $dataBaru->tanggal . ';' . $request->list_id_baru . ';' . $dataBaru->kode_ruangan;;
+                        $dataAwal->ket_jadwal = null;
                         $dataAwal->save();
             
                 

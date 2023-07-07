@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">{{ __('Daftar') }}</h1>
+                    <h1 class="m-0">Halaman Penambahan Pengguna</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -17,9 +17,8 @@
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
-
             {{-- START LOADING --}}
-            <div id="loading" class="row">
+            <div id="loading" class="row" style="block">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body text-center box-spinner">
@@ -31,9 +30,7 @@
                 </div>
             </div>
             {{-- END LOADING --}}
-
-
-            <div id="content" class="row">
+            <div id="content" class="row" style="display: none">
                 <div class="col-lg-12">
                     <div  class="card">
                         <div class="card-body">
@@ -67,23 +64,23 @@
                                                 {{-- @enderror --}}
                                             {{-- </div> --}}
 
-                                            {{-- START CUSTOM ADD ROLE --}}
+                                            {{-- START CUSTOM ADD KODE, ROLE, NAMA --}}
                                             <div class="input-group mb-3">
                                                 <select name="name" class="custom-select select2" id="name">
                                                     <option value="" selected disabled>Dosen Code</option>
                                                 </select>
                                                 <div class="input-group-append">
                                                 <label class="input-group-text" for="name">
-                                                    <span class="fas fa-user"></span>
+                                                    <span class="fa fa-key"></span>
                                                 </label>
-                                                </div>
+                                            </div>
                                                 @error('name')
                                                 <span class="error invalid-feedback">
                                                     {{ $message }}
                                                 </span>
                                                 @enderror
                                             </div>
-
+                                            
                                             <div class="input-group mb-3">
                                                 <select name="role" class="custom-select select2" id="role">
                                                     <option value="" selected disabled>Role</option>
@@ -91,8 +88,8 @@
                                                     <option value="3">Dosen</option>
                                                 </select>
                                                 <div class="input-group-append">
-                                                <label class="input-group-text" for="role">
-                                                    <span class="fas fa-users"></span>
+                                                    <label class="input-group-text" for="role">
+                                                        <span class="fas fa-users"></span>
                                                 </label>
                                                 </div>
                                                 @error('role')
@@ -101,7 +98,22 @@
                                                 </span>
                                                 @enderror
                                             </div>
-                                            {{-- END CUSTOM ADD ROLE --}}
+                                            
+                                            <div class="input-group mb-3">
+                                                <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror"
+                                                    placeholder="{{ __('Nama') }}" required>
+                                                <div class="input-group-append">
+                                                    <div class="input-group-text">
+                                                        <span class="fas fa-user"></span>
+                                                    </div>
+                                                </div>
+                                                @error('nama')
+                                                <span class="error invalid-feedback">
+                                                    {{ $message }}
+                                                </span>
+                                                @enderror
+                                            </div>
+                                            {{-- END CUSTOM ADD KODE, ROLE, NAMA --}}
 
                                             <div class="input-group mb-3">
                                                 <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
@@ -174,39 +186,44 @@
 
 @section('scripts')
 <script type="module">
-    $( document ).ready(function() {
+$( document ).ready(function() {
 
-        // GET DATA DOSEN FROM API
-        $.ajax({
-            url: 'api/dosen',
-            method: 'GET',
-            data: {
-            },
-            beforeSend: function () {
-                $('#content').hide();
-                $('#loading').show();
-            },
-            success: function(data) {
-                var select = $('#name');
-
-                $.each(data.dosen, function(index, item) {
-                console.log(item);
-                    var option = $('<option></option>');
-                    option.val(item.kode);
-                    option.text(item.kode + '-' +item.dosen);
-                    select.append(option);
-                });
-                $('#content').show();
-                $('#loading').hide();
-                // Handle the response data here
-                console.log(data);
-            },
-            error: function(xhr, status, error) {
-                // Handle the error here
-                console.log(error);
-            }
-        });
-
+    // GET DATA DOSEN FROM API
+    $.ajax({
+        url: 'api/dosen',
+        method: 'POST',
+        data: {
+        },
+        beforeSend: function () {
+            loadingProses();
+        },
+        success: function(data) {
+            var select = $('#name');
+            $.each(data.dosen, function(index, item) {
+            console.log(item);
+                var option = $('<option></option>');
+                option.val(item.kode);
+                option.text(item.kode + '-' +item.dosen);
+                select.append(option);
+            });
+            loadingSelesai();
+            console.log(data);
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
     });
+
+    // Loading Proses
+    function loadingProses() {
+        $('#content').css("display", "none");
+        $('#loading').css("display", "block");
+    }
+    function loadingSelesai() {
+        $('#loading').css("display", "none");
+        $('#content').css("display", "block");
+    }
+
+});
 </script>
 @endsection

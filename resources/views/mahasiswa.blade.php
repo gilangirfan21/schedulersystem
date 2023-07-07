@@ -7,7 +7,7 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     {{-- <h1 class="m-0">{{ __('Dashboard') }}</h1> --}}
-                    <h1 class="ml-2">JADWAL PERKULIAHAN</h1>
+                    <h1 class="ml-2">Jadwal Perkuliahan</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -17,7 +17,20 @@
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
-            <div class="row">
+            {{-- START LOADING --}}
+            <div id="loading" class="row" style="block">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body text-center box-spinner">
+                            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- END LOADING --}}
+            <div id="content" class="row" style="display: none">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
@@ -59,7 +72,7 @@
                 <div class="modal-content">
                     <span class="close btnModalClose">&times;</span>
                     <!-- Modal content -->
-                    <h2 class="text-center mb-2">Detail Jadwal</h2>
+                    <h2 class="text-center mb-3 mt-4">Detail Jadwal</h2>
                     <div id="perubahanFalse" class="text-center">
                         <ul>
                             <li class="list-decorate-none">Tidak ada keterangan tambahan.</li>
@@ -91,10 +104,11 @@
 $(document).ready(function () {
 
     function load() {
-        jadwal();   
+        loadJadwal();
     }
 
     load();
+
 
     $(document).on('click', '.open-modal', function() {
     // Code to display the modal here
@@ -157,16 +171,17 @@ $(document).ready(function () {
 
 
 
-    function jadwal() {
+    function loadJadwal() {
         $.ajax({
             type: 'POST',
             url: '/api/jadwal',
             // dataType: "json",
             beforeSend: function() {
-                // setting a timeout
+                loadingProses();
                 console.log("beforeSend");
             },
             success: function(data) {
+                loadingSelesai();
             console.log(data);
             var i = 1;
                 $('#dataTable').DataTable({
@@ -208,13 +223,25 @@ $(document).ready(function () {
                     {
                         "data": "ket_jadwal", "width" : "50px", 
                         "render": function (data) {
-                            return '<button type="button" id="btnDetail' + i + '|' + data + '" class="btn btn-primary m-1 open-modal btnDetail" data-toggle="modal">Detail</button>'
+                            return '<button type="button" id="btnDetail' + i + '|' + data + '" class="btn btn-secondary m-1 open-modal btnDetail" data-toggle="modal">Detail</button>'
                         }
                     }
                 ]
                 });
             }
         });
+    }
+
+
+    // Loading Proses
+    function loadingProses() {
+        $('#content').css("display", "none");
+        $('#loading').css("display", "block");
+    }
+
+    function loadingSelesai() {
+        $('#loading').css("display", "none");
+        $('#content').css("display", "block");
     }
 
 

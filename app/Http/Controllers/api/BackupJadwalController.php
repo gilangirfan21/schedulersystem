@@ -7,7 +7,7 @@ use App\Models\Jadwal;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
-class JadwalController extends Controller
+class BackupJadwalController extends Controller
 {
     /**
      * Display a listing of the resource.

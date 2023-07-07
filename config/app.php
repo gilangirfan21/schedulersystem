@@ -194,9 +194,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        // Export Import Excel
-        // Maatwebsite\Excel\ExcelServiceProvider::class,
-
     ],
 
     /*

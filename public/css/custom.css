@@ -160,3 +160,8 @@ label:not(.form-check-label):not(.custom-file-label) {
     background-color: #ccc;
     border: 1px solid #fff;
 }
+
+/* DATATABLE */
+#dataTable tbody td {
+    vertical-align: middle;
+}
