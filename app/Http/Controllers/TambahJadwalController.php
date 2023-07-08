@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Jadwal;
+use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportJadwal;
+use App\Imports\ImportJadwal;
+use App\Models\Jadwal;
 
 class TambahJadwalController extends Controller
 {
@@ -24,12 +27,13 @@ class TambahJadwalController extends Controller
         return view('tambahjadwal', ['jadwal' => $jadwal]);
     }
 
-    public function export() {
-        return Excel::download(new JadwalExport, 'jadwal.xlsx');
+    public function exportjadwal(Request $request) {
+        return Excel::download(new ExportJadwal, 'jadwal.xlsx');
     }
 
-    public function import() {
-        Excel::import(new JadwalImport, request()->file('file'));
-        return back();
+    public function importjadwal(Request $request) {
+        
+        Excel::import(new ImportJadwal, $request->file('file')->store('files'));
+        return redirect()->back()->with('success', 'Data berhasil ditambahkan');
     }
 }

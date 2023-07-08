@@ -67,7 +67,7 @@
                 <a href="{{ route('tambahjadwal') }}" class="nav-link">
                     <i class="nav-icon fa fa-calendar-plus"></i>
                     <p>
-                        TAMBAH JADWAL
+                        MENU JADWAL
                     </p>
                 </a>
             </li>

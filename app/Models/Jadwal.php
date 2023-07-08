@@ -36,4 +36,7 @@ class Jadwal extends Model
     }
 
     protected $table = "jadwal";
+
+    protected $fillable = ['kode_kelas', 'hari', 'tanggal', 'kode_matkul', 'pertemuan', 'kode_ruangan', 'kode_jam', 'kode_dosen'];
+
 }

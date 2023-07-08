@@ -39,6 +39,7 @@ Route::middleware('auth')->group(function () {
     // Default
     Route::view('about', 'about')->name('about');
     Route::get('users', [UserController::class, 'index'])->name('users.index'); //Menu (USERS)
+    Route::get('users/edit', [UserController::class, 'show'])->name('users.edit'); //Halamn Edit (USERS)
     Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
 
@@ -49,6 +50,8 @@ Route::middleware('auth')->group(function () {
     
     // Export Schedule (TAMBAH JADWAL)
     Route::get('/tambahjadwal', [TambahjadwalController::class, 'index'])->name('tambahjadwal');
+    Route::get('/exportjadwal', [TambahJadwalController::class, 'exportjadwal'])->name('exportjadwal');
+    Route::post('/importjadwal', [TambahJadwalController::class, 'importjadwal'])->name('importjadwal');
     
     // Add new account (DAFTAR)
     Route::get('/daftar',[RegisterController::class, 'index'])->name('daftar');

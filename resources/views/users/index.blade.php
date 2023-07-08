@@ -27,6 +27,7 @@
                                         <th>Role</th>
                                         <th>Nama</th>
                                         <th>Email</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -36,6 +37,12 @@
                                         <td>{{ $user->role }}</td>
                                         <td>{{ $user->nama }}</td>
                                         <td>{{ $user->email }}</td>
+                                        <td>
+                                            <form action="{{ route('data.edit', $user->id) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-secondary">Edit</button>
+                                            </form>    
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
