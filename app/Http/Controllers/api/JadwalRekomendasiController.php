@@ -228,7 +228,7 @@ class JadwalRekomendasiController extends Controller
                 // Remove kode_jam not match array with count_time, sunday, and public holidays
                 foreach ($arrJadwal as $jadwal) {
                     $cekCountArr = count($jadwal['kode_jam']);
-                    if ($cekCountArr == $maxCount && (!in_array($jadwal['tanggal'], $listTanggalMerah)) && strtoupper($jadwal['hari']) != 'MINGGU') {
+                    if ($cekCountArr == $maxCount && (!in_array($jadwal['tanggal'], $listTanggalMerah)) && strtoupper($jadwal['hari']) != 'MINGGU' && $jadwal['concat_kode_jam'] != $listJamArr) {
                         array_push($tmpArrJadwal, $jadwal);
                     }
                     if ($maxRekomandasi == count($tmpArrJadwal)) {
@@ -289,7 +289,7 @@ class JadwalRekomendasiController extends Controller
                     // Remove kode_jam not match array with count_time, sunday, and public holidays
                     foreach ($arrJadwal as $jadwal) {
                         $cekCountArr = count($jadwal['kode_jam']);
-                        if ($cekCountArr == $maxCount && (!in_array($jadwal['tanggal'], $listTanggalMerah)) && strtoupper($jadwal['hari']) != 'MINGGU') {
+                        if ($cekCountArr == $maxCount && (!in_array($jadwal['tanggal'], $listTanggalMerah)) && strtoupper($jadwal['hari']) != 'MINGGU' && $jadwal['concat_kode_jam'] != $listJamArr) {
                             array_push($tmpArrJadwal, $jadwal);
                         }
                         if ($maxRekomandasi == count($tmpArrJadwal)) {
@@ -350,7 +350,7 @@ class JadwalRekomendasiController extends Controller
                     // Remove kode_jam not match array with count_time, sunday, and public holidays
                     foreach ($arrJadwal as $jadwal) {
                         $cekCountArr = count($jadwal['kode_jam']);
-                        if ($cekCountArr == $maxCount && (!in_array($jadwal['tanggal'], $listTanggalMerah)) && strtoupper($jadwal['hari']) != 'MINGGU') {
+                        if ($cekCountArr == $maxCount && (!in_array($jadwal['tanggal'], $listTanggalMerah)) && strtoupper($jadwal['hari']) != 'MINGGU' && $jadwal['concat_kode_jam'] != $listJamArr) {
                             array_push($tmpArrJadwal, $jadwal);
                         }
                         if ($maxRekomandasi == count($tmpArrJadwal)) {
@@ -410,7 +410,7 @@ class JadwalRekomendasiController extends Controller
                     // Remove kode_jam not match array with count_time, sunday, and public holidays
                     foreach ($arrJadwal as $jadwal) {
                         $cekCountArr = count($jadwal['kode_jam']);
-                        if ($cekCountArr == $maxCount && (!in_array($jadwal['tanggal'], $listTanggalMerah)) && strtoupper($jadwal['hari']) != 'MINGGU') {
+                        if ($cekCountArr == $maxCount && (!in_array($jadwal['tanggal'], $listTanggalMerah)) && strtoupper($jadwal['hari']) != 'MINGGU' && $jadwal['concat_kode_jam'] != $listJamArr) {
                             array_push($tmpArrJadwal, $jadwal);
                         }
                         if ($maxRekomandasi == count($tmpArrJadwal)) {

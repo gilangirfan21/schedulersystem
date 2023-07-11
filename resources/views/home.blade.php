@@ -35,7 +35,7 @@
                     <div class="card">
                         <div class="card-body">
                             <p class="card-text">
-                                @if( Auth::user()->role == 3)
+                                @if(Auth::user()->role == 3)
                                 <form class="ml-1 mt-3">
                                     <div class="form-group">
                                         <div class="row">
@@ -51,9 +51,41 @@
                                         </div>
                                     </div>
                                 </form>
-                                @endif
-                                <input type="hidden" name="userRole" id="userRole" value="{{ Auth::user()->role }}">
-                                
+                                @elseif(in_array(Auth::user()->role, [1,2]))
+                                <div class="mb-3 text-center">
+                                    <a id="btnExportJadwal" class="btn btn-success text-right" href="{{ route('exportjadwal') }}">Export Jadwal</a>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalImportExcel">Import Jadwal</button> 
+                                    <button type="button" id="btnHapusSemuaJadwal" class="btn btn-danger">Hapus Semua Jadwal</button> 
+                                    <!-- Start Modal Export Import Excel -->
+                                    <div class="modal fade" id="modalImportExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <form id="formImportExoport" action="{{ route('importjadwal') }}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Import Excel</h5>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group mb-4">
+                                                            <div class="custom-file text-left w-75">
+                                                                <input type="file" name="file" class="custom-file-input" id="inputFile">
+                                                                <label class="custom-file-label" for="inputFile" id="labelInputFile">Choose file</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button id="btnImportJadwal" class="btn btn-primary text-left">Import</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- End Modal Export Import Excel -->
+                                    @endif
+                                    <input type="hidden" name="userId" id="userId" value="{{ Auth::user()->name }}">
+                                    <input type="hidden" name="userRole" id="userRole" value="{{ Auth::user()->role }}">
+                                </div>
                             </p>
                             <div class="row mt-3">
                                 <div class="col-sm-12">
@@ -122,7 +154,7 @@
                 <div class="modal-content">
                     <span class="close btnModalClose">&times;</span>
                     <!-- Modal content -->
-                    <h2 class="text-center mb-3 mt-4" id="titleModal"></h2>
+                    <h2 class="text-center mb-3 mt-4" id="titleModal">Pilih Rerkomendasi Jadwal</h2>
                     <div id="containerCardRekomendasi" class="containerCardRekomendasi">
                     </div>
                     <div class="modal-footer">
@@ -142,10 +174,13 @@
 @endsection
 
 @section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script>
 $(document).ready( function () {
 
     var tmpDosen = $('#dosen').val();
+    var userId = $('#userId').val();
     var userRole = $('#userRole').val();
     var dosen = (userRole == 3) ? tmpDosen : '-';
     var type = '';
@@ -168,12 +203,12 @@ $(document).ready( function () {
         let kodeKelas = rowData[6].textContent;
         let kodeDosen = rowData[7].textContent;
         let namaDosen = rowData[8].textContent;
-        let flag = rowData[11].childNodes[2].getAttribute('class');
+        let flag = rowData[11].childNodes[1].getAttribute('class');
 
         // cek tanggal merah
         if (flag == 'L') {
             $('#tanggal').text(tanggal);
-            $('detailKetranganTanggal').text();
+            $('#detailKetranganTanggal').text();
             $('#keteranganTanggal').show();
         } else {
             $('#keteranganTanggal').hide();
@@ -213,7 +248,8 @@ $(document).ready( function () {
     });
 
     $(document).on('click', '.open-modal', function() {
-        type = $(this).text();
+        // type = $(this).text();
+        type = 'sementara';
         $('#type').val(type);
         var tmpId = $(this).attr('id');
         listId = tmpId.substring(6);
@@ -273,8 +309,6 @@ $(document).ready( function () {
         });
 
         // Title Modal
-        var elementText = $(this).text();
-        $('#titleModal').html("Perubahan " + elementText );
         $('#modalRekomendasi').show();
     });
 
@@ -357,7 +391,6 @@ $(document).ready( function () {
                 $('#dataTable').DataTable({
                     "data": data.jadwal,
                     columnDefs: [
-                        { width: '240px', targets: 11 }, // 0 is first column
                         { width: '20px', targets: [0,4] }, // 0 is first column
                         { width: '50px', targets: [1,2,7] },
                         { width: '120px', targets: [5,6,8] },
@@ -397,15 +430,15 @@ $(document).ready( function () {
                         "data": "dosen"
                     },
                     {
-                        "data": "ket_jadwal", "width" : "40px", 
+                        "data": "ket_jadwal", "width" : "50px", 
                         "render": function (data) {
                             return '<button type="button" id="btnDetail' + i + '|' + data + '" class="btn btn-info m-1 btnDetail" data-toggle="modal" data-target="#modalDetail">Detail</button>'
                         }
                     },
                     {
-                        "data": null, "width" : "240px", 
+                        "data": null, "width" : "50px", 
                         "render": function (data, type, row) {
-                            return '<button type="button" id="btnSem' + data.concat_kode_jam + '" class="btn btn-primary m-1 open-modal btnSementara" data-toggle="modal" data-target="#modalRekomendasi">Sementara</button><button type="button" id="btnPer' + data.concat_kode_jam + '" class="btn btn-warning m-1 open-modal btnPermanen" data-toggle="modal" data-target="#modalRekomendasi">Permanen</button><input type="hidden" class="' + data.flag + '">'
+                            return '<button type="button" id="btnSem' + data.concat_kode_jam + '" class="btn btn-primary m-1 open-modal btnSementara" data-toggle="modal" data-target="#modalRekomendasi">Pindah</button><input type="hidden" class="' + data.flag + '">'
                         }
                     }
                 ],
@@ -421,7 +454,6 @@ $(document).ready( function () {
 
     // Hapus data global
     function removeModalData() {
-        $('#titleModal').html("");
         $('#containerCardRekomendasi').empty();
         type = '';
         listIdAwal = '';
@@ -454,6 +486,62 @@ $(document).ready( function () {
         $('#loading').css("display", "none");
         $('#content').css("display", "block");
     }
+
+
+    // START EXPORT, IMPORT, DELETE
+    $('#closeAlert').on('click', function() {
+        $('#alertFlash').hide();
+    });
+
+    $('#inputFile').change(function() {
+        // File input has changed
+        var fileName = $(this).val().split('\\').pop(); // Get the filename
+        $('#labelInputFile').text(fileName);
+    });
+
+    $('#btnImportJadwal').on('click', function(event) {
+        event.preventDefault();
+        var inputFile = $('#inputFile')[0];
+        if (inputFile.files.length === 0) {
+            alertify.alert("Pemberitahuan","File jadwal kosong! <br>Mohon uhnggah jadwal dalam bentuk file Excel.", function(){
+            });
+        } else {
+            $('#formImportExoport').submit();
+        }
+    });
+
+    // DELETE
+    $('#btnHapusSemuaJadwal').on('click', function(event) {
+        event.preventDefault();
+        var angkaPertama = Math.floor(Math.random() * 11);
+        var angkaKedua = Math.floor(Math.random() * 11);
+        var total = angkaPertama + angkaKedua;
+        var isTrue = 'Y';
+        console.log(total);
+        alertify.prompt( 'Hapus Semua Jadwal?', 'Hitung penjumlahan dari ' + angkaPertama + ' + ' + angkaKedua + ' = ' , ''
+            , function(evt, value) { 
+                if (value == total) {
+                    var encodeDataDosen = $.param({ hapus_jadwal: isTrue, user_id: userId });
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/jadwal/hapus',
+                        data: encodeDataDosen,
+                        beforeSend: function() {
+                        },
+                        success: function(data) {
+                            if (data.status == '200') {
+                                alertify.success('Semua Jadwal Berhasil Dihapus');
+                            }
+                            alertify.error('Hapus Jadwal Gagal');
+                        }
+                    });
+                } else {
+                    alertify.error('Penjumlahan Anda Salah');
+                }
+            }
+            , function() { alertify.error('Batal Menghapus Jadwal') });
+    });
+    // END EXPORT, IMPORT, DELETE
 
 });
 </script>

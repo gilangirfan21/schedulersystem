@@ -24,16 +24,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    // Route::post('/dosen','App\Http\Controllers\api\DosenController@show');
+    
     return $request->user();
 });
 
-// Route::post('/dosen','App\Http\Controllers\api\DosenController@show');
 Route::post('/dosen', [DosenController::class, 'show']);
 Route::post('/lokasi', [LokasiController::class, 'show']);
 Route::post('/gedung', [GedungController::class, 'show']);
 Route::post('/lantai', [LantaiController::class, 'show']);
 Route::post('/ruangan', [RuanganController::class, 'show']);
 Route::post('/jadwal', [JadwalController::class, 'show']);
+Route::post('/jadwal/hapus', [JadwalController::class, 'hapus']);
 Route::put('/jadwal', [JadwalController::class, 'update']);
 Route::post('/jadwalavailable', [JadwalAvailableController::class, 'show']);
 Route::post('/jadwalrekomendasi', [JadwalRekomendasiController::class, 'show']);
+

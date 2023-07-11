@@ -11,46 +11,6 @@
     <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
             data-accordion="false">
-            {{-- <li class="nav-item">
-                <a href="{{ route('home') }}" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
-                    <p>
-                        {{ __('Dashboard') }}
-                    </p>
-                </a>
-            </li> --}}
-            
-
-            {{-- <li class="nav-item">
-                <a href="{{ route('about') }}" class="nav-link">
-                    <i class="nav-icon far fa-address-card"></i>
-                    <p>
-                        {{ __('About us') }}
-                    </p>
-                </a>
-            </li> --}}
-
-            {{-- <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-circle nav-icon"></i>
-                    <p>
-                        Menu
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview" style="display: none;">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <p>
-                            <i class="far fa-circle nav-icon"></i>
-                            Jadwal
-                        </p>
-                        </a>
-                    </li>
-                </ul>
-            </li> --}}
-
-            {{-- START SIDE NAVBAR CUSTOM--}}
             <li class="nav-item">
                 <a href="{{ route('home') }}" class="nav-link">
                     <i class="nav-icon fa fa-calendar" aria-hidden="true"></i>
@@ -61,17 +21,6 @@
             </li>
 
             @if( in_array(Auth::user()->role, [1,2]))
-
-            <li class="nav-item">
-                
-                <a href="{{ route('tambahjadwal') }}" class="nav-link">
-                    <i class="nav-icon fa fa-calendar-plus"></i>
-                    <p>
-                        MENU JADWAL
-                    </p>
-                </a>
-            </li>
-
             <li class="nav-item">
                 <a href="{{ route('daftar') }}" class="nav-link">
                     <i class="nav-icon fa fa-user-plus" aria-hidden="true"></i>
@@ -80,8 +29,6 @@
                     </p>
                 </a>
             </li>
-
-            
             <li class="nav-item">
                 
                 <a href="{{ route('users.index') }}" class="nav-link">
@@ -93,7 +40,6 @@
             </li>
             @endif
 
-            {{-- END SIDEBAR CUSTOM --}}
         </ul>
     </nav>
     <!-- /.sidebar-menu -->

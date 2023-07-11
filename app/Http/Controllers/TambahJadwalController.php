@@ -7,6 +7,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ExportJadwal;
 use App\Imports\ImportJadwal;
 use App\Models\Jadwal;
+use Illuminate\Support\Facades\Auth;
 
 class TambahJadwalController extends Controller
 {
@@ -21,10 +22,7 @@ class TambahJadwalController extends Controller
     }
 
     public function index() {
-        // $jadwal = Jadwal::all();
-        $jadwal = Jadwal::limit(10)
-                ->get();
-        return view('tambahjadwal', ['jadwal' => $jadwal]);
+        // code here
     }
 
     public function exportjadwal(Request $request) {

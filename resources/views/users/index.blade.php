@@ -38,10 +38,11 @@
                                         <td>{{ $user->nama }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>
-                                            <form action="{{ route('data.edit', $user->id) }}" method="POST">
+                                            {{-- <form action="{{ route('data.edit', $user->id) }}" method="POST">
                                                 @csrf
                                                 <button type="submit" class="btn btn-secondary">Edit</button>
-                                            </form>    
+                                            </form>     --}}
+                                            <button class="btn btn-primary">Reset Paswword</button>
                                         </td>
                                     </tr>
                                 @endforeach

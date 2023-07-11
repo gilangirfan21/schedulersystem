@@ -20,10 +20,10 @@ class ImportJadwal implements ToModel, WithHeadingRow
             'kode_kelas' => $row['kode_kelas'],
             'hari' => $row['hari'],
             'tanggal' => $row['tanggal'],
-            'kode_matkul' => $row['kode_matkul'],
             'pertemuan' => $row['pertemuan'],
-            'kode_ruangan' => $row['kode_ruangan'],
+            'kode_matkul' => $row['kode_matkul'],
             'kode_jam' => $row['kode_jam'],
+            'kode_ruangan' => $row['kode_ruangan'],
             'kode_dosen' => $row['kode_dosen']
         ]);
     }

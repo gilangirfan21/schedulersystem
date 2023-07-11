@@ -16,9 +16,8 @@
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
-
             {{-- START LOADING --}}
-            <div id="loading" class="row">
+            <div id="loading" class="row" style="block">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body text-center box-spinner">
@@ -30,8 +29,7 @@
                 </div>
             </div>
             {{-- END LOADING --}}
-
-            <div id="content" class="row hide">
+            <div id="content" class="row hide" style="display: none">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
@@ -96,68 +94,49 @@
                                                 <label for="" class="col-sm-1 col-form-label text-center">sd</label>
                                                 <input type="date" data-date="" data-date-format="DD MMMM YYYY" value="2030-12-31" name="endDate" id="endDate" data-provide="datepicker" class="col-sm-5 datepicker form-control">
                                             </div>
-                                            
-                                            {{-- <div class="input-group row mb-2">
-                                                <label class="col-sm-2 col-form-label">Waktu</label> 
-                                                <select name="timeStart" id="timeStart" class="custom-select select2" aria-label="Default select example">
-                                                    <option selected value="-">Pilih Semua</option>
-                                                    <option value="1">1 | 07:30-08:30</option>
-                                                    <option value="2">2 | 08:30-09:30</option>
-                                                    <option value="3">3 | 09:30-10:30</option>
-                                                    <option value="4">4 | 10:30-11:30</option>
-                                                    <option value="5">5 | 11:30-12:30</option>
-                                                    <option value="6">6 | 12:30-13:30</option>
-                                                    <option value="7">7 | 13:30-14:30</option>
-                                                    <option value="8">8 | 14:30-15:30</option>
-                                                    <option value="9">9 | 15:30-16:30</option>
-                                                    <option value="10">10 | 16:30-17:30</option>
-                                                </select>
-                                                <label class="col-sm-1 col-form-label text-center">sd</label>
-                                                <select name="timeEnd" id="timeEnd" class="custom-select select2" aria-label="Default select example">
-                                                    <option selected value="-">Pilih Semua</option>
-                                                    <option value="1">1 | 07:30-08:30</option>
-                                                    <option value="2">2 | 08:30-09:30</option>
-                                                    <option value="3">3 | 09:30-10:30</option>
-                                                    <option value="4">4 | 10:30-11:30</option>
-                                                    <option value="5">5 | 11:30-12:30</option>
-                                                    <option value="6">6 | 12:30-13:30</option>
-                                                    <option value="7">7 | 13:30-14:30</option>
-                                                    <option value="8">8 | 14:30-15:30</option>
-                                                    <option value="9">9 | 15:30-16:30</option>
-                                                    <option value="10">10 | 16:30-17:30</option>
-                                                </select>
-                                            </div> --}}
                                             <div class="text-right mr-2">
                                                 <button id="submitBtn" type="submit" class="btn btn-primary btn-custom-submit">Submit</button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
-                                {{-- <div class="row justify-content-end mt-3">
-                                    <div class="col-lg-3">
-                                        <form action="{{ route('home.search') }}" method="GET">
-                                            <div class="input-group mb-3">
-                                                <label class="form-label" for="search"></label>
-                                                <input type="search" name="search" id="search" class="form-control"  placeholder="Hari / Kelas / Mata Kuliah" aria-label="Hari /Kelas / Mata Kuliah" aria-describedby="basic-addon2">
-                                                <div class="input-group-append">
-                                                    <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
-                                                </div>
-                                            </div>
-                                        </form>
+                            </p>
+                                <div class="row my-3">
+                                    <div class="col-sm 12">
+                                        <div class="table-responsive">
+                                            <h5 id="" class="text-center">DATA JADWAL AWAL</h5>
+                                            <table id="tableDataAwal" class="table w100p">
+                                                <thead>
+                                                    <th>No</th>
+                                                    <th>Hari</th>
+                                                    <th>Tanggal</th>
+                                                    <th>Mata Kuliah</th>
+                                                    <th>Jam</th>
+                                                    <th>Kode Ruangan</th>
+                                                    <th>Kode Kelas</th>
+                                                    <th>Pertemuan</th>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div> --}}
-                                </p>
-                                <div class="row mt-3">
+                                </div>
+                                <div class="row my-3">
                                     <div class="col-sm-12">
                                         <div class="table-responsive">
+                                            <h5 id="" class="text-center">DATA JADWAL YANG TERSEDIA</h5>
                                             <table id="dataTable" class="table w100p">
                                                 <thead>
                                                     <tr>
                                                         <th>No</th>
                                                         <th>Hari</th>
                                                         <th>Tanggal</th>
+                                                        <th>Mata Kuliah</th>
+                                                        <th>Jam</th>
                                                         <th>Kode Ruangan</th>
-                                                        <th>kode Jam</th>
+                                                        <th>Pertemuan</th>
                                                         <th>Pindah Jadwal</th>
                                                     </tr>
                                                 </thead>
@@ -173,36 +152,6 @@
                 </div>
             </div>
             <!-- /.row -->
-            {{-- Modal --}}
-            {{-- <div id="myModal" class="modal">
-                <div class="modal-content">
-                    <span class="close btnModalClose">&times;</span> --}}
-                    <!-- Modal content -->
-                    {{-- <h2 class="text-center mb-2" id="titleModal"></h2>
-                    <div class="input-group row mb-2">
-                        <label for="selPindah" class="col-sm-2 col-form-label">Pindah Jam dari</label>
-                        <select name="selPindah" id="selPindah" class="custom-select select2" aria-label="Default select example">
-                            <option selected value="-">Pilih Semua</option>
-                        </select>
-                    </div>
-
-                    <div class="containerCardListJam">
-                        
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btnModalClose" data-dismiss="modal">Close</button>
-                        <form action="{{ route('check') }}" method="get">
-                            <input type="hidden">
-                            <input type="hidden">
-                            <input type="hidden">
-                            <button type="submit" class="btn btn-success">Pilih Manual</button>
-                        </form> --}}
-                        {{-- <a href="{{ route('check') }}" class="btn btn-success">Pilih Manual</a> --}}
-                    {{-- </div>
-                </div>
-            </div> --}}
-            {{-- End Modal --}}
             <div id="hiddenData">
                 <input type="hidden" name="type" id="type" value="{{ $perubahanData['type'] }}">
                 <input type="hidden" name="count_time" id="count_time" value="{{ $perubahanData['count_time'] }}">
@@ -248,40 +197,14 @@ $( document ).ready(function() {
         console.log('End Date:', endDate);
     });
 
-    /** START BLOCK VALIDATE WAKTU **/ 
-    // $('#timeStart').change(function() {
-    // startTime = parseInt($(this).val());
-    // // Remove options in timeEnd select that are less than the selected start time
-    // $('#timeEnd option').each(function() {
-    //     endTime = parseInt($(this).val());
-    //     if (endTime < startTime) {
-    //         $(this).remove();
-    //     }
-    //     });
-    // });
-
-    // $('#timeStart, #timeEnd').change(function() {
-    // startTime = parseInt($('#timeStart').val());
-    // endTime = parseInt($('#timeEnd').val());
-    // if (startTime > endTime) {
-    //     alertify.alert("Perhatian","Invalid time range. Start time cannot be greater than end time.");
-    //     // Reset the values to the default option
-    //     $('#timeStart').val('-');
-    //     $('#timeEnd').val('-');
-    //     }
-    // });
-    /** END BLOCK VALIDATE WAKTU **/ 
-
-
-
     function load() {
         if (userRole != 1 && userRole != 2) {
-            detailDosen(dosen); 
+            detailDosen(dosen);
         }
+        loadJadwalAWal(dosen, listId);
         loadGedung(lokasi);
         loadRuangan(lokasi, gedung, lantai);
-        $('#loading').hide();
-        $('#content').show();
+        loadingSelesai();
     }
     // INIT LOAD ALL DATA
     load();
@@ -401,13 +324,8 @@ $( document ).ready(function() {
             method: 'POST',
             data: data,
             beforeSend: function () {
-                // $('#content').hide();
-                // $('#loading').show();
-                // console.log("before gedung");
             },
             success: function(data) {
-                // console.log("after gedung");
-                // console.log(data);
                 var selGedung = $('#selGedung');
                 selGedung.empty();
                 var defaultOption = $('<option></option>').text('Pilih Semua').val('-');
@@ -432,13 +350,8 @@ $( document ).ready(function() {
             method: 'POST',
             data: data,
             beforeSend: function () {
-                // $('#content').hide();
-                // $('#loading').show();
-                // console.log("before lantai");
             },
             success: function(data) {
-                // console.log("after lantai");
-                // console.log(data);
                 var selLantai = $('#selLantai');
                 selLantai.empty();
                 var defaultOption = $('<option></option>').text('Pilih Semua').val('-');
@@ -463,13 +376,8 @@ $( document ).ready(function() {
             method: 'POST',
             data: data,
             beforeSend: function () {
-                // $('#content').hide();
-                // $('#loading').show();
-                // console.log("before ruangan");
             },
             success: function(data) {
-                // console.log("after ruangan");
-                // console.log(data);
                 var selRuangan = $('#selRuangan');
                 selRuangan.empty();
                 var defaultOption = $('<option></option>').text('Pilih Semua').val('-');
@@ -502,6 +410,66 @@ $( document ).ready(function() {
         });
     }
 
+    // LOAD DATA JADWAL FROM API
+    function loadJadwalAWal(dosen, list_id) {
+        var dataParam = { kode_dosen: dosen, list_id: list_id};
+        var data = $.param(dataParam);
+        $.ajax({
+            type: 'POST',
+            url: '/api/jadwal',
+            data: data,
+            beforeSend: function() {
+                loadingProses();
+            },
+            success: function(data) {
+                loadingSelesai();
+                // $('#tableDataAwal').DataTable().destroy();
+                var i = 1;
+                $('#tableDataAwal').DataTable({
+                    searching: false,
+                    paging: false,
+                    language: {
+                    info: ""
+                    },
+                    "data": data.jadwal,
+                    "columns": [{
+                        "data": "no",
+                        "render": function(data, type, row, meta) {
+                            return i++;
+                        }
+                    },
+                    {
+                        "data": "hari"
+                    },
+                    {
+                        "data": "tanggal"
+                    },
+                    {
+                        "data": "matkul"
+                    },
+                    {
+                        "data": "concat_jam"
+                    },
+                    {
+                        "data": "kode_ruangan"
+                    },
+                    {
+                        "data": "kode_kelas"
+                    },
+                    {
+                        "data": "pertemuan"
+                    },
+                ],
+                "rowCallback": function(row, data, index) {
+                    if (index === 0) {
+                        $(row).addClass('bg-color-lightgray');
+                    }
+                }
+                });
+            }
+        });
+    }
+
     // LOAD DATA JADWAL AVAILABLE FROM API
     function loadJadwalAvailable(dataParam) {
         var data = $.param(dataParam);
@@ -510,13 +478,15 @@ $( document ).ready(function() {
             url: '/api/jadwalavailable',
             data: data,
             beforeSend: function() {
+                loadingProses();
                 console.log("berfore get jadwal available");
             },
             success: function(data) {
-            $('#dataTable').DataTable().destroy();
-            console.log("after jawal available");
-            console.log(data);
-            var i = 1;
+                loadingSelesai();
+                $('#dataTable').DataTable().destroy();
+                console.log("after jawal available");
+                console.log(data);
+                var i = 1;
                 $('#dataTable').DataTable({
                     "data": data.jadwalavailable,
                     "columns": [{
@@ -532,10 +502,16 @@ $( document ).ready(function() {
                         "data": "tanggal"
                     },
                     {
-                        "data": "kode_ruangan"
+                        "data": "kode_matkul"
                     },
                     {
                         "data": "concat_jam"
+                    },
+                    {
+                        "data": "kode_ruangan"
+                    },
+                    {
+                        "data": "pertemuan"
                     },
                     {
                         "data": "concat_kode_jam", "width" : "50px", 
@@ -567,9 +543,20 @@ $( document ).ready(function() {
         };
         console.log(dataParam);
         loadJadwalAvailable(dataParam);
-        // console.log('lokasi ' + lokasi + ' gedung ' + gedung + ' lantai ' + lantai);
-        // console.log('tanggal mulai ' + startDate + ' tanggal selesai ' + endDate);
+        console.log('lokasi ' + lokasi + ' gedung ' + gedung + ' lantai ' + lantai);
+        console.log('tanggal mulai ' + startDate + ' tanggal selesai ' + endDate);
     });
+
+
+    // Loading Proses
+    function loadingProses() {
+        $('#content').css("display", "none");
+        $('#loading').css("display", "block");
+    }
+    function loadingSelesai() {
+        $('#loading').css("display", "none");
+        $('#content').css("display", "block");
+    }
 
 });
 

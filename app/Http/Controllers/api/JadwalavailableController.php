@@ -9,6 +9,8 @@ use App\Models\Jadwal;
 use App\Models\TanggalMerah;
 use App\Models\Tmpjadwal;
 
+use function Ramsey\Uuid\v1;
+
 class JadwalAvailableController extends Controller
 {
     /**
@@ -50,6 +52,21 @@ class JadwalAvailableController extends Controller
         foreach ($queryTanggalMerah as $tanggal) {
             array_push($listTanggalMerah, $tanggal['tanggal_merah']);
         }
+        
+        // START CHECK LOKASI, GEDUNG, LANTAI, RUANGAN
+        if (isset($request->kode_lokasi)) {
+            $kodeLokasi = $request->kode_lokasi;
+        }
+        if (isset($request->kode_gedung)) {
+            $kodeGedung = $request->kode_gedung;
+        }
+        if (isset($request->kode_lantai)) {
+            $kodeLantai = $request->kode_lantai;
+        }
+        if (isset($request->kode_gedung)) {
+            $kodeRuangan = $request->kode_ruangan;
+        }
+        // END CHECK LOKASI, GEDUNG, LANTAI, RUANGAN
 
         
         if (strtoupper($request->type) == 'SEMENTARA') {
@@ -154,6 +171,13 @@ class JadwalAvailableController extends Controller
                             array_push($resultArrJadwalTerdekat, $jadwal);
                         }
                     }
+                $kodeLokasiAwal = substr($dataOri['kode_ruangan'], 0, 1);
+                $kodeGedungAwal = substr($dataOri['kode_ruangan'], 1, 1);
+                $kodeLantaiAwal = substr($dataOri['kode_ruangan'], 2, 1);
+                $kodeRuanganAwal = substr($dataOri['kode_ruangan'], 3, 1);
+                if ($request->kode_lokasi != $kodeLokasiAwal || $request->kode_gedung != $kodeGedungAwal || $request->kode_lantai != $kodeLantaiAwal || $request->kode_ruangan != $kodeRuanganAwal) {
+                    $resultArrJadwalTerdekat = [];
+                }
                 // dd($resultArrJadwalTerdekat);
                 //** END SELECT JADWDAL TERDEKAT */
 
@@ -257,7 +281,7 @@ class JadwalAvailableController extends Controller
                 // Remove kode_jam not match array with count_time, sunday, and public holidays
                 foreach ($arrJadwal as $jadwal) {
                     $cekCountArr = count($jadwal['kode_jam']);
-                    if ($cekCountArr == $maxCount && (!in_array($jadwal['tanggal'], $listTanggalMerah)) && strtoupper($jadwal['hari']) != 'MINGGU') {
+                    if ($cekCountArr == $maxCount && (!in_array($jadwal['tanggal'], $listTanggalMerah)) && strtoupper($jadwal['hari']) != 'MINGGU' && $jadwal['concat_kode_jam'] != $listIdAwal) {
                         array_push($resultArrJadwal, $jadwal);
                     }
                 }
@@ -286,120 +310,7 @@ class JadwalAvailableController extends Controller
             }
 
         } elseif (strtoupper($request->type) == 'PERMANEN') {
-            //selet all data
-            // try {
-            //     if (isset($request->kode_ruangan) && $request->kode_ruangan != '-') {
-            //         $jadwalavailable = Jadwal::leftJoin('ref_dosen', 'jadwal.kode_dosen', '=', 'ref_dosen.kode')
-            //         ->leftJoin('ref_matkul', 'jadwal.kode_matkul', '=', 'ref_matkul.kode')
-            //         ->leftJoin('ref_ruangan', 'jadwal.kode_ruangan', '=', 'ref_ruangan.kode')
-            //         ->whereNull('jadwal.kode_dosen')
-            //         ->where('jadwal.kode_ruangan', '=', $request->kode_ruangan)
-            //         ->whereBetween('jadwal.tanggal', [$request->start_date, $request->end_date])
-            //         ->get();
-            //         dd($jadwalavailable);
-            //     } else {
-            //         if (isset($request->kode_lokasi) && $request->kode_lokasi != '-') {
-            //             if (isset($request->kode_gedung) && $request->kode_gedung != '-') {
-            //                 if (isset($request->kode_lantai) && $request->kode_lantai != '-') {
-            //                     $jadwalavailable = Jadwal::leftJoin('ref_dosen', 'jadwal.kode_dosen', '=', 'ref_dosen.kode')
-            //                             ->leftJoin('ref_matkul', 'jadwal.kode_matkul', '=', 'ref_matkul.kode')
-            //                             ->leftJoin('ref_ruangan', 'jadwal.kode_ruangan', '=', 'ref_ruangan.kode')
-            //                             ->whereNull('jadwal.kode_dosen')
-            //                             ->whereNotNull('jadwal.kode_ruangan')
-            //                             ->where('ref_ruangan.lokasi', '=', $request->kode_lokasi)
-            //                             ->where('ref_ruangan.gedung', '=', $request->kode_gedung)
-            //                             ->where('ref_ruangan.lantai', '=', $request->kode_lantai)
-            //                             ->whereBetween('jadwal.tanggal', [$request->start_date, $request->end_date])
-            //                             ->get();
-            //                 } else {
-            //                     $jadwalavailable = Jadwal::leftJoin('ref_dosen', 'jadwal.kode_dosen', '=', 'ref_dosen.kode')
-            //                             ->leftJoin('ref_matkul', 'jadwal.kode_matkul', '=', 'ref_matkul.kode')
-            //                             ->leftJoin('ref_ruangan', 'jadwal.kode_ruangan', '=', 'ref_ruangan.kode')
-            //                             ->whereNull('jadwal.kode_dosen')
-            //                             ->whereNotNull('jadwal.kode_ruangan')
-            //                             ->where('ref_ruangan.lokasi', '=', $request->kode_lokasi)
-            //                             ->where('ref_ruangan.gedung', '=', $request->kode_gedung)
-            //                             ->whereBetween('jadwal.tanggal', [$request->start_date, $request->end_date])
-            //                             ->get();
-            //                 }
-            //             } else {
-            //                 $jadwalavailable = Jadwal::leftJoin('ref_dosen', 'jadwal.kode_dosen', '=', 'ref_dosen.kode')
-            //                         ->leftJoin('ref_matkul', 'jadwal.kode_matkul', '=', 'ref_matkul.kode')
-            //                         ->leftJoin('ref_ruangan', 'jadwal.kode_ruangan', '=', 'ref_ruangan.kode')
-            //                         ->whereNull('jadwal.kode_dosen')
-            //                         ->whereNotNull('jadwal.kode_ruangan')
-            //                         ->where('ref_ruangan.lokasi', '=', $request->kode_lokasi)
-            //                         ->whereBetween('jadwal.tanggal', [$request->start_date, $request->end_date])
-            //                         ->get();
-            //             }
-            //         } else {
-            //             $jadwalavailable = Jadwal::leftJoin('ref_dosen', 'jadwal.kode_dosen', '=', 'ref_dosen.kode')
-            //                     ->leftJoin('ref_matkul', 'jadwal.kode_matkul', '=', 'ref_matkul.kode')
-            //                     ->leftJoin('ref_ruangan', 'jadwal.kode_ruangan', '=', 'ref_ruangan.kode')
-            //                     ->whereNull('jadwal.kode_dosen')
-            //                     ->whereNotNull('jadwal.kode_ruangan')
-            //                     ->whereBetween('jadwal.tanggal', [$request->start_date, $request->end_date])
-            //                     ->get();
-            //         }
-            //     }
-            
-            //     $arrJadwal = [];
-            //     $length = count($jadwalavailable);
-            //     $i = 0;
-            //     for ($j = 0; $j < $length; $j++) {
-            //         $arrJadwal[$i]['kode_kelas'] = $jadwalavailable[$j]['kode_kelas'];
-            //         $arrJadwal[$i]['kode_dosen'] = $jadwalavailable[$j]['kode_dosen'];
-            //         $arrJadwal[$i]['dosen'] = $jadwalavailable[$j]['dosen'];
-            //         $arrJadwal[$i]['kode_matkul'] = $jadwalavailable[$j]['kode_matkul'];
-            //         $arrJadwal[$i]['matkul'] = $jadwalavailable[$j]['matkul'];
-            //         $arrJadwal[$i]['pertemuan'] = $jadwalavailable[$j]['pertemuan'];
-            //         $arrJadwal[$i]['kode_ruangan'] = $jadwalavailable[$j]['kode_ruangan'];
-            //         $arrJadwal[$i]['hari'] = $jadwalavailable[$j]['hari'];
-            //         $arrJadwal[$i]['tanggal'] = $jadwalavailable[$j]['tanggal'];
-            //         $arrJadwal[$i]['concat_kode_jam'] = $jadwalavailable[$j]['id'];
-            //         $arrJadwal[$i]['concat_jam'] = $jadwalavailable[$j]['kode_jam'];
-            //         $arrJadwal[$i]['kode_jam'] = [$jadwalavailable[$j]['id'] => $jadwalavailable[$j]['kode_jam']];
-            //         $arrJadwal[$i]['ket_jadwal'] = $jadwalavailable[$j]['ket_jadwal'];
-        
-            //         $tmp = $j + 1; // Start the inner loop from the next index
-            //         $setCount = 1;
-            //         while ( $setCount < $maxCount && $tmp < $length && $arrJadwal[$i]['kode_ruangan'] == $jadwalavailable[$tmp]['kode_ruangan'] && $arrJadwal[$i]['tanggal'] == $jadwalavailable[$tmp]['tanggal']) {
-            //             // Validate next kode_jam must increment
-            //             $cekNextJam = $jadwalavailable[$j]['kode_jam'] + $setCount;
-            //             if ($cekNextJam == $jadwalavailable[$tmp]['kode_jam']) {
-            //                 $arrJadwal[$i]['concat_kode_jam'] .= '-' . $jadwalavailable[$tmp]['id'];
-            //                 $arrJadwal[$i]['concat_jam'] .= '/' . $jadwalavailable[$tmp]['kode_jam'];
-            //                 $arrJadwal[$i]['kode_jam'][$jadwalavailable[$tmp]['id']] = $jadwalavailable[$tmp]['kode_jam'];
-            //                 $tmp++;
-            //                 $setCount++;
-            //             } else {
-            //                 break;
-            //             }
-            //         }
-            //         // $j = $tmp - 1;
-            //         $i++;
-            //     }
-        
-            //     $resultArrJadwal = [];
-            //     // Remove kode_jam not match array with count_time, sunday, and public holidays
-            //     foreach ($arrJadwal as $jadwal) {
-            //         $cekCountArr = count($jadwal['kode_jam']);
-            //         if ($cekCountArr == $maxCount && (!in_array($jadwal['tanggal'], $listTanggalMerah)) && strtoupper($jadwal['hari']) != 'MINGGU') {
-            //             array_push($resultArrJadwal, $jadwal);
-            //         }
-            //     }
-        
-            //     return response()->json([
-            //         'status' => '200',
-            //         'jadwalavailable' => $resultArrJadwal
-            //     ]);
-
-            // } catch (QueryException $e) {
-            //     $error = [
-            //         'error' => $e->getMessage()
-            //     ];
-            //     return response()->json($error);
-            // }
+            // code here
         } else {
             $error = [
                 'error' => 'Type is required!'

@@ -35,6 +35,11 @@ class Jadwal extends Model
         return $this->BelongsTo(Ruangan::class, 'kode_ruangan', 'kode');
     }
 
+    public function tb_kelas() : BelongsTo
+    {
+        return $this->BelongsTo(Ruangan::class, 'kode_kelas', 'kode');
+    }
+
     protected $table = "jadwal";
 
     protected $fillable = ['kode_kelas', 'hari', 'tanggal', 'kode_matkul', 'pertemuan', 'kode_ruangan', 'kode_jam', 'kode_dosen'];

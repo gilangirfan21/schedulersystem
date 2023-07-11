@@ -95,6 +95,10 @@
     color: salmon;
 }
 
+.bg-color-lightgray {
+    background-color: lightslategray !important;
+}
+
 .w100p {
     width: 100% !important;
 }

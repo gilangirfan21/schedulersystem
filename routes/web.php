@@ -48,8 +48,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [SchedulerController::class, 'index'])->name('home');
     Route::get('/home/search', [SchedulerController::class, 'index'])->name('home.search');
     
+    
     // Export Schedule (TAMBAH JADWAL)
-    Route::get('/tambahjadwal', [TambahjadwalController::class, 'index'])->name('tambahjadwal');
     Route::get('/exportjadwal', [TambahJadwalController::class, 'exportjadwal'])->name('exportjadwal');
     Route::post('/importjadwal', [TambahJadwalController::class, 'importjadwal'])->name('importjadwal');
     
@@ -61,6 +61,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/check',[SchedulerController::class, 'check'])->name('check');
     
 });
+
+Route::middleware(['auth', 'roles:role2,role3'])->group(function () {
+    // Routes that require 'role2' or 'role3'
+});
+
 
 // Page for Mahasiswa
 Route::get('/mahasiswa',[MahasiswaController::class, 'index'])->name('mahasiswa');
