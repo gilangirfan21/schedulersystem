@@ -7,7 +7,7 @@
             <div class="row mb-2">
                 <div id="test" class="col-sm-6">
                     {{-- <h1 class="m-0">{{ __('Dashboard') }}</h1> --}}
-                    <h1 class="ml-2">Halaman Jadwal Mengajar</h1>
+                    <h1 class="ml-2">Halaman Jadwal Mengajar di Tanggal Merah</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -62,42 +62,6 @@
                                 </div>
                             </form>
                             @endif
-                            @if(in_array(Auth::user()->role, [1,2]))
-                            <div class="mb-3 text-center">
-                                <div class="d-flex justify-content-center">
-                                    <a id="btnExportJadwal" class="btn btn-success text-right mx-1" href="{{ route('exportjadwal') }}">Export Jadwal</a>
-                                    <button type="button" class="btn btn-primary mx-1" data-toggle="modal" data-target="#modalImportExcel">Import Jadwal</button> 
-                                    <!-- Delete button -->
-                                    <a type="button" href="/jadwal/hapus" id="btnHapusSemuaJadwal" class="btn btn-danger">Hapus Semua Jadwal</a> 
-                                </div>
-                                <!-- Start Modal Export Import Excel -->
-                                <div class="modal fade" id="modalImportExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <form id="formImportExoport" action="{{ route('importjadwal') }}" method="POST" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Import Excel</h5>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="form-group mb-4">
-                                                        <div class="custom-file text-left w-75">
-                                                            <input type="file" name="file" class="custom-file-input" id="inputFile">
-                                                            <label class="custom-file-label" for="inputFile" id="labelInputFile">Choose file</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button id="btnImportJadwal" class="btn btn-primary text-left">Import</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <!-- End Modal Export Import Excel -->
-                            @endif
                             <input type="hidden" name="userId" id="userId" value="{{ Auth::user()->name }}">
                             <input type="hidden" name="userRole" id="userRole" value="{{ Auth::user()->role }}">
                             <input type="hidden" name="lastLogin" id="lastLogin" value="{{ Auth::user()->last_login }}">
@@ -105,7 +69,7 @@
                                 <div class="col-sm-12">
                                     <div class="table-responsive">
                                         <table id="dataTable" class="table w100p">
-                                            <thead class="text-center fit-bg-color-primary">
+                                            <thead class="text-center fit-bg-color-secondary">
                                                 <tr>
                                                     <th class="text-center fit-text-color-2">No</th>
                                                     <th class="text-center fit-text-color-2">Hari</th>
@@ -118,7 +82,7 @@
                                                     <th class="text-center fit-text-color-2">Kode Dosen</th>
                                                     <th class="text-center fit-text-color-2">Dosen</th>
                                                     <th class="text-center fit-text-color-2">Detail</th>
-                                                    <th class="text-center fit-text-color-2">Pindah Jadwal</th>
+                                                    <th class="text-center fit-text-color-2">Pilih</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="text-center">
@@ -201,40 +165,12 @@ $(document).ready( function () {
     var type = '';
     var listIdAwal = '';
     var listIdBaru = '';
-    var currentDatetime = new Date();
-
-    function NotifTanggalMerah(dosen) {
-        if(userRole != 1 && userRole != 2) {
-            $.ajax({
-                url: 'api/jadwal/tanggalmerah/popup',
-                method: 'POST',
-                data: $.param({kode_dosen: dosen}),
-                beforeSend: function () {
-                    console.log("before popup");
-                },
-                success: function(data) {
-                    console.log("after popup");
-                    console.log(data.jadwal);
-                    $(document).Toasts('create', {
-                        title: 'Harus diganti jadwal berikut',
-                        body: data.jadwal.tanggalMerah
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.log(error);
-                }
-            });
-    
-        }
-    }
-
     
     function load() {
         if (userRole != 1 && userRole != 2) {
             detailDosen(dosen); 
         }
-        NotifTanggalMerah(dosen);
-        jadwal(dosen);
+        jadwalTanggalMerah(dosen);
     }
     // INIT LOAD ALL DATA
     load();
@@ -384,7 +320,7 @@ $(document).ready( function () {
                     console.log("after update");
                     if (data.status == '200') {
                         alertify.success('Update berhasil');
-                        window.location.href = '/home';
+                        window.location.href = '/menu/jadwaltanggalmerah';
                     }
                 },
                 error: function(xhr, status, error) {
@@ -415,13 +351,13 @@ $(document).ready( function () {
         });
     }
 
-    // LOAD DATA JADWAL FROM API
-    function jadwal(dosen) {
+    // LOAD DATA JADWAL TANGGAL MERAH FROM API
+    function jadwalTanggalMerah(dosen) {
         var dataParam = { kode_dosen: dosen };
         var data = $.param(dataParam);
         $.ajax({
             type: 'POST',
-            url: '/api/jadwal',
+            url: '/api/jadwal/tanggalmerah',
             data: data,
             beforeSend: function() {
                 loadingProses();
@@ -474,27 +410,15 @@ $(document).ready( function () {
                         "data": "dosen"
                     },
                     {
-                        "data": null, "width" : "50px", 
-                        "render": function (data, type, row) {
-                            var dk = data.kode_kelas;
-                            var lastChar = dk.charAt(dk.length - 1);
-                            if (lastChar == 'A' || lastChar == 'B' || lastChar == 'C') {
-                                return '<button type="button" id="btnDetail' + i + '|' + data.ket_jadwal + '" class="btn btn-info m-1 btnDetail btnHide" data-toggle="modal" data-target="#modalDetail">Detail</button>'
-                            } else {
-                                return '<button type="button" id="btnDetail' + i + '|' + data.ket_jadwal + '" class="btn btn-info m-1 btnDetail" data-toggle="modal" data-target="#modalDetail">Detail</button>'
-                            }
+                        "data": "ket_jadwal", "width" : "50px", 
+                        "render": function (data) {
+                            return '<button type="button" id="btnDetail' + i + '|' + data + '" class="btn btn-info m-1 btnDetail" data-toggle="modal" data-target="#modalDetail">Detail</button>'
                         }
                     },
                     {
                         "data": null, "width" : "70px", 
                         "render": function (data, type, row) {
-                            var dk = data.kode_kelas;
-                            var lastChar = dk.charAt(dk.length - 1);
-                            if (lastChar == 'A' || lastChar == 'B' || lastChar == 'C') {
-                            return '<button type="button" id="btnSem' + data.concat_kode_jam + '" class="btn btn-primary m-1 open-modal btnSementara btnHide" data-toggle="modal" data-target="#modalRekomendasi">Pindah</button><input type="hidden" class="' + data.flag + '"><input type="hidden" class="' + data.ket_tanggal_merah + '">'
-                            } else {
-                                return '<button type="button" id="btnSem' + data.concat_kode_jam + '" class="btn btn-primary m-1 open-modal btnSementara" data-toggle="modal" data-target="#modalRekomendasi">Pindah</button><input type="hidden" class="' + data.flag + '"><input type="hidden" class="' + data.ket_tanggal_merah + '">'
-                            }
+                            return '<button type="button" id="btnSem' + data.concat_kode_jam + '" class="btn btn-primary m-1 open-modal btnSementara" data-toggle="modal" data-target="#modalRekomendasi">Pindah</button><input type="hidden" class="' + data.flag + '"><input type="hidden" class="' + data.ket_tanggal_merah + '">'
                         }
                     }
                 ],
@@ -535,6 +459,11 @@ $(document).ready( function () {
         $('.modal').hide();
     });
 
+    $('.btnModalClose').click(function() {
+        removeModalData();
+        $('.modal').hide();
+    });
+
     // Loading Proses
     function loadingProses() {
         $('#content').css("display", "none");
@@ -545,87 +474,10 @@ $(document).ready( function () {
         $('#content').css("display", "block");
     }
 
-
-    // START EXPORT, IMPORT, DELETE
     $('#closeAlert').on('click', function() {
         $('#alertFlash').hide();
     });
 
-    $('#inputFile').change(function() {
-        // File input has changed
-        var fileName = $(this).val().split('\\').pop(); // Get the filename
-        $('#labelInputFile').text(fileName);
-    });
-
-    $('#btnImportJadwal').on('click', function(event) {
-        event.preventDefault();
-        var inputFile = $('#inputFile')[0];
-        if (inputFile.files.length === 0) {
-            alertify.alert("Pemberitahuan","File jadwal kosong! <br>Mohon uhnggah jadwal dalam bentuk file Excel.", function(){
-            });
-        } else {
-            $('#formImportExoport').submit();
-        }
-    });
-
-    // DELETE API
-    // $('#btnHapusSemuaJadwal').on('click', function(event) {
-    //     event.preventDefault();
-    //     var angkaPertama = Math.floor(Math.random() * 11);
-    //     var angkaKedua = Math.floor(Math.random() * 11);
-    //     var total = angkaPertama + angkaKedua;
-    //     var isTrue = 'Y';
-    //     console.log(total);
-    //     alertify.prompt( 'Hapus Semua Jadwal?', 'Hitung penjumlahan dari ' + angkaPertama + ' + ' + angkaKedua + ' = ' , ''
-    //         , function(evt, value) { 
-    //             if (value == total) {
-    //                 var encodeDataDosen = $.param({ hapus_jadwal: isTrue, user_id: userId });
-    //                 $.ajax({
-    //                     type: 'POST',
-    //                     url: '/api/jadwal/hapus',
-    //                     data: encodeDataDosen,
-    //                     beforeSend: function() {
-    //                     },
-    //                     success: function(data) {
-    //                         if (data.status == '200') {
-    //                             alertify.success('Semua Jadwal Berhasil Dihapus');
-    //                             location.reload();
-    //                         } else {
-    //                             alertify.error('Hapus Jadwal Gagal');
-    //                         }
-    //                     }
-
-    //                 });
-    //             } else {
-    //                 alertify.error('Penjumlahan Anda Salah');
-    //             }
-    //         }
-    //         , function() { alertify.error('Batal Menghapus Jadwal') });
-    // });
-
-    // DELETE FORM
-    $('#btnHapusSemuaJadwal').on('click', function(event) {
-        event.preventDefault();
-        var angkaPertama = Math.floor(Math.random() * 11);
-        var angkaKedua = Math.floor(Math.random() * 11);
-        var total = angkaPertama + angkaKedua;
-        
-        alertify.prompt( 'Hapus Semua Jadwal?', 'Hitung penjumlahan dari ' + angkaPertama + ' + ' + angkaKedua + ' = ' , ''
-        , function(evt, value) { 
-            if (value == total) {
-                alertify.success('Semua Jadwal Berhasil Dihapus');
-                // location.reload();
-                // window.location.href = $(this).attr('href');
-                var url = $('#btnHapusSemuaJadwal').attr('href');
-                window.location.href = url;
-                } else {
-                    alertify.error('Penjumlahan Anda Salah');
-                }
-            }
-            , function() { alertify.error('Batal Menghapus Jadwal') 
-        });
-    });
-    // END EXPORT, IMPORT, DELETE
 
 });
 </script>

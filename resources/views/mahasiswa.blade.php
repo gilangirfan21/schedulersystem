@@ -39,19 +39,19 @@
                                     <div class="col-lg-12">
                                         <div class="table-responsive">
                                             <table id="dataTable" class="table w100p">
-                                                <thead>
+                                                <thead class="fit-bg-color-secondary fit-text-color-2">
                                                     <tr>
-                                                        <th>No</th>
-                                                        <th>Hari</th>
-                                                        <th>Tanggal</th>
-                                                        <th>Mata Kuliah</th>
-                                                        <th>Waktu</th>
-                                                        <th>Kode Ruangan</th>
-                                                        <th>Kode Kelas</th>
-                                                        <th>Kode Dosen</th>
-                                                        <th>Dosen</th>
-                                                        <th>Pertemuan</th>
-                                                        <th>Detail</th>
+                                                        <th class="fit-text-color-2">No</th>
+                                                        <th class="fit-text-color-2">Hari</th>
+                                                        <th class="fit-text-color-2">Tanggal</th>
+                                                        <th class="fit-text-color-2">Mata Kuliah</th>
+                                                        <th class="fit-text-color-2">Waktu</th>
+                                                        <th class="fit-text-color-2">Kode Ruangan</th>
+                                                        <th class="fit-text-color-2">Kode Kelas</th>
+                                                        <th class="fit-text-color-2">Kode Dosen</th>
+                                                        <th class="fit-text-color-2">Dosen</th>
+                                                        <th class="fit-text-color-2">Pertemuan</th>
+                                                        <th class="fit-text-color-2">Detail</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -223,7 +223,7 @@ $(document).ready(function () {
                     {
                         "data": "ket_jadwal", "width" : "50px", 
                         "render": function (data) {
-                            return '<button type="button" id="btnDetail' + i + '|' + data + '" class="btn btn-secondary m-1 open-modal btnDetail" data-toggle="modal">Detail</button>'
+                            return '<button type="button" id="btnDetail' + i + '|' + data + '" class="btn fit-bg-color-secondary fit-text-color-2 m-1 open-modal btnDetail" data-toggle="modal">Detail</button>'
                         }
                     }
                 ]

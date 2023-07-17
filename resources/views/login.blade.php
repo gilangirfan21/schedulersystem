@@ -37,7 +37,7 @@
 
             <div class="row justify-content-center">
                 <div class="col-4">
-                    <button type="submit" class="btn btn-primary btn-block">{{ __('Login') }}</button>
+                    <button type="submit" class="btn fit-bg-color-secondary btn-block">{{ __('Login') }}</button>
                 </div>
             </div>
         </form>

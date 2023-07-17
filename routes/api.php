@@ -8,6 +8,7 @@ use App\Http\Controllers\API\JadwalRekomendasiController;
 use App\Http\Controllers\API\LantaiController;
 use App\Http\Controllers\API\LokasiController;
 use App\Http\Controllers\API\RuanganController;
+use App\Http\Controllers\API\TanggalMerahApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,8 +36,12 @@ Route::post('/gedung', [GedungController::class, 'show']);
 Route::post('/lantai', [LantaiController::class, 'show']);
 Route::post('/ruangan', [RuanganController::class, 'show']);
 Route::post('/jadwal', [JadwalController::class, 'show']);
-Route::post('/jadwal/hapus', [JadwalController::class, 'hapus']);
+Route::post('/jadwal/tanggalmerah', [JadwalController::class, 'jadwaltanggalmerah']); // riwayat perubahan jadwal
+Route::post('/jadwal/tanggalmerah/popup', [JadwalController::class, 'jadwaltanggalmerahpopup']); // riwayat perubahan jadwal
+// hapus semua jadwal di route web
 Route::put('/jadwal', [JadwalController::class, 'update']);
+Route::post('/jadwal/riwayat', [JadwalController::class, 'riwayat']); // riwayat perubahan jadwal
 Route::post('/jadwalavailable', [JadwalAvailableController::class, 'show']);
 Route::post('/jadwalrekomendasi', [JadwalRekomendasiController::class, 'show']);
+Route::post('/tanggalmerah', [TanggalMerahApiController::class, 'show']);
 

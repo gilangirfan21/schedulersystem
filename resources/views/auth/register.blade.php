@@ -46,7 +46,7 @@
                                         <p class="login-box-msg">{{ __('Tambah Akun') }}</p>
 
                                         {{-- <form method="POST" action="{{ route('register') }}"> --}}
-                                        <form method="POST" action="{{ route('register') }}">
+                                        <form method="POST" action="{{ route('tambah') }}">
                                             @csrf
 
                                             {{-- <div class="input-group mb-3"> --}}
@@ -160,7 +160,7 @@
                                                 <div class="col-12">
                                                     <button type="submit"
                                                         {{-- class="btn btn-primary btn-block">{{ __('Register') }} --}}
-                                                        class="btn btn-primary btn-block">{{ __('Tambah') }}
+                                                        class="btn fit-bg-color-secondary btn-block">{{ __('Tambah') }}
                                                     </button>
                                                 </div>
                                             </div>

@@ -35,18 +35,18 @@
 <div class="wrapper">
 
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white mhs-margin mhs-nav mhs-base-color px-3" >
+    <nav class="main-header navbar navbar-expand navbar-white mhs-margin mhs-nav fit-bg-color-primary px-3" >
         <!-- Left navbar links -->
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a href="{{ route('login') }}" role="button"><i class="fa fa-home mhs-base-color" aria-hidden="true"></i></a>
+                <a href="{{ route('login') }}" role="button"><i class="fa fa-home fit-text-color-2" aria-hidden="true"></i></a>
             </li>
         </ul>
 
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
-                <span class="mhs-base-color">Halaman Mahasiswa</span>
+                <span class="fit-bg-color-primary fit-text-color-2">Halaman Mahasiswa</span>
             </li>
         </ul>
     </nav>
@@ -69,10 +69,10 @@
     <!-- /.control-sidebar -->
 
     <!-- Main Footer -->
-    <footer class="main-footer navbar-white mhs-base-color mhs-margin">
+    <footer class="main-footer navbar-white fit-bg-color-primary mhs-margin">
         <!-- Coppyright Center -->
         <div class="d-flex justify-content-center">
-            <span class="mhs-base-color">Copyright &copy; 2023 - Fitriana Indah Mitasari</span>
+            <span class="fit-text-color-2">Copyright &copy; 2023 - Fitriana Indah Mitasari</span>
         </div>
     </footer>
 </div>

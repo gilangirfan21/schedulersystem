@@ -43,6 +43,16 @@ class JadwalAvailableController extends Controller
     public function show(Request $request)
     {
 
+        $dateNow = date('Y-m-d');
+        // $dateNow = '2023-03-13';
+        // tidak bisa memilih tanggal lebih kecil dari hari ini
+        // if ($request->start_date < $dateNow) {
+        //     $request->start_date = $dateNow;
+        // }
+        // if ($request->end_date < $dateNow) {
+        //     $request->end_date = $dateNow;
+        // }
+        // dd($request->start_date);
         $maxCount = $request->count_time;
         $listIdAwal = $request->list_id;
         $listIdAwal = str_replace("/", "-", $listIdAwal);
@@ -71,6 +81,7 @@ class JadwalAvailableController extends Controller
         
         if (strtoupper($request->type) == 'SEMENTARA') {
             //** START SELECT JADWDAL TERDEKAT */
+            
             try {
                 $dataOri = [];
                 $listJadwalAwal = explode('/', $listIdAwal);
@@ -103,6 +114,9 @@ class JadwalAvailableController extends Controller
                     $dataAwal->save();
                     
                 }
+
+                // tidak bisa memilih tanggal lebih kecil dari hari ini
+                // $dataOri['tanggal'] = ( $dateNow <= $dataOri['tanggal']) ? $dataOri['tanggal'] : $dateNow;
             
                 $jadwalavailable = Jadwal::leftJoin('ref_dosen', 'jadwal.kode_dosen', '=', 'ref_dosen.kode')
                 ->leftJoin('ref_matkul', 'jadwal.kode_matkul', '=', 'ref_matkul.kode')

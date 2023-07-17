@@ -181,4 +181,15 @@ class SchedulerController extends Controller
         return view('check',['perubahanData' => $perubahanData]);
     }
 
+    public function riwayat(Request $request)
+    {
+        return view('riwayatperubahanjadwal');
+    }
+
+    public function jadwaltanggalmerah(Request $request)
+    {
+        return view('jadwaltanggalmerah');
+    }
+
+
 }

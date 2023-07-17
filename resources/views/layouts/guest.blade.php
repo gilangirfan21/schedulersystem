@@ -15,6 +15,8 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
     {{-- START Alertify --}}
+    <!-- CUSTOME STYLE -->
+    {{-- <link rel="stylesheet" href="{{ asset('css/custom.css') }}"> --}}
     <!-- CSS -->
     <link rel="stylesheet" href="{{ secure_asset('https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css') }}"/>
     <!-- Default theme -->

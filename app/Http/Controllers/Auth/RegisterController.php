@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+// use GuzzleHttp\Psr7\Request;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -76,7 +78,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'role' => $data['role'],
             'password' => Hash::make($data['password']),
-            'uid' => (string) Str::uuid(),
+            'uid' => (string) Str::random(30),
         ]);
     }
 
@@ -89,6 +91,52 @@ class RegisterController extends Controller
 
         } else {
             return view('auth/register');
+        }
+    }
+
+    public function daftar()
+    {
+        $listAccess = [1,2];
+
+        if(!in_array(Auth::user()->role, $listAccess)) {
+            return  view('home');
+
+        } else {
+            return view('auth/register');
+        }
+    }
+
+    public function tambah(Request $request)
+    {
+        $data = [
+            'name' => $request->name,
+            'nama' => $request->nama,
+            'email' => $request->email,
+            'role' => $request->role,
+            'password' => $request->password,
+            'password_confirmation' => $request->password_confirmation
+        ];
+        $rules = [
+            'name' => ['required', 'string', 'max:255'],
+            'nama' => ['required', 'string', 'max:255'],
+            'role' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:5', 'confirmed'],
+        ];
+        
+        $validator = Validator::make($data, $rules);
+        if ($validator->passes()) {
+            User::create([
+                'name' => $data['name'],
+                'nama' => $data['nama'],
+                'email' => $data['email'],
+                'role' => $data['role'],
+                'password' => Hash::make($data['password']),
+                'uid' => (string) Str::random(30),
+            ]);
+            return redirect('users')->with('success', 'Akun ' .$request->nama . ' (' . $request->name . ')' . ' berhasil ditambahkan');
+        } else {
+            return redirect('users')->with('failed', 'Gagal menambah akun');
         }
     }
 }

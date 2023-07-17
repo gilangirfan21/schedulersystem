@@ -11,5 +11,5 @@ class HapusHistoryJadwal extends Model
 
     protected $table = 'history_hapus_jadwal';
 
-    protected $fillable = ['id', 'id_akun', 'time'];
+    protected $fillable = ['id', 'id_akun', 'jumlah_data', 'time'];
 }

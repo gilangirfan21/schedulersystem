@@ -37,7 +37,8 @@
 
             <div class="row justify-content-center">
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary btn-block">{{ __('Login')}}</button>
+                    <button type="submit" class="btn btn-block" style="background-color: #5d77b9 !important;
+                    color: #ffff !important;">{{ __('Login')}}</button>
                 </div>
                 <!-- /.col -->
             </div>

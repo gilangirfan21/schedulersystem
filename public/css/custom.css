@@ -91,6 +91,43 @@
     list-style: none;
 }
 
+/* START COLOR FITRI */
+.fit-bg-color-primary-only {
+    background-color: #3b5998 !important;
+}
+
+.fit-bg-color-primary {
+    background-color: #3b5998 !important;
+    color: #ffff !important;
+}
+
+.fit-bg-color-secondary {
+    background-color: #5d77b9 !important;
+    color: #ffff !important;
+}
+
+.fit-bg-color-secondary-only {
+    background-color: #5d77b9 !important;
+}
+
+.fit-bg-color-neutrals {
+    background-color: #ffff !important;
+    color: #121212 !important;
+}
+
+.fit-bg-color-neutrals-only {
+    background-color: #ffff !important;
+}
+
+.fit-text-color-1 {
+    color: #121212 !important;
+}
+
+.fit-text-color-2 {
+    color: #ffff !important;
+}
+/* END COLOR FITRI */
+
 .color-salmon {
     color: salmon;
 }
@@ -168,4 +205,8 @@ label:not(.form-check-label):not(.custom-file-label) {
 /* DATATABLE */
 #dataTable tbody td {
     vertical-align: middle;
+}
+
+.btnHide {
+    display: none;
 }

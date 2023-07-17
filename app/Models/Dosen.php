@@ -15,5 +15,10 @@ class Dosen extends Model
         return $this->HasMany(Jadwal::class);
     }
 
+    public function riwayatperubahanjadwal() : HasMany
+    {
+        return $this->HasMany(RiwayatPerubahanJadwal::class);
+    }
+
     protected $table = "ref_dosen";
 }

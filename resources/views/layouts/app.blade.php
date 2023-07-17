@@ -34,33 +34,33 @@
 <div class="wrapper">
 
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light fit-bg-color-secondary">
         <!-- Left navbar links -->
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars fit-text-color-2"></i></a>
             </li>
         </ul>
 
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown fit-text-color-2">
 
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <a href="{{ route('logout') }}" class="dropdown-item"
+                    <a href="{{ route('logout') }}" class="dropdown-item fit-text-color-2"
                         onclick="event.preventDefault(); this.closest('form').submit();">
                         {{ '(' . Auth::user()->email . ') - ' . __('Log Out') }}
-                        <i class="mr-2 fas fa-sign-out-alt"></i>
+                        <i class="mr-2 fas fa-sign-out-alt fit-text-color-2"></i>
                     </a>
                 </form>
                 
                 {{-- <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
                     {{(Auth::user()->email)}}
                 </a> --}}
-                <div class="dropdown-menu dropdown-menu-right" style="left: inherit; right: 0px;">
-                    <a href="{{ route('profile.show') }}" class="dropdown-item">
-                        <i class="mr-2 fas fa-file"></i>
+                <div class="dropdown-menu dropdown-menu-right fit-text-color-2" style="left: inherit; right: 0px;">
+                    <a href="{{ route('profile.show') }}" class="dropdown-item fit-text-color-2">
+                        <i class="mr-2 fas fa-file fit-text-color-2"></i>
                         {{ __('My profile') }}
                     </a>
                     <div class="dropdown-divider"></div>
@@ -73,13 +73,13 @@
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <aside class="main-sidebar sidebar-dark-primary elevation-4 fit-bg-color-secondary">
         <!-- Brand Logo -->
         <a href="#" class="brand-link">
             <img src="{{ asset('images/main.png') }}" alt="Logo Apps"
             class="brand-image img-circle elevation-3"
             style="opacity: .8">
-            <span class="brand-text font-weight-light">SCHADULER SYSTEM</span>
+            <span class="brand-text font-weight-light fit-text-color-2">SCHADULER SYSTEM</span>
         </a>
 
         @include('layouts.navigation')
@@ -103,10 +103,10 @@
     <!-- /.control-sidebar -->
 
     <!-- Main Footer -->
-    <footer class="main-footer navbar-white navbar-light">
+    <footer class="main-footer navbar-white navbar-light fit-bg-color-secondary">
         <!-- Coppyright Center -->
-        <div class="d-flex justify-content-center">
-            <span >Copyright &copy; 2023 - Fitriana Indah Mitasari</span>
+        <div class="d-flex justify-content-center ">
+            <span class="fit-text-color-2">Copyright &copy; 2023 - Fitriana Indah Mitasari</span>
         </div>
     </footer>
 </div>

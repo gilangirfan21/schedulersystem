@@ -8,6 +8,8 @@ use App\Http\Controllers\SchedulerController;
 use App\Http\Controllers\TambahJadwalController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\HapusJadwalController;
+use App\Http\Controllers\TanggalMerahController;
 use Illuminate\Console\Scheduling\Schedule;
 
 /*
@@ -39,33 +41,40 @@ Route::middleware('auth')->group(function () {
     // Default
     Route::view('about', 'about')->name('about');
     Route::get('users', [UserController::class, 'index'])->name('users.index'); //Menu (USERS)
-    Route::get('users/edit', [UserController::class, 'show'])->name('users.edit'); //Halamn Edit (USERS)
+    Route::get('user/edit/{uid}', [UserController::class, 'edit'])->name('user.edit'); //Halamn Edit (USER)
+    Route::post('user/update/{uid}', [UserController::class, 'update'])->name('user.update'); //Update (USER)
+    Route::get('user/resetpass/{uid}', [UserController::class, 'resetpass'])->name('user.resetpass'); //Reset Password (USER)
+    Route::get('user/hapus/{uid}', [UserController::class, 'hapus'])->name('user.hapus'); //Hapus (USER)
     Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
+    // Add new account (DAFTAR)
+    Route::get('/daftar',[RegisterController::class, 'index'])->name('daftar');
+    Route::post('/daftar',[RegisterController::class, 'tambah'])->name('tambah');
 
     // LIST MENU
     // Main Page (JADWAL)
     Route::get('/home', [SchedulerController::class, 'index'])->name('home');
     Route::get('/home/search', [SchedulerController::class, 'index'])->name('home.search');
+    Route::get('/menu/riwayatperubahanjadwal',[SchedulerController::class, 'riwayat'])->name('riwayatperubahanjadwal');
+    Route::get('/menu/jadwaltanggalmerah', [SchedulerController::class, 'jadwaltanggalmerah'])->name('jadwaltanggalmerah');
+    Route::get('/menu/tanggalmerah',[TanggalMerahController::class, 'index'])->name('tanggalmerah');
+    Route::post('/tanggalmerah/tambah',[TanggalMerahController::class, 'tambah'])->name('tanggalmerah.tambah');
+    Route::get('/tanggalmerah/hapus/{tanggalmerah}',[TanggalMerahController::class, 'hapus'])->name('tanggalmerah.hapus');
+    // riwayat perubahan jadwal get by api
     
+
     
     // Export Schedule (TAMBAH JADWAL)
     Route::get('/exportjadwal', [TambahJadwalController::class, 'exportjadwal'])->name('exportjadwal');
     Route::post('/importjadwal', [TambahJadwalController::class, 'importjadwal'])->name('importjadwal');
     
-    // Add new account (DAFTAR)
-    Route::get('/daftar',[RegisterController::class, 'index'])->name('daftar');
-    Route::post('/daftar',[RegisterController::class, 'index'])->name('tambah');
-    
-    // Resadule Manual 
+    // Reschedule Manual 
     Route::get('/check',[SchedulerController::class, 'check'])->name('check');
+
+    // Hapus Semua Jadwal
+    Route::get('/jadwal/hapus',[HapusJadwalController::class, 'hapus'])->name('hapussemuajadwal');
     
 });
-
-Route::middleware(['auth', 'roles:role2,role3'])->group(function () {
-    // Routes that require 'role2' or 'role3'
-});
-
 
 // Page for Mahasiswa
 Route::get('/mahasiswa',[MahasiswaController::class, 'index'])->name('mahasiswa');

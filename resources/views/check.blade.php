@@ -51,6 +51,7 @@
                                     </div>
                                 </form>
                                 @endif
+                                <input type="hidden" name="userId" id="userId" value="{{ Auth::user()->name }}">
                                 <input type="hidden" name="userRole" id="userRole" value="{{ Auth::user()->role }}">
                                 <div class="row justify-content-md-center">
                                     <div class="col-lg-6">
@@ -172,6 +173,7 @@ $( document ).ready(function() {
     console.log(listId);
     var listIdBaru = $('#listIdBaru').val()
     var tmpDosen = $('#dosen').val();
+    var userId = $('#userId').val();
     var userRole = $('#userRole').val();
     var dosen = (userRole == 3) ? tmpDosen : '-';
     var lokasi = $('#selLokasi').val();
@@ -201,7 +203,7 @@ $( document ).ready(function() {
         if (userRole != 1 && userRole != 2) {
             detailDosen(dosen);
         }
-        loadJadwalAWal(dosen, listId);
+        loadJadwalAwal(listId);
         loadGedung(lokasi);
         loadRuangan(lokasi, gedung, lantai);
         loadingSelesai();
@@ -217,7 +219,7 @@ $( document ).ready(function() {
         alertify.confirm("PERINGATAN","Apakah anda yakin?",
         function(){
             // UPDATE JADWAL VIA API
-            var dataParam = { type: type, kode_dosen: dosen, list_id_awal: listId , list_id_baru: listIdBaru};
+            var dataParam = { type: type, kode_dosen: dosen, list_id_awal: listId , list_id_baru: listIdBaru, user_id: userId};
             var data = $.param(dataParam);
             $.ajax({
                 url: 'api/jadwal',
@@ -411,8 +413,8 @@ $( document ).ready(function() {
     }
 
     // LOAD DATA JADWAL FROM API
-    function loadJadwalAWal(dosen, list_id) {
-        var dataParam = { kode_dosen: dosen, list_id: list_id};
+    function loadJadwalAwal(list_id) {
+        var dataParam = { list_id: list_id};
         var data = $.param(dataParam);
         $.ajax({
             type: 'POST',
