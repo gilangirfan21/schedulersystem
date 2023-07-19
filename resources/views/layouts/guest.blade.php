@@ -32,7 +32,7 @@
 <div class="login-box">
     <div class="login-logo">
         {{-- <a href="#">{{ config('app.name', 'Laravel') }}</a> --}}
-        <h2>SCHADULER SYSTEM</h2>
+        <h2>Sistem Penjadwalan Perkuliahan</h2>
     </div>
     <!-- /.login-logo -->
     <div class="card">
@@ -41,7 +41,7 @@
 </div>
 <!-- /.login-box -->
 
-@vite('resources/js/app.js')
+{{-- @vite('resources/js/app.js') --}}
 <!-- Bootstrap 4 -->
 <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE App -->

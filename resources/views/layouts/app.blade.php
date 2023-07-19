@@ -79,7 +79,7 @@
             <img src="{{ asset('images/main.png') }}" alt="Logo Apps"
             class="brand-image img-circle elevation-3"
             style="opacity: .8">
-            <span class="brand-text font-weight-light fit-text-color-2">SCHADULER SYSTEM</span>
+            <span class="brand-text font-weight-light fit-text-color-2">{{ strtoupper(Auth::user()->name) }}</span>
         </a>
 
         @include('layouts.navigation')

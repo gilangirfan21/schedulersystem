@@ -25,7 +25,6 @@ class ExportJadwal implements FromCollection, WithHeadings, ShouldAutoSize, With
                     ->leftJoin('ref_jurusan', 'ref_kelas.kode_jurusan', '=', 'ref_jurusan.kode')
                     ->leftJoin('ref_matkul', 'jadwal.kode_matkul', '=', 'ref_matkul.kode')
                     ->leftJoin('ref_dosen', 'jadwal.kode_dosen', '=', 'ref_dosen.kode')
-                    ->limit(3)
                     ->get();
     }
 

@@ -423,11 +423,13 @@ class JadwalController extends Controller
                 ->leftJoin('users', 'history_perubahan_jadwal.id_akun', '=', 'users.name')
                 ->leftJoin('ref_matkul', 'history_perubahan_jadwal.kode_matkul', '=', 'ref_matkul.kode')
                 ->where('history_perubahan_jadwal.kode_dosen', '=', $kode_dosen)
+                ->select('history_perubahan_jadwal.*','users.nama','ref_dosen.dosen','ref_matkul.matkul')
                 ->get();
             } else {
                 $riwayatJadwal = RiwayatPerubahanJadwal::leftJoin('ref_dosen', 'history_perubahan_jadwal.kode_dosen', '=', 'ref_dosen.kode')
                 ->leftJoin('users', 'history_perubahan_jadwal.id_akun', '=', 'users.name')
                 ->leftJoin('ref_matkul', 'history_perubahan_jadwal.kode_matkul', '=', 'ref_matkul.kode')
+                ->select('history_perubahan_jadwal.*','users.nama','ref_dosen.dosen','ref_matkul.matkul')
                 ->get();
             }
             $arrRiwayatJadwal = [];
@@ -456,7 +458,7 @@ class JadwalController extends Controller
                 $arrRiwayatJadwal[$i]['updated_at'] = $riwayatJadwal[$j]['updated_at'];
                 $arrRiwayatJadwal[$i]['created_at'] = $riwayatJadwal[$j]['created_at'];
                 $tmp = $j + 1; // Start the inner loop from the next index
-                while ($tmp < $length && $arrRiwayatJadwal[$i]['kode_kelas'] == $riwayatJadwal[$tmp]['kode_kelas'] && $arrRiwayatJadwal[$i]['kode_ruangan'] == $riwayatJadwal[$tmp]['kode_ruangan'] && $arrRiwayatJadwal[$i]['kode_dosen'] == $riwayatJadwal[$tmp]['kode_dosen']  && $arrRiwayatJadwal[$i]['tanggal'] == $riwayatJadwal[$tmp]['tanggal'] && $arrRiwayatJadwal[$i]['pertemuan'] == $riwayatJadwal[$tmp]['pertemuan']) {
+                while ($tmp < $length && $arrRiwayatJadwal[$i]['kode_kelas'] == $riwayatJadwal[$tmp]['kode_kelas'] && $arrRiwayatJadwal[$i]['kode_ruangan'] == $riwayatJadwal[$tmp]['kode_ruangan'] && $arrRiwayatJadwal[$i]['kode_dosen'] == $riwayatJadwal[$tmp]['kode_dosen']  && $arrRiwayatJadwal[$i]['tanggal'] == $riwayatJadwal[$tmp]['tanggal'] && $arrRiwayatJadwal[$i]['pertemuan'] == $riwayatJadwal[$tmp]['pertemuan'] && $arrRiwayatJadwal[$i]['updated_at'] == $riwayatJadwal[$tmp]['updated_at']) {
                     $arrRiwayatJadwal[$i]['concat_kode_jam'] .= '-' . $riwayatJadwal[$tmp]['id_history'];
                     $arrRiwayatJadwal[$i]['concat_jam'] .= '/' . $riwayatJadwal[$tmp]['kode_jam'];
                     $arrRiwayatJadwal[$i]['concat_jam_new'] .= '/' . $riwayatJadwal[$tmp]['kode_jam_new'];

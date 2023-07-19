@@ -45,7 +45,7 @@
         </form>
         <div class="row justify-content-center mt-2">
             <div class="col-12 text-center">
-                <a href="{{ route('mahasiswa') }}" class="">{{ __('Halaman Mahasiswa')}}</a>
+                <a href="{{ route('mahasiswa') }}" class="">{{ __('Jadwal Perkuliahan')}}</a>
             </div>
             <!-- /.col -->
         </div>

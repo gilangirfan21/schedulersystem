@@ -52,7 +52,8 @@ class JadwalAvailableController extends Controller
         // if ($request->end_date < $dateNow) {
         //     $request->end_date = $dateNow;
         // }
-        // dd($request->start_date);
+
+
         $maxCount = $request->count_time;
         $listIdAwal = $request->list_id;
         $listIdAwal = str_replace("/", "-", $listIdAwal);
