@@ -30,7 +30,7 @@
 
     @yield('styles')
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini fit-fs-16px">
 <div class="wrapper">
 
     <!-- Navbar -->
@@ -40,11 +40,11 @@
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars fit-text-color-2"></i></a>
             </li>
-            <li class="nav-item ml-2">
-                <img src="{{ asset('images/logo_gundar.png') }}" alt="logo universitas gunadarma" width="40" height="40" class="d-inline-block align-top">
-            </li>
             <li class="nav-item ml-2 mt-1">
-                <span class="ml-1 title-gundar">Universitas Gunadarma</span>
+                <img src="{{ asset('images/logo_gundar.png') }}" alt="logo universitas gunadarma" width="30" height="30" class="d-inline-block align-top">
+            </li>
+            <li class="nav-item ml-2 mt-2">
+                <span class="ml-1 title-gundar fit-fs-16px">Universitas Gunadarma</span>
             </li>
         </ul>
 
@@ -53,7 +53,7 @@
             <li class="nav-item dropdown fit-text-color-2">
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <a href="{{ route('logout') }}" class="dropdown-item fit-text-color-2"
+                    <a href="{{ route('logout') }}" class="dropdown-item fit-text-color-2 fit-fs-16px"
                         onclick="event.preventDefault(); this.closest('form').submit();">
                         {{ '(' . Auth::user()->email . ') - ' . __('Log Out') }}
                         <i class="mr-2 fas fa-sign-out-alt fit-text-color-2"></i>
@@ -76,18 +76,18 @@
         <!-- Brand Logo -->
         <a href="#" class="brand-link">
             <img src="{{ asset('images/main.png') }}" alt="Logo Apps"
-            class="brand-image img-circle elevation-3"
+            class="brand-image img-circle elevation-3 mt-1"
             style="opacity: .8">
             @php 
                 if ((Auth::user()->role == 1)) {
-                    $role = 'OWNER';
+                    $role = 'Owner';
                 } elseif ((Auth::user()->role == 2)) {
-                    $role = 'ADMIN';
+                    $role = 'Admin';
                 } elseif ((Auth::user()->role == 3)) {
-                    $role = 'DOSEN';
+                    $role = 'Dosen';
                 }
             @endphp
-            <span class="brand-text font-weight-light fit-text-color-2">MENU {{ $role }}</span>
+            <span class="brand-text font-weight-light fit-text-color-2 fit-fs-26px">Menu {{ $role }}</span>
         </a>
 
         @include('layouts.navigation')

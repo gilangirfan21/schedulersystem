@@ -38,18 +38,18 @@
     <nav class="main-header navbar navbar-expand navbar-white mhs-margin mhs-nav fit-bg-color-primary px-3 pb-3" >
         <!-- Left navbar links -->
         <ul class="navbar-nav">
-            <li class="nav-item ml-2">
-                <img src="{{ asset('images/logo_gundar.png') }}" alt="logo universitas gunadarma" width="40" height="40" class="d-inline-block align-top">
-            </li>
             <li class="nav-item ml-2 mt-1">
-                <span class="ml-1 title-gundar">Universitas Gunadarma</span>
+                <img src="{{ asset('images/logo_gundar.png') }}" alt="logo universitas gunadarma" width="30" height="30" class="d-inline-block align-top">
+            </li>
+            <li class="nav-item ml-2 mt-2">
+                <span class="ml-1 title-gundar fit-fs-16px">Universitas Gunadarma</span>
             </li>
         </ul>
 
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
-                <a style="width: 120px;" class="btn btn-primary fit-text-color-2" href="{{ route('login') }}" role="button">Login</a>
+                <a style="width: 120px;" class="btn btn-primary fit-text-color-2 fit-fs-16px" href="{{ route('login') }}" role="button">Login</a>
             </li>
         </ul>
     </nav>

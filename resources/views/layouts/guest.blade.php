@@ -28,20 +28,20 @@
     {{-- END Alertify --}}
 
 </head>
-<body class="hold-transition login-page fit-custom" style="height:90vh !important;">
-<div class="login-box">
-    <div class="login-logo">
+<body class="hold-transition login-page fit-custom mt-2" style="height:90vh !important;">
+<div class="login-box mt-5">
+    <div class="login-logo" style="margin:0 !important;">
         <img src="{{ asset('images/logo_gundar_hd.png') }}" alt="logo universitas gunadarma" width="200" height="200" class="d-inline-block align-top">
     </div>
     <div class="login-logo">
-        <h2>Sistem Penjadwalan Perkuliahan</h2>
+        <h2 style="font-size: 42px !important;">Sistem Penjadwalan Perkuliahan</h2>
     </div>
     <!-- /.login-logo -->
     <div class="card">
         @yield('content')
     </div>
     <div class="login-logo mt-3">
-        <h2 class="font-weight-bold">Universitas Gunadarma</h2>
+        <h2 class="font-weight-bold" style="font-size: 26px !important;">Universitas Gunadarma</h2>
     </div>
 </div>
 <!-- /.login-box -->

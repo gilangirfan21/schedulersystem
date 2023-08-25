@@ -50,12 +50,12 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <h5 id="kodeDosen">Kode Dosen : - </h5>
+                                            <h5 id="kodeDosen" class="fit-fs-16px">Kode Dosen : - </h5>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <h5 id="namaDosen">Nama Dosen : - </h5>
+                                            <h5 id="namaDosen" class="fit-fs-16px">Nama Dosen : - </h5>
                                         </div>
                                         <input type="hidden" name="dosen" id="dosen" value="{{ Auth::user()->name }}">
                                     </div>
@@ -132,7 +132,7 @@
                 <div class="modal-content">
                     {{-- <span class="close btnModalClose">&times;</span> --}}
                     <!-- Modal content -->
-                    <h2 class="text-center mb-3 mt-4" id="titleModal">Pilih Rerkomendasi Jadwal</h2>
+                    <h2 class="text-center mb-3 mt-4 fit-fs-26px" id="titleModal">Pilih Rerkomendasi Jadwal</h2>
                     <div id="containerCardRekomendasi" class="containerCardRekomendasi">
                     </div>
                     <div class="modal-footer">

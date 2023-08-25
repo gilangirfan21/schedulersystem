@@ -13,27 +13,27 @@
             data-accordion="false">
             <li class="nav-item">
                 <a href="{{ route('home') }}" class="nav-link fit-text-color-2">
-                    <i class="nav-icon fa fa-calendar fit-text-color-2" aria-hidden="true"></i>
+                    <i class="nav-icon fa fa-calendar fit-text-color-2 fit-fs-16px" aria-hidden="true"></i>
                     <p>
-                        JADWAL
+                        Jadwal
                     </p>
                 </a>
             </li>
             <li class="nav-item">
                 
                 <a href="{{ route('riwayatperubahanjadwal') }}" class="nav-link fit-text-color-2">
-                    <i class="nav-icon fa fa-history fit-text-color-2"></i>
+                    <i class="nav-icon fa fa-history fit-text-color-2 fit-fs-16px"></i>
                     <p>
-                        RIWAYAT JADWAL
+                        Riwayat Jadwal
                     </p>
                 </a>
             </li>
             <li class="nav-item">
                 
                 <a href="{{ route('jadwaltanggalmerah') }}" class="nav-link fit-text-color-2">
-                    <i class="nav-icon fa fa-bell fit-text-color-2"></i>
+                    <i class="nav-icon fa fa-bell fit-text-color-2 fit-fs-16px"></i>
                     <p>
-                        JADWAL TANGGAL MERAH
+                        Jadwal Tanggal Merah
                     </p>
                 </a>
             </li>
@@ -42,26 +42,26 @@
             <li class="nav-item">
                 
                 <a href="{{ route('tanggalmerah') }}" class="nav-link fit-text-color-2">
-                    <i class="nav-icon fa fa-window-close fit-text-color-2"></i>
+                    <i class="nav-icon fa fa-window-close fit-text-color-2 fit-fs-16px"></i>
                     <p>
-                        TANGGAL MERAH
+                        Tanggal Merah
                     </p>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('daftar') }}" class="nav-link fit-text-color-2">
-                    <i class="nav-icon fa fa-user-plus fit-text-color-2" aria-hidden="true"></i>
+                    <i class="nav-icon fa fa-user-plus fit-text-color-2 fit-fs-16px" aria-hidden="true"></i>
                     <p>
-                        DAFTAR
+                        Daftar
                     </p>
                 </a>
             </li>
             <li class="nav-item">
                 
                 <a href="{{ route('users.index') }}" class="nav-link fit-text-color-2">
-                    <i class="nav-icon fas fa-users fit-text-color-2"></i>
+                    <i class="nav-icon fas fa-users fit-text-color-2 fit-fs-16px"></i>
                     <p>
-                        USERS
+                        Users
                     </p>
                 </a>
             </li>

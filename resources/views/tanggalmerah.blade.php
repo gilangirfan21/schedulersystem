@@ -118,6 +118,9 @@ $(document).ready( function () {
     // INIT LOAD ALL DATA
     load();
 
+    $(document).on('click', 'btnTambah', function() {
+    });
+
     $(document).on('click', '.btnHapus', function(event) {
         event.preventDefault();
         var tanggalmerah = $(this).attr('id');

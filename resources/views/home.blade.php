@@ -50,12 +50,12 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <h5 id="kodeDosen">Kode Dosen : - </h5>
+                                            <h5 id="kodeDosen" class="fit-fs-16px">Kode Dosen : - </h5>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <h5 id="namaDosen">Nama Dosen : - </h5>
+                                            <h5 id="namaDosen" class="fit-fs-16px">Nama Dosen : - </h5>
                                         </div>
                                         <input type="hidden" name="dosen" id="dosen" value="{{ Auth::user()->name }}">
                                     </div>
@@ -137,35 +137,35 @@
                 <div class="modal-content">
                     <!--<span class="close btnModalClose">&times;</span>-->
                     <!-- Modal content -->
-                    <h2 class="text-center mb-3 mt-4">Detail Jadwal</h2>
+                    <h2 class="text-center mb-3 mt-4 fit-fs-26px">Detail Jadwal</h2>
                     <div id="keteranganTanggal" class="text-center">
                         <div class="alert alert-danger" role="alert">
                             Tanggal <span id="tanggal" class="font-weight-bold"></span> bertepatan dengan <span id="detailKetranganTanggal" class="font-weight-bold"></span>. Mohon lakukan perubahan jadwal.
                         </div>
                     </div>
                     <div id="perubahanFalse" class="text-center">
-                        <span class="list-decorate-none">Tidak ada perubahan jadwal</span>
+                        <span class="list-decorate-none fit-fs-16px">Tidak ada perubahan jadwal</span>
                     </div>
                     <div id="perubahanTrue" >
-                        <h5 class="text-center">Telah Melakukan Perubahan</h5>
-                        <h5 id="pertemuan" class="text-center">Pertemuan : </h5>
+                        <h5 class="text-center fit-fs-16px">Telah Melakukan Perubahan</h5>
+                        <h5 id="pertemuan" class="text-center fit-fs-16px">Pertemuan : </h5>
                         <ul class="font-weight-bold">
                             <div class="row">
                                 <div class="col-sm-2"></div>
                                 <div class="col-sm-3">
-                                    <li id="kdKelas" class="list-decorate-none">Kelas      : </li>
-                                    <li id="nmDosen" class="list-decorate-none">Dosen      : </li>
-                                    <li id="matkul" class="list-decorate-none">Mata Kuliah : </li>
+                                    <li id="kdKelas" class="list-decorate-none fit-fs-16px">Kelas      : </li>
+                                    <li id="nmDosen" class="list-decorate-none fit-fs-16px">Dosen      : </li>
+                                    <li id="matkul" class="list-decorate-none fit-fs-16px">Mata Kuliah : </li>
                                 </div>
                                 <div class="col-sm-3">
-                                    <li id="tglAwal" class="list-decorate-none">Tanggal Awal : </li>
-                                    <li id="wktAwal" class="list-decorate-none">Waktu Awal   : </li>
-                                    <li id="rgAwal" class="list-decorate-none">Ruang Awal    : </li>
+                                    <li id="tglAwal" class="list-decorate-none fit-fs-16px">Tanggal Awal : </li>
+                                    <li id="wktAwal" class="list-decorate-none fit-fs-16px">Waktu Awal   : </li>
+                                    <li id="rgAwal" class="list-decorate-none fit-fs-16px">Ruang Awal    : </li>
                                 </div>
                                 <div class="col-sm-3">
-                                    <li id="tglBaru" class="list-decorate-none">Tanggal Baru : </li>
-                                    <li id="wktBaru" class="list-decorate-none">Waktu Baru   : </li>
-                                    <li id="rgBaru" class="list-decorate-none">Ruang Baru    : </li>
+                                    <li id="tglBaru" class="list-decorate-none fit-fs-16px">Tanggal Baru : </li>
+                                    <li id="wktBaru" class="list-decorate-none fit-fs-16px">Waktu Baru   : </li>
+                                    <li id="rgBaru" class="list-decorate-none fit-fs-16px">Ruang Baru    : </li>
                                 </div>
                                 <div class="col-sm-1"></div>
                             </div>
@@ -182,7 +182,7 @@
                 <div class="modal-content">
                     {{-- <span class="close btnModalClose">&times;</span> --}}
                     <!-- Modal content -->
-                    <h2 class="text-center mb-3 mt-4" id="titleModal">Pilih Rekomendasi Jadwal</h2>
+                    <h2 class="text-center mb-3 mt-4 fit-fs-26px" id="titleModal">Pilih Rekomendasi Jadwal</h2>
                     <div id="containerCardRekomendasi" class="containerCardRekomendasi">
                     </div>
                     <div class="modal-footer">
@@ -524,7 +524,7 @@ $(document).ready( function () {
                             if (lastChar == 'A' || lastChar == 'B' || lastChar == 'C' || dosen == '-') {
                             return '<button type="button" id="btnSem' + data.concat_kode_jam + '" class="btn fit-bg-color-primary  m-1 open-modal btnSementara btnHide" data-toggle="modal" data-target="#modalRekomendasi">Pindah</button><input type="hidden" class="' + data.flag + '"><input type="hidden" class="' + data.ket_tanggal_merah + '">'
                             } else {
-                                return '<button type="button" id="btnSem' + data.concat_kode_jam + '" class="btn fit-bg-color-primary m-1 open-modal btnSementara" data-toggle="modal" data-target="#modalRekomendasi">Pindah</button><input type="hidden" class="' + data.flag + '"><input type="hidden" class="' + data.ket_tanggal_merah + '">'
+                                return '<button type="button" id="btnSem' + data.concat_kode_jam + '" class="btn fit-bg-color-primary  m-1 open-modal btnSementara" data-toggle="modal" data-target="#modalRekomendasi">Pindah</button><input type="hidden" class="' + data.flag + '"><input type="hidden" class="' + data.ket_tanggal_merah + '">'
                             }
                         }
                     }

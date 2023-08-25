@@ -7,7 +7,7 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     {{-- <h1 class="m-0">{{ __('Dashboard') }}</h1> --}}
-                    <h1 class="ml-2">Jadwal Perkuliahan</h1>
+                    <h1 class="ml-2 fit-fs-26px">Jadwal Perkuliahan</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -103,7 +103,7 @@
                         </ul>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btnModalClose" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-close btnModalClose" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>

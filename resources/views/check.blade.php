@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="ml-2">PERUBAHAN JADWAL MENGAJAR MANUAL</h1>
+                    <h1 class="ml-2">Perubahan Jadwal Mengajar Manual</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -39,12 +39,12 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-lg-6">
-                                                <h5 id="kodeDosen"> Kode Dosen : - </h5>
+                                                <h5 id="kodeDosen" class="fit-fs-16px"> Kode Dosen : - </h5>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-6">
-                                                <h5 id="namaDosen">Nama Dosen : - </h5>
+                                                <h5 id="namaDosen" class="fit-fs-16px">Nama Dosen : - </h5>
                                             </div>
                                             <input type="hidden" name="dosen" id="dosen" value="{{ Auth::user()->name }}">
                                         </div>
@@ -53,7 +53,7 @@
                                 @endif
                                 <input type="hidden" name="userId" id="userId" value="{{ Auth::user()->name }}">
                                 <input type="hidden" name="userRole" id="userRole" value="{{ Auth::user()->role }}">
-                                <div class="row justify-content-md-center">
+                                <div class="row justify-content-md-center fit-fs-16px">
                                     <div class="col-lg-6">
                                         <div class="input-group row mb-2">
                                             <div class="col-lg-2"></div>
@@ -95,7 +95,7 @@
                                                 <input type="date" data-date="" data-date-format="DD MMMM YYYY" value="2030-12-31" name="endDate" id="endDate" data-provide="datepicker" class="col-sm-5 datepicker form-control">
                                             </div>
                                             <div class="text-right mr-2">
-                                                <button id="submitBtn" type="submit" class="btn fit-bg-color-primary btn-custom-submit">Submit</button>
+                                                <button id="submitBtn" type="submit" class="btn fit-bg-color-primary btn-custom-submit fit-fs-16px">Submit</button>
                                             </div>
                                         </form>
                                     </div>
@@ -104,7 +104,7 @@
                                 <div class="row my-3">
                                     <div class="col-sm 12">
                                         <div class="table-responsive">
-                                            <h5 id="" class="text-center">DATA JADWAL AWAL</h5>
+                                            <h5 id="" class="text-center">Data Jadwal Awal</h5>
                                             <table id="tableDataAwal" class="table w100p">
                                                 <thead class="fit-bg-color-primary">
                                                     <th>No</th>
@@ -125,7 +125,7 @@
                                 <div class="row my-3">
                                     <div class="col-sm-12">
                                         <div class="table-responsive">
-                                            <h5 id="" class="text-center">DATA JADWAL YANG TERSEDIA</h5>
+                                            <h5 id="" class="text-center">Data Jadwal Yang Tersedia</h5>
                                             <table id="dataTable" class="table w100p">
                                                 <thead class="fit-bg-color-primary">
                                                     <tr>

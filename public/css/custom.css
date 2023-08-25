@@ -99,11 +99,6 @@
     font-size: 20px;
 }
 
-.login-page,
-.register-page {
-    height: 75vh !important;
-}
-
 /* START COLOR FITRI */
 .fit-bg-color-primary-only {
     background-color: #3b5998 !important;
@@ -140,6 +135,21 @@
     color: #ffff !important;
 }
 /* END COLOR FITRI */
+
+/* START FONT SIZE FITRI */
+.fit-fs-16px {
+    font-size: 16px !important;
+}
+.fit-fs-26px {
+    font-size: 26px !important;
+}
+.fit-fs-42px {
+    font-size: 42px !important;
+}
+.toast {
+    font-size: 16px !important;
+}
+/* END FONT SIZE FITRI */
 
 .color-salmon {
     color: salmon;
