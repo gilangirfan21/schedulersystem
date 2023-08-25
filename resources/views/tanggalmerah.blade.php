@@ -47,7 +47,7 @@
                             @endif
                             <input type="hidden" name="userId" id="userId" value="{{ Auth::user()->name }}">
                             <input type="hidden" name="userRole" id="userRole" value="{{ Auth::user()->role }}">
-                            <button id="btnTambah" class="btn fit-bg-color-secondary mx-1 mb-2" data-toggle="modal" data-target="#modalTambah" style="width: 120px">Tambah</button>
+                            <button id="btnTambah" class="btn fit-bg-color-primary mx-1 mb-2" data-toggle="modal" data-target="#modalTambah" style="width: 120px">Tambah</button>
                             {{-- Start Modal Tambah Tanggal Merah --}}
                             <div class="modal fade" id="modalTambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <form id="formTambahTanggalMerah" action="{{ route('tanggalmerah.tambah') }}" method="POST" enctype="multipart/form-data">
@@ -68,8 +68,8 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button id="btnTambah" class="btn fit-bg-color-secondary text-left">Tambah</button>
+                                                <button type="button" class="btn btn-close" data-dismiss="modal">Close</button>
+                                                <button id="btnTambah" class="btn fit-bg-color-primary text-left">Tambah</button>
                                             </div>
                                         </div>
                                     </div>
@@ -80,12 +80,12 @@
                                 <div class="col-sm-12">
                                     <div class="table-responsive">
                                         <table id="dataTable" class="table w100p">
-                                            <thead class="text-center fit-bg-color-secondary">
+                                            <thead class="text-center fit-bg-color-primary">
                                                 <tr>
-                                                    <th class="text-center fit-text-color-2">No</th>
-                                                    <th class="text-center fit-text-color-2">Tanggal Merah</th>
-                                                    <th class="text-center fit-text-color-2">Keterangan</th>
-                                                    <th class="text-center fit-text-color-2">Action</th>
+                                                    <th class="text-center">No</th>
+                                                    <th class="text-center">Tanggal Merah</th>
+                                                    <th class="text-center">Keterangan</th>
+                                                    <th class="text-center">Pilih</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="text-center">
@@ -117,9 +117,6 @@ $(document).ready( function () {
     }
     // INIT LOAD ALL DATA
     load();
-
-    $(document).on('click', 'btnTambah', function() {
-    });
 
     $(document).on('click', '.btnHapus', function(event) {
         event.preventDefault();

@@ -300,6 +300,15 @@ class JadwalController extends Controller
             ]);
         }
 
+        $listKodeJamAwal = [];
+        for ($i=0; $i < count($listAwalArr); $i++) { 
+            $jamAwal = Jadwal::select('kode_jam')
+                    ->where('id',$listAwalArr[$i])
+                    ->get();
+            array_push($listKodeJamAwal, $jamAwal[0]['kode_jam']);
+        }
+        $listKodeJamAwal = implode('/', $listKodeJamAwal);
+
         if (strtoupper($type) == 'SEMENTARA') {
             try {
                 for ($i=0; $i < count($listAwalArr); $i++) { 
@@ -326,7 +335,7 @@ class JadwalController extends Controller
                     $dataBaru->kode_matkul = $dataAwal->kode_matkul;
                     $dataBaru->pertemuan = $dataAwal->pertemuan;
                     $dataBaru->kode_dosen = $dataAwal->kode_dosen;
-                    $dataBaru->ket_jadwal = $dataAwal->tanggal . ';' . $request->list_id_awal . ';' . $dataAwal->kode_ruangan;
+                    $dataBaru->ket_jadwal = $request->list_id_awal . ';' . $listKodeJamAwal . ';' . $dataAwal->tanggal . ';' . $dataAwal->kode_ruangan;
                     $dataBaru->save();
                     // Remove old schadule
                     $dataAwal->kode_kelas = null;
@@ -365,52 +374,6 @@ class JadwalController extends Controller
     {
         //
     }
-
-    /**
-     * Hapus semua data jadwal di table jadwal
-     */
-    // public function hapus(Request $request)
-    // {
-    //     // $user_id = 'master';
-    //     $user_id = $request->user_id;
-    //     if (isset($request->user_id) && (isset($request->hapus_jadwal) && $request->hapus_jadwal === 'Y')) {
-    //         try {
-    //             $datetime = date('Y-m-d H:i:s');
-
-    //             $countData = Jadwal::count();
-    //             if ($countData) {
-    //                 HapusHistoryJadwal::create([
-    //                     'id_akun' => $user_id,
-    //                     'jumlah_data' => $countData,
-    //                     'time' => $datetime
-    //                 ]);
-    //                 // TRUCATE TABLE JAWDAL
-    //                 Jadwal::truncate();
-        
-    //                 return response()->json([
-    //                     'status' => '200',
-    //                     'message' => 'Semua jadwal berhasil dihapus'
-    //                 ]);
-    //             } else {
-    //                 return response()->json([
-    //                     'status' => '400',
-    //                     'message' => 'Table gagal dihapus karena kosong'
-    //                 ]);
-    //             }
-                
-    //         } catch (QueryException $e) {
-    //             $error = [
-    //                 'error' => $e->getMessage()
-    //             ];
-    //             return response()->json($error);
-    //         }
-    //     } else {
-    //         $error = [
-    //             'error' => 'failed'
-    //         ];
-    //         return response()->json($error);
-    //     }
-    // }
 
     public function riwayat(Request $request) {
         // check kode_dosen

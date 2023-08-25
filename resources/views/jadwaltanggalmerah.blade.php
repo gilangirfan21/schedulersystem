@@ -7,7 +7,7 @@
             <div class="row mb-2">
                 <div id="test" class="col-sm-6">
                     {{-- <h1 class="m-0">{{ __('Dashboard') }}</h1> --}}
-                    <h1 class="ml-2">Halaman Jadwal Mengajar di Tanggal Merah</h1>
+                    <h1 class="ml-2">Halaman Jadwal Mengajar Bertepatan pada Tanggal Merah</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -69,20 +69,20 @@
                                 <div class="col-sm-12">
                                     <div class="table-responsive">
                                         <table id="dataTable" class="table w100p">
-                                            <thead class="text-center fit-bg-color-secondary">
+                                            <thead class="text-center fit-bg-color-primary">
                                                 <tr>
-                                                    <th class="text-center fit-text-color-2">No</th>
-                                                    <th class="text-center fit-text-color-2">Hari</th>
-                                                    <th class="text-center fit-text-color-2">Tanggal</th>
-                                                    <th class="text-center fit-text-color-2">Mata Kuliah</th>
-                                                    <th class="text-center fit-text-color-2">Jam</th>
-                                                    <th class="text-center fit-text-color-2">Kode Ruangan</th>
-                                                    <th class="text-center fit-text-color-2">Kode Kelas</th>
-                                                    <th class="text-center fit-text-color-2">Pertemuan</th>
-                                                    <th class="text-center fit-text-color-2">Kode Dosen</th>
-                                                    <th class="text-center fit-text-color-2">Dosen</th>
-                                                    <th class="text-center fit-text-color-2">Detail</th>
-                                                    <th class="text-center fit-text-color-2">Pilih</th>
+                                                    <th class="text-center">No</th>
+                                                    <th class="text-center">Hari</th>
+                                                    <th class="text-center">Tanggal</th>
+                                                    <th class="text-center">Kelas</th>
+                                                    <th class="text-center">Waktu</th>
+                                                    <th class="text-center">Ruang</th>
+                                                    <th class="text-center">Mata Kuliah</th>
+                                                    <th class="text-center">Dosen</th>
+                                                    <th class="text-center">Pertemuan</th>
+                                                    <th class="text-center">Keterangan</th>
+                                                    {{-- <th class="text-center">Detail</th> --}}
+                                                    <th id="thPilih" class="text-center fit-text-color-2">Pilih</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="text-center">
@@ -100,7 +100,7 @@
             {{-- Modal Detail--}}
             <div id="modalDetail" class="modal" tabindex='-1'>
                 <div class="modal-content">
-                    <span class="close btnModalClose">&times;</span>
+                    {{-- <span class="close btnModalClose">&times;</span> --}}
                     <!-- Modal content -->
                     <h2 class="text-center mb-3 mt-4">Detail Jadwal</h2>
                     <div id="keteranganTanggal" class="text-center">
@@ -122,7 +122,7 @@
                         </ul>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btnModalClose" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-close btnModalClose" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -130,7 +130,7 @@
             {{-- Modal Rekomendasi--}}
             <div id="modalRekomendasi" class="modal">
                 <div class="modal-content">
-                    <span class="close btnModalClose">&times;</span>
+                    {{-- <span class="close btnModalClose">&times;</span> --}}
                     <!-- Modal content -->
                     <h2 class="text-center mb-3 mt-4" id="titleModal">Pilih Rerkomendasi Jadwal</h2>
                     <div id="containerCardRekomendasi" class="containerCardRekomendasi">
@@ -139,9 +139,9 @@
                         <form action="{{ route('check') }}" method="GET">
                             <input type="hidden" name="type" id="type">
                             <input type="hidden" name="listId" id="listId">
-                            <button type="submit" class="btn btn-success">Pilih Manual</button>
+                            <button type="submit" class="btn fit-bg-color-primary">Pilih Manual</button>
                         </form>
-                        <button type="button" class="btn btn-secondary btnModalClose" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-close btnModalClose" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -169,63 +169,13 @@ $(document).ready( function () {
     function load() {
         if (userRole != 1 && userRole != 2) {
             detailDosen(dosen); 
+        } else {
+            $('#thPilih').hide();
         }
         jadwalTanggalMerah(dosen);
     }
     // INIT LOAD ALL DATA
     load();
-
-    $(document).on('click', '.btnDetail', function() {
-        // get detail row
-        let rowData = this.parentElement.parentElement.childNodes;
-        let tanggal = rowData[2].textContent;
-        let kodeKelas = rowData[6].textContent;
-        let kodeDosen = rowData[7].textContent;
-        let namaDosen = rowData[8].textContent;
-        let flag = rowData[11].childNodes[1].getAttribute('class');
-        let ketTanggalMerah = rowData[11].childNodes[2].getAttribute('class');
-
-        // cek tanggal merah
-        if (flag == 'L') {
-            $('#tanggal').text(tanggal);
-            $('#detailKetranganTanggal').text(ketTanggalMerah);
-            $('#keteranganTanggal').show();
-        } else {
-            $('#keteranganTanggal').hide();
-        }
-
-        let ketJadwal = this.id;
-        let arrKetJadwal = ketJadwal.split("|");
-        let detailKet = arrKetJadwal[1];
-        // console.log(detailKet);
-        if (detailKet != 'null') {
-            // console.log('masuk if');
-            let detailPerubahan = detailKet;
-            let arrDetail = detailPerubahan.split(";");
-            let exTanggal = arrDetail[0];
-            let exWaktu = arrDetail[1];
-            let exRuangan = arrDetail[2];
-
-            // Isi detial jadwal
-            $('#perubahanFalse').hide();
-            $('#perubahanTrue').show();
-            $('#kdKelas').text('Kode Kelas : ' + kodeKelas);
-            $('#kdDosen').text('Kode Dosen : ' + kodeDosen);
-            $('#nmDosen').text('Nama Dosen : ' + namaDosen);
-            $('#tglAwal').text('Tanggal Awal : ' + exTanggal);
-            $('#wktAwal').text('Waktu Awal : ' + exWaktu);
-            $('#rgAwal').text('Ruangan Awal : ' + exRuangan);
-            
-        } else {
-            // console.log("masuk else");
-            $('#perubahanTrue').hide();
-            $('#perubahanFalse').show();
-        }
-        
-
-        
-        $('#modalDetail').show();
-    });
 
     $(document).on('click', '.open-modal', function() {
         // type = $(this).text();
@@ -371,10 +321,11 @@ $(document).ready( function () {
                 $('#dataTable').DataTable({
                     "data": data.jadwal,
                     columnDefs: [
-                        { width: '20px', targets: [0,4] }, // 0 is first column
-                        { width: '50px', targets: [1,2,7] },
-                        { width: '120px', targets: [5,6,8] },
-                        { width: '150px', targets: [3,9] },
+                        { className: 'text-center', targets: [0, 1, 2, 3, 4, 5, 8, 9] },
+                        { className: 'text-left', targets: [6, 7] },
+                        { className: 'rowPindah', targets: 10 },
+                        { width: '300px', targets: [6] },
+                        { width: '200px', targets: [7] },
                     ],
                     "columns": [{
                         "data": "no",
@@ -389,7 +340,7 @@ $(document).ready( function () {
                         "data": "tanggal"
                     },
                     {
-                        "data": "matkul"
+                        "data": "kode_kelas"
                     },
                     {
                         "data": "concat_jam"
@@ -398,37 +349,41 @@ $(document).ready( function () {
                         "data": "kode_ruangan"
                     },
                     {
-                        "data": "kode_kelas"
-                    },
-                    {
-                        "data": "pertemuan"
-                    },
-                    {
-                        "data": "kode_dosen"
+                        "data": "matkul"
                     },
                     {
                         "data": "dosen"
                     },
                     {
-                        "data": "ket_jadwal", "width" : "50px", 
-                        "render": function (data) {
-                            return '<button type="button" id="btnDetail' + i + '|' + data + '" class="btn btn-info m-1 btnDetail" data-toggle="modal" data-target="#modalDetail">Detail</button>'
-                        }
+                        "data": "pertemuan"
                     },
+                    {
+                        "data": "ket_tanggal_merah"
+                    },
+                    // {
+                    //     "data": "ket_jadwal", "width" : "50px", 
+                    //     "render": function (data) {
+                    //         return '<button type="button" id="btnDetail' + i + '|' + data + '" class="btn fit-bg-color-primary m-1 btnDetail" data-toggle="modal" data-target="#modalDetail">Detail</button>'
+                    //     }
+                    // },
                     {
                         "data": null, "width" : "70px", 
                         "render": function (data, type, row) {
-                            return '<button type="button" id="btnSem' + data.concat_kode_jam + '" class="btn btn-primary m-1 open-modal btnSementara" data-toggle="modal" data-target="#modalRekomendasi">Pindah</button><input type="hidden" class="' + data.flag + '"><input type="hidden" class="' + data.ket_tanggal_merah + '">'
+                            var dk = data.kode_kelas;
+                            var lastChar = dk.charAt(dk.length - 1);
+                            if (lastChar == 'A' || lastChar == 'B' || lastChar == 'C' || dosen == '-') {
+                                return '<button type="button" id="btnSem' + data.concat_kode_jam + '" class="btn fit-bg-color-primary  m-1 open-modal btnSementara btnHide" data-toggle="modal" data-target="#modalRekomendasi">Pindah</button><input type="hidden" class="' + data.flag + '"><input type="hidden" class="' + data.ket_tanggal_merah + '">'
+                            } else {
+                                return '<button type="button" id="btnSem' + data.concat_kode_jam + '" class="btn fit-bg-color-primary m-1 open-modal btnSementara" data-toggle="modal" data-target="#modalRekomendasi">Pindah</button><input type="hidden" class="' + data.flag + '"><input type="hidden" class="' + data.ket_tanggal_merah + '">'
+                            }
                         }
                     }
                 ],
-                // row merah if hari libur
-                // "rowCallback": function(row, data, index) {
-                //     if ($(row).find('input').hasClass('L')) {
-                //     $(row).addClass('bg-danger');
-                //     }
-                // }
                 });
+                // hide row pindah jika login sebagai admin
+                if (userRole == 1 || userRole == 2) {
+                    $('.rowPindah').hide();
+                }
             }
         });
     }

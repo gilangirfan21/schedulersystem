@@ -46,7 +46,7 @@
                                                         <th class="text-center fit-text-color-2">Tanggal</th>
                                                         <th class="text-center fit-text-color-2">Kelas</th>
                                                         <th class="text-center fit-text-color-2">Waktu</th>
-                                                        <th class="text-center fit-text-color-2">Ruang</th>
+                                                        <th class="text-center fit-text-color-2">Ruangan</th>
                                                         <th class="text-center fit-text-color-2">Mata Kuliah</th>
                                                         <th class="text-center fit-text-color-2">Dosen</th>
                                                         <th class="text-center fit-text-color-2">Pertemuan</th>
@@ -78,28 +78,12 @@
                         </ul>
                     </div>
                     <div id="perubahanTrue" >
-                        <h5 class="text-center">Telah Melakukan Perubahan</h5>
-                        <h5 id="pertemuan" class="text-center">Pertemuan : </h5>
-                        <ul class="font-weight-bold">
-                            <div class="row">
-                                <div class="col-sm-2"></div>
-                                <div class="col-sm-3">
-                                    <li id="kdKelas" class="list-decorate-none">Kelas      : </li>
-                                    <li id="nmDosen" class="list-decorate-none">Dosen      : </li>
-                                    <li id="matkul" class="list-decorate-none">Mata Kuliah : </li>
-                                </div>
-                                <div class="col-sm-3">
-                                    <li id="tglAwal" class="list-decorate-none">Tanggal Awal : </li>
-                                    <li id="wktAwal" class="list-decorate-none">Waktu Awal   : </li>
-                                    <li id="rgAwal" class="list-decorate-none">Ruang Awal    : </li>
-                                </div>
-                                <div class="col-sm-3">
-                                    <li id="tglBaru" class="list-decorate-none">Tanggal Baru : </li>
-                                    <li id="wktBaru" class="list-decorate-none">Waktu Baru   : </li>
-                                    <li id="rgBaru" class="list-decorate-none">Ruang Baru    : </li>
-                                </div>
-                                <div class="col-sm-1"></div>
-                            </div>
+                        <ul>
+                            <li id="kdKelas" class="list-decorate-none">Kelas : </li>
+                            <li id="nmDosen" class="list-decorate-none">Nama Dosen : </li>
+                            <li id="tglAwal" class="list-decorate-none color-salmon">Tanggal Awal : </li>
+                            <li id="wktAwal" class="list-decorate-none color-salmon">Waktu Awal : </li>
+                            <li id="rgAwal" class="list-decorate-none color-salmon">Ruang Awal : </li>
                         </ul>
                     </div>
                     <div class="modal-footer">
@@ -125,15 +109,15 @@ $(document).ready(function () {
 
 
     $(document).on('click', '.open-modal', function() {
+    // Code to display the modal here
+            
+        // Load sugest Jadwal
+        // loadDetail();
+
         // get detail row
         let rowData = this.parentElement.parentElement.childNodes;
-        let pertemuan = rowData[8].textContent;
         let kodeKelas = rowData[3].textContent;
         let namaDosen = rowData[7].textContent;
-        let matkul = rowData[6].textContent; 
-        let newTanggal = rowData[2].textContent; 
-        let newWaktu = rowData[4].textContent; 
-        let newRuangan = rowData[5].textContent; 
 
         let ketJadwal = this.id;
         let arrKetJadwal = ketJadwal.split("|");
@@ -143,23 +127,18 @@ $(document).ready(function () {
             // console.log('masuk if');
             let detailPerubahan = detailKet;
             let arrDetail = detailPerubahan.split(";");
-            let exTanggal = arrDetail[2];
+            let exTanggal = arrDetail[0];
             let exWaktu = arrDetail[1];
-            let exRuangan = arrDetail[3];
+            let exRuangan = arrDetail[2];
 
             // Isi detial jadwal
             $('#perubahanFalse').hide();
             $('#perubahanTrue').show();
-            $('#pertemuan').text('Pertemuan : ' + pertemuan);
             $('#kdKelas').text('Kelas : ' + kodeKelas);
-            $('#nmDosen').text('Dosen : ' + namaDosen);
-            $('#matkul').text('Mata Kuliah : ' + matkul);
+            $('#nmDosen').text('Nama Dosen : ' + namaDosen);
             $('#tglAwal').text('Tanggal Awal : ' + exTanggal);
             $('#wktAwal').text('Waktu Awal : ' + exWaktu);
             $('#rgAwal').text('Ruangan Awal : ' + exRuangan);
-            $('#tglBaru').text('Tanggal Baru : ' + newTanggal);
-            $('#wktBaru').text('Waktu Baru : ' + newWaktu);
-            $('#rgBaru').text('Ruangan Baru : ' + newRuangan);
             
         } else {
             // console.log("masuk else");

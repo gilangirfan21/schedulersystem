@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Jad;
 use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\Auth;
 
 class SchedulerController extends Controller
 {
@@ -54,7 +55,6 @@ class SchedulerController extends Controller
                 ->where('ref_dosen.kode', '=', $kode_dosen)
                 ->where('jadwal.kode_dosen', '!=', null)
                 ->paginate(10);
-
         }
 
         $i=0;
@@ -70,102 +70,30 @@ class SchedulerController extends Controller
                 $arrJadwal[$i]['kode_jam'] = [$jadwal[$j]['id'] => $jadwal[$j]['kode_jam']];
                 $tmp = $j;
                 $tmp++;
-
                 if ($tmp < count($jadwal)) {
                     if ($arrJadwal[$i]['kode_kelas'] == $jadwal[$tmp]['kode_kelas']) {
-
                         $arrJadwal[$i]['kode_jam'][$jadwal[$tmp]['id']] = $jadwal[$tmp]['kode_jam'];
                         $j++;
                         $tmp++;
-
-                        // dd($arrJadwal[$i]['kode_kelas']);
-                        // dd($jadwal[$tmp]['kode_kelas']);
                         if ($tmp < count($jadwal)) {
                             if ($arrJadwal[$i]['kode_kelas'] == $jadwal[$tmp]['kode_kelas']) {                                
                                 $arrJadwal[$i]['kode_jam'][$jadwal[$tmp]['id']] = $jadwal[$tmp]['kode_jam'];
                                 $j++;
                                 $tmp++;
-
                                 if ($tmp < count($jadwal)) {
                                     if ($arrJadwal[$i]['kode_kelas'] == $jadwal[$tmp]['kode_kelas']) {                                
                                         $arrJadwal[$i]['kode_jam'][$jadwal[$tmp]['id']] = $jadwal[$tmp]['kode_jam'];
                                         $j++;
                                         $tmp++;
-                    
-                                        
                                     }
                                 }
-            
-                                
                             }
                         }
                     }
                 }
             $i++;
         }
-        
-
-        // foreach($jadwal as $key => $value) {
-
-        //     $arrJadwal[$i]['kode_kelas'] = $value['kode_kelas'];
-        //     $arrJadwal[$i]['hari'] = $value['hari'];
-        //     $arrJadwal[$i]['kode_dosen'] = $value['kode_dosen'];
-        //     $arrJadwal[$i]['kode_jam'] = [];
-        //     array_push($arrJadwal[$i]['kode_jam'],$value['kode_jam']);
-
-        //     for ($key; $key < strlen($jadwal)-$key; $key++) { 
-        //         if($arrJadwal[$i]['kode_kelas'] == $jadwal[$i+1]['kode_kelas'])
-        //         array_push($arrJadwal[$i]['kode_jam'],$jadwal[$i+1]['kode_jam']);
-        //     }
-            
-            
-        //     $i++;
-        // }
-        // $arr = [];
-
-        // for ($j=0; $j < count($jadwal); $j++) { 
-        //     $arrJadwal[$i]['kode_kelas'] = $jadwal[$j]['kode_kelas'];
-        //     $arrJadwal[$i]['kode_dosen'] = $jadwal[$j]['kode_dosen'];
-        //     $arrJadwal[$i]['hari'] = $jadwal[$j]['hari'];
-        //     $arrJadwal[$i]['kode_jam'] = $jadwal[$j]['kode_jam'];
-        //     // dd($arrJadwal);
-
-        //     $tmp = $j;
-            
-        //     $tmp++;
-        //     // dd($tmp);
-        //     if ($tmp < count($jadwal)) {
-        //         // dd($arrJadwal[$i]['kode_kelas']);
-        //         // dd($jadwal[$tmp]['kode_kelas']);
-        //         while ($arrJadwal[$i]['kode_kelas'] == $jadwal[$tmp]['kode_kelas']) {
-        //             // $arrJadwal[$i]['kode_jam'] = $arrJadwal[$i]['kode_jam'] . ";" . $jadwal[$tmp]['kode_jam'];
-        //             $j++;
-        //             $tmp++;
-        //             dd($tmp);
-        //         }
-        //     }
-            // dd(count($jadwal));
-            // do  {
-            //     echo "test";
-            //     // dd( $jadwal[$tmp]['kode_kelas']);
-                
-
-            // } while ($tmp < count($jadwal)) {
-            //     # code...
-            // }
-            
-
-        //     $i++;
-        // }
-
-
-        // dd($arrJadwal);
         $jadwal = $arrJadwal;
-
-        // CONVERT KODE JAM to JAM
-        // foreach
-        // dd($jadwal);
-        
         return view('home', ['jadwal' => $jadwal, 'dosen' => $dosen]);
     }
 

@@ -88,7 +88,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-close" data-dismiss="modal">Close</button>
                                                     <button id="btnImportJadwal" class="btn btn-primary text-left">Import</button>
                                                 </div>
                                             </div>
@@ -110,15 +110,14 @@
                                                     <th class="text-center fit-text-color-2">No</th>
                                                     <th class="text-center fit-text-color-2">Hari</th>
                                                     <th class="text-center fit-text-color-2">Tanggal</th>
+                                                    <th class="text-center fit-text-color-2">Kelas</th>
+                                                    <th class="text-center fit-text-color-2">Waktu</th>
+                                                    <th class="text-center fit-text-color-2">Ruang</th>
                                                     <th class="text-center fit-text-color-2">Mata Kuliah</th>
-                                                    <th class="text-center fit-text-color-2">Jam</th>
-                                                    <th class="text-center fit-text-color-2">Kode Ruangan</th>
-                                                    <th class="text-center fit-text-color-2">Kode Kelas</th>
-                                                    <th class="text-center fit-text-color-2">Pertemuan</th>
-                                                    <th class="text-center fit-text-color-2">Kode Dosen</th>
                                                     <th class="text-center fit-text-color-2">Dosen</th>
+                                                    <th class="text-center fit-text-color-2">Pertemuan</th>
                                                     <th class="text-center fit-text-color-2">Detail</th>
-                                                    <th class="text-center fit-text-color-2">Pindah Jadwal</th>
+                                                    <th id="thPilih" class="text-center fit-text-color-2">Pilih</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="text-center">
@@ -136,7 +135,7 @@
             {{-- Modal Detail--}}
             <div id="modalDetail" class="modal" tabindex='-1'>
                 <div class="modal-content">
-                    <span class="close btnModalClose">&times;</span>
+                    <!--<span class="close btnModalClose">&times;</span>-->
                     <!-- Modal content -->
                     <h2 class="text-center mb-3 mt-4">Detail Jadwal</h2>
                     <div id="keteranganTanggal" class="text-center">
@@ -148,17 +147,32 @@
                         <span class="list-decorate-none">Tidak ada perubahan jadwal</span>
                     </div>
                     <div id="perubahanTrue" >
-                        <ul>
-                            <li id="kdKelas" class="list-decorate-none">Kode Kelas : </li>
-                            <li id="kdDosen" class="list-decorate-none">Kode Dosen : </li>
-                            <li id="nmDosen" class="list-decorate-none">Nama Dosen : </li>
-                            <li id="tglAwal" class="list-decorate-none color-salmon">Tanggal Awal : </li>
-                            <li id="wktAwal" class="list-decorate-none color-salmon">Waktu Awal : </li>
-                            <li id="rgAwal" class="list-decorate-none color-salmon">Ruang Awal : </li>
+                        <h5 class="text-center">Telah Melakukan Perubahan</h5>
+                        <h5 id="pertemuan" class="text-center">Pertemuan : </h5>
+                        <ul class="font-weight-bold">
+                            <div class="row">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-3">
+                                    <li id="kdKelas" class="list-decorate-none">Kelas      : </li>
+                                    <li id="nmDosen" class="list-decorate-none">Dosen      : </li>
+                                    <li id="matkul" class="list-decorate-none">Mata Kuliah : </li>
+                                </div>
+                                <div class="col-sm-3">
+                                    <li id="tglAwal" class="list-decorate-none">Tanggal Awal : </li>
+                                    <li id="wktAwal" class="list-decorate-none">Waktu Awal   : </li>
+                                    <li id="rgAwal" class="list-decorate-none">Ruang Awal    : </li>
+                                </div>
+                                <div class="col-sm-3">
+                                    <li id="tglBaru" class="list-decorate-none">Tanggal Baru : </li>
+                                    <li id="wktBaru" class="list-decorate-none">Waktu Baru   : </li>
+                                    <li id="rgBaru" class="list-decorate-none">Ruang Baru    : </li>
+                                </div>
+                                <div class="col-sm-1"></div>
+                            </div>
                         </ul>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btnModalClose" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-close btnModalClose" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -166,18 +180,18 @@
             {{-- Modal Rekomendasi--}}
             <div id="modalRekomendasi" class="modal">
                 <div class="modal-content">
-                    <span class="close btnModalClose">&times;</span>
+                    {{-- <span class="close btnModalClose">&times;</span> --}}
                     <!-- Modal content -->
-                    <h2 class="text-center mb-3 mt-4" id="titleModal">Pilih Rerkomendasi Jadwal</h2>
+                    <h2 class="text-center mb-3 mt-4" id="titleModal">Pilih Rekomendasi Jadwal</h2>
                     <div id="containerCardRekomendasi" class="containerCardRekomendasi">
                     </div>
                     <div class="modal-footer">
                         <form action="{{ route('check') }}" method="GET">
                             <input type="hidden" name="type" id="type">
                             <input type="hidden" name="listId" id="listId">
-                            <button type="submit" class="btn btn-success">Pilih Manual</button>
+                            <button type="submit" class="btn fit-bg-color-primary">Pilih Manual</button>
                         </form>
-                        <button type="button" class="btn btn-secondary btnModalClose" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-close btnModalClose" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -215,10 +229,12 @@ $(document).ready( function () {
                 success: function(data) {
                     console.log("after popup");
                     console.log(data.jadwal);
-                    $(document).Toasts('create', {
-                        title: 'Harus diganti jadwal berikut',
-                        body: data.jadwal.tanggalMerah
-                    });
+                    if (data.jadwal.tanggalMerah != '') {
+                        $(document).Toasts('create', {
+                            title: 'PERHATIAN!',
+                            body: 'Mohon melakukan perubahan jadwal pada tanggal berikut.<br><span class="font-weight-bold">' + data.jadwal.tanggalMerah + '</span>'
+                        });
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.log(error);
@@ -232,6 +248,8 @@ $(document).ready( function () {
     function load() {
         if (userRole != 1 && userRole != 2) {
             detailDosen(dosen); 
+        } else {
+            $('#thPilih').hide();
         }
         NotifTanggalMerah(dosen);
         jadwal(dosen);
@@ -242,12 +260,16 @@ $(document).ready( function () {
     $(document).on('click', '.btnDetail', function() {
         // get detail row
         let rowData = this.parentElement.parentElement.childNodes;
+        let pertemuan = rowData[8].textContent;
+        let kodeKelas = rowData[3].textContent;
+        let namaDosen = rowData[7].textContent;
+        let matkul = rowData[6].textContent;
         let tanggal = rowData[2].textContent;
-        let kodeKelas = rowData[6].textContent;
-        let kodeDosen = rowData[7].textContent;
-        let namaDosen = rowData[8].textContent;
-        let flag = rowData[11].childNodes[1].getAttribute('class');
-        let ketTanggalMerah = rowData[11].childNodes[2].getAttribute('class');
+        let newTanggal = rowData[2].textContent;
+        let newWaktu = rowData[4].textContent;
+        let newRuangan = rowData[5].textContent;
+        let flag = rowData[10].childNodes[1].getAttribute('class');
+        let ketTanggalMerah = rowData[10].childNodes[2].getAttribute('class');
 
         // cek tanggal merah
         if (flag == 'L') {
@@ -266,19 +288,24 @@ $(document).ready( function () {
             // console.log('masuk if');
             let detailPerubahan = detailKet;
             let arrDetail = detailPerubahan.split(";");
-            let exTanggal = arrDetail[0];
+            let exTanggal = arrDetail[2];
             let exWaktu = arrDetail[1];
-            let exRuangan = arrDetail[2];
+            let exRuangan = arrDetail[3];
 
             // Isi detial jadwal
             $('#perubahanFalse').hide();
             $('#perubahanTrue').show();
-            $('#kdKelas').text('Kode Kelas : ' + kodeKelas);
-            $('#kdDosen').text('Kode Dosen : ' + kodeDosen);
-            $('#nmDosen').text('Nama Dosen : ' + namaDosen);
+            $('#pertemuan').text('Pertemuan : ' + pertemuan);
+            $('#kdKelas').text('Kelas : ' + kodeKelas);
+            $('#nmDosen').text('Dosen : ' + namaDosen);
+            $('#matkul').text('Mata Kuliah : ' + matkul);
             $('#tglAwal').text('Tanggal Awal : ' + exTanggal);
             $('#wktAwal').text('Waktu Awal : ' + exWaktu);
             $('#rgAwal').text('Ruangan Awal : ' + exRuangan);
+            $('#tglBaru').text('Tanggal Baru : ' + newTanggal);
+            $('#wktBaru').text('Waktu Baru : ' + newWaktu);
+            $('#rgBaru').text('Ruangan Baru : ' + newRuangan);
+            
             
         } else {
             // console.log("masuk else");
@@ -305,7 +332,7 @@ $(document).ready( function () {
 
         // REKOMENDASI JADWAL FROM API
         var tr = $(this).closest('tr');
-        var kodeDosen = tr.find('td').eq(8).text();
+        var kodeDosen = dosen;
         var kodeRuangan = tr.find('td').eq(5).text();
         var tanggal = tr.find('td').eq(2).text();
         var hari = tr.find('td').eq(1).text();
@@ -394,6 +421,7 @@ $(document).ready( function () {
         },
         function(){
             $('#containerCardRekomendasi').empty();
+            removeModalData();
             alertify.error('Cancel');
         });
     });
@@ -429,16 +457,17 @@ $(document).ready( function () {
             },
             success: function(data) {
                 loadingSelesai();
-            // $('#dataTable').DataTable().destroy();
-            console.log(data);
-            var i = 1;
+                // $('#dataTable').DataTable().destroy();
+                console.log(data);
+                var i = 1;
                 $('#dataTable').DataTable({
                     "data": data.jadwal,
                     columnDefs: [
-                        { width: '20px', targets: [0,4] }, // 0 is first column
-                        { width: '50px', targets: [1,2,7] },
-                        { width: '120px', targets: [5,6,8] },
-                        { width: '150px', targets: [3,9] },
+                        { className: 'text-center', targets: [0, 1, 2, 3, 4, 5, 8, 9] },
+                        { className: 'text-left', targets: [6, 7] },
+                        { className: 'rowPindah', targets: 10 },
+                        { width: '300px', targets: [6] },
+                        { width: '200px', targets: [7] },
                     ],
                     "columns": [{
                         "data": "no",
@@ -453,7 +482,7 @@ $(document).ready( function () {
                         "data": "tanggal"
                     },
                     {
-                        "data": "matkul"
+                        "data": "kode_kelas"
                     },
                     {
                         "data": "concat_jam"
@@ -462,16 +491,13 @@ $(document).ready( function () {
                         "data": "kode_ruangan"
                     },
                     {
-                        "data": "kode_kelas"
-                    },
-                    {
-                        "data": "pertemuan"
-                    },
-                    {
-                        "data": "kode_dosen"
+                        "data": "matkul"
                     },
                     {
                         "data": "dosen"
+                    },
+                    {
+                        "data": "pertemuan"
                     },
                     {
                         "data": null, "width" : "50px", 
@@ -479,10 +505,15 @@ $(document).ready( function () {
                             var dk = data.kode_kelas;
                             var lastChar = dk.charAt(dk.length - 1);
                             if (lastChar == 'A' || lastChar == 'B' || lastChar == 'C') {
-                                return '<button type="button" id="btnDetail' + i + '|' + data.ket_jadwal + '" class="btn btn-info m-1 btnDetail btnHide" data-toggle="modal" data-target="#modalDetail">Detail</button>'
+                                return '<button type="button" id="btnDetail' + i + '|' + data.ket_jadwal + '" class="btn fit-bg-color-primary m-1 btnDetail btnHide" data-toggle="modal" data-target="#modalDetail">Detail</button>'
                             } else {
-                                return '<button type="button" id="btnDetail' + i + '|' + data.ket_jadwal + '" class="btn btn-info m-1 btnDetail" data-toggle="modal" data-target="#modalDetail">Detail</button>'
+                                if (data.ket_jadwal != null) {
+                                return '<button type="button" id="btnDetail' + i + '|' + data.ket_jadwal + '" class="btn fit-bg-color-primary m-1 btnDetail borderGreen" data-toggle="modal" data-target="#modalDetail">Detail</button>'
+                                } else {
+                                    return '<button type="button" id="btnDetail' + i + '|' + data.ket_jadwal + '" class="btn fit-bg-color-primary m-1 btnDetail" data-toggle="modal" data-target="#modalDetail">Detail</button>'
+                                }
                             }
+                                
                         }
                     },
                     {
@@ -490,21 +521,19 @@ $(document).ready( function () {
                         "render": function (data, type, row) {
                             var dk = data.kode_kelas;
                             var lastChar = dk.charAt(dk.length - 1);
-                            if (lastChar == 'A' || lastChar == 'B' || lastChar == 'C') {
-                            return '<button type="button" id="btnSem' + data.concat_kode_jam + '" class="btn btn-primary m-1 open-modal btnSementara btnHide" data-toggle="modal" data-target="#modalRekomendasi">Pindah</button><input type="hidden" class="' + data.flag + '"><input type="hidden" class="' + data.ket_tanggal_merah + '">'
+                            if (lastChar == 'A' || lastChar == 'B' || lastChar == 'C' || dosen == '-') {
+                            return '<button type="button" id="btnSem' + data.concat_kode_jam + '" class="btn fit-bg-color-primary  m-1 open-modal btnSementara btnHide" data-toggle="modal" data-target="#modalRekomendasi">Pindah</button><input type="hidden" class="' + data.flag + '"><input type="hidden" class="' + data.ket_tanggal_merah + '">'
                             } else {
-                                return '<button type="button" id="btnSem' + data.concat_kode_jam + '" class="btn btn-primary m-1 open-modal btnSementara" data-toggle="modal" data-target="#modalRekomendasi">Pindah</button><input type="hidden" class="' + data.flag + '"><input type="hidden" class="' + data.ket_tanggal_merah + '">'
+                                return '<button type="button" id="btnSem' + data.concat_kode_jam + '" class="btn fit-bg-color-primary m-1 open-modal btnSementara" data-toggle="modal" data-target="#modalRekomendasi">Pindah</button><input type="hidden" class="' + data.flag + '"><input type="hidden" class="' + data.ket_tanggal_merah + '">'
                             }
                         }
                     }
                 ],
-                // row merah if hari libur
-                // "rowCallback": function(row, data, index) {
-                //     if ($(row).find('input').hasClass('L')) {
-                //     $(row).addClass('bg-danger');
-                //     }
-                // }
                 });
+                // hide row pindah jika login sebagai admin
+                if (userRole == 1 || userRole == 2) {
+                    $('.rowPindah').hide();
+                }
             }
         });
     }
@@ -567,41 +596,6 @@ $(document).ready( function () {
             $('#formImportExoport').submit();
         }
     });
-
-    // DELETE API
-    // $('#btnHapusSemuaJadwal').on('click', function(event) {
-    //     event.preventDefault();
-    //     var angkaPertama = Math.floor(Math.random() * 11);
-    //     var angkaKedua = Math.floor(Math.random() * 11);
-    //     var total = angkaPertama + angkaKedua;
-    //     var isTrue = 'Y';
-    //     console.log(total);
-    //     alertify.prompt( 'Hapus Semua Jadwal?', 'Hitung penjumlahan dari ' + angkaPertama + ' + ' + angkaKedua + ' = ' , ''
-    //         , function(evt, value) { 
-    //             if (value == total) {
-    //                 var encodeDataDosen = $.param({ hapus_jadwal: isTrue, user_id: userId });
-    //                 $.ajax({
-    //                     type: 'POST',
-    //                     url: '/api/jadwal/hapus',
-    //                     data: encodeDataDosen,
-    //                     beforeSend: function() {
-    //                     },
-    //                     success: function(data) {
-    //                         if (data.status == '200') {
-    //                             alertify.success('Semua Jadwal Berhasil Dihapus');
-    //                             location.reload();
-    //                         } else {
-    //                             alertify.error('Hapus Jadwal Gagal');
-    //                         }
-    //                     }
-
-    //                 });
-    //             } else {
-    //                 alertify.error('Penjumlahan Anda Salah');
-    //             }
-    //         }
-    //         , function() { alertify.error('Batal Menghapus Jadwal') });
-    // });
 
     // DELETE FORM
     $('#btnHapusSemuaJadwal').on('click', function(event) {

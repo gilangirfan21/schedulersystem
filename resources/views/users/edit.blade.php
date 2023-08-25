@@ -38,7 +38,7 @@
                                     <input type="password" class="form-control" id="password" name="password" value="">
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn fit-bg-color-secondary" style="width: 120px">Update</button>
+                                    <button type="submit" class="btn fit-bg-color-primary" style="width: 120px">Update</button>
                                 </div>
                             </form>
                         </div>

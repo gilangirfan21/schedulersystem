@@ -35,18 +35,21 @@
 <div class="wrapper">
 
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white mhs-margin mhs-nav fit-bg-color-primary px-3" >
+    <nav class="main-header navbar navbar-expand navbar-white mhs-margin mhs-nav fit-bg-color-primary px-3 pb-3" >
         <!-- Left navbar links -->
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a href="{{ route('login') }}" role="button"><i class="fa fa-home fit-text-color-2" aria-hidden="true"></i></a>
+            <li class="nav-item ml-2">
+                <img src="{{ asset('images/logo_gundar.png') }}" alt="logo universitas gunadarma" width="40" height="40" class="d-inline-block align-top">
+            </li>
+            <li class="nav-item ml-2 mt-1">
+                <span class="ml-1 title-gundar">Universitas Gunadarma</span>
             </li>
         </ul>
 
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
-                <span class="fit-bg-color-primary fit-text-color-2">Halaman Mahasiswa</span>
+                <a style="width: 120px;" class="btn btn-primary fit-text-color-2" href="{{ route('login') }}" role="button">Login</a>
             </li>
         </ul>
     </nav>
@@ -72,7 +75,7 @@
     <footer class="main-footer navbar-white fit-bg-color-primary mhs-margin">
         <!-- Coppyright Center -->
         <div class="d-flex justify-content-center">
-            <span class="fit-text-color-2">Copyright &copy; 2023 - Fitriana Indah Mitasari</span>
+            <span class="fit-text-color-2">Copyright &copy; 2023 - Fitriana Indah Pramitasari</span>
         </div>
     </footer>
 </div>

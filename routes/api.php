@@ -3,12 +3,12 @@
 use App\Http\Controllers\api\DosenController;
 use App\Http\Controllers\api\GedungController;
 use App\Http\Controllers\api\JadwalController;
-use App\Http\Controllers\API\JadwalAvailableController;
-use App\Http\Controllers\API\JadwalRekomendasiController;
-use App\Http\Controllers\API\LantaiController;
-use App\Http\Controllers\API\LokasiController;
-use App\Http\Controllers\API\RuanganController;
-use App\Http\Controllers\API\TanggalMerahApiController;
+use App\Http\Controllers\api\JadwalAvailableController;
+use App\Http\Controllers\api\JadwalRekomendasiController;
+use App\Http\Controllers\api\LantaiController;
+use App\Http\Controllers\api\LokasiController;
+use App\Http\Controllers\api\RuanganController;
+use App\Http\Controllers\api\TanggalMerahApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,8 +25,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    // Route::post('/dosen','App\Http\Controllers\api\DosenController@show');
-    
     return $request->user();
 });
 

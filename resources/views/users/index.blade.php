@@ -29,7 +29,7 @@
                         </div>
                         <div class="card-body p-0">
                             <table class="table m-1">
-                                <thead class="fit-bg-color-secondary">
+                                <thead class="fit-bg-color-primary">
                                     <tr>
                                         <th>Kode Dosen</th>
                                         <th>Role</th>
@@ -46,7 +46,7 @@
                                         <td>{{ $user->nama }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>
-                                            <a href="/user/edit/{{ $user->uid }}" class="btn fit-bg-color-secondary">Edit</a>
+                                            <a href="/user/edit/{{ $user->uid }}" class="btn fit-bg-color-primary">Edit</a>
                                             <a href="/user/resetpass/{{ $user->uid }}" class="btn btn-warning">Reset Password</a>
                                             <a id="btnHapus" href="/user/hapus/{{ $user->uid }}" class="btn btn-danger">Hapus</a>
                                         </td>

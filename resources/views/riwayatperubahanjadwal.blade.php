@@ -51,21 +51,21 @@
                                 <div class="col-sm-12">
                                     <div class="table-responsive">
                                         <table id="dataTable" class="table w100p">
-                                            <thead class="text-center fit-bg-color-secondary">
+                                            <thead class="text-center fit-bg-color-primary">
                                                 <tr>
-                                                    <th class="text-center fit-text-color-2">No</th>
-                                                    <th class="text-center fit-text-color-2">Kode Kelas</th>
-                                                    <th class="text-center fit-text-color-2">Hari Awal</th>
-                                                    <th class="text-center fit-text-color-2">Hari</th>
-                                                    <th class="text-center fit-text-color-2">Tanggal Awal</th>
-                                                    <th class="text-center fit-text-color-2">Tanggal</th>
-                                                    <th class="text-center fit-text-color-2">Mata Kuliah</th>
-                                                    <th class="text-center fit-text-color-2">Pertemuan</th>
-                                                    <th class="text-center fit-text-color-2">Kode Ruangan Awal</th>
-                                                    <th class="text-center fit-text-color-2">Kode Ruangan</th>
-                                                    <th class="text-center fit-text-color-2">Kode Jam Awal</th>
-                                                    <th class="text-center fit-text-color-2">Kode Jam</th>
-                                                    <th class="text-center fit-text-color-2">Dirubah Oleh</th>
+                                                    <th class="text-center">No</th>
+                                                    <th class="text-center">Kelas</th>
+                                                    <th class="text-center">Hari Awal</th>
+                                                    <th class="text-center">Hari Baru</th>
+                                                    <th class="text-center">Tanggal Awal</th>
+                                                    <th class="text-center">Tanggal Baru</th>
+                                                    <th class="text-center">Mata Kuliah</th>
+                                                    <th class="text-center">Pertemuan</th>
+                                                    <th class="text-center">Ruang Awal</th>
+                                                    <th class="text-center">Ruang Baru</th>
+                                                    <th class="text-center">Waktu Awal</th>
+                                                    <th class="text-center">Waktu Baru</th>
+                                                    <th class="text-center">Diubah Oleh</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="text-center">

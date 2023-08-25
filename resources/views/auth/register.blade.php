@@ -34,8 +34,6 @@
                 <div class="col-lg-12">
                     <div  class="card">
                         <div class="card-body">
-                            {{-- <h5 class="card-title">{{ __('About us') }}</h5> --}}
-
                             {{-- START DEFAULT VIEW REGISTER --}}
                             <div class="card-body login-card-body">
                                 <div class="row justify-content-md-center">
@@ -48,22 +46,6 @@
                                         {{-- <form method="POST" action="{{ route('register') }}"> --}}
                                         <form method="POST" action="{{ route('tambah') }}">
                                             @csrf
-
-                                            {{-- <div class="input-group mb-3"> --}}
-                                                {{-- <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="{{ __('Name') }}" required autocomplete="name" autofocus> --}}
-                                                {{-- <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="{{ __('Kode Dosen') }}" required autocomplete="name" autofocus> --}}
-                                                {{-- <div class="input-group-append"> --}}
-                                                    {{-- <div class="input-group-text"> --}}
-                                                        {{-- <span class="fas fa-user"></span> --}}
-                                                    {{-- </div> --}}
-                                                {{-- </div> --}}
-                                                {{-- @error('name') --}}
-                                                {{-- <span class="error invalid-feedback"> --}}
-                                                    {{-- {{ $message }} --}}
-                                                {{-- </span> --}}
-                                                {{-- @enderror --}}
-                                            {{-- </div> --}}
-
                                             {{-- START CUSTOM ADD KODE, ROLE, NAMA --}}
                                             <div class="input-group mb-3">
                                                 <select name="name" class="custom-select select2" id="name">
@@ -160,7 +142,7 @@
                                                 <div class="col-12">
                                                     <button type="submit"
                                                         {{-- class="btn btn-primary btn-block">{{ __('Register') }} --}}
-                                                        class="btn fit-bg-color-secondary btn-block">{{ __('Tambah') }}
+                                                        class="btn fit-bg-color-primary btn-block">{{ __('Tambah') }}
                                                     </button>
                                                 </div>
                                             </div>
@@ -192,15 +174,15 @@ $( document ).ready(function() {
     $.ajax({
         url: 'api/dosen',
         method: 'POST',
-        data: {
-        },
+        data: $.param({isRegisterd:'N'}),
         beforeSend: function () {
             loadingProses();
         },
         success: function(data) {
+            // console.log(data);
             var select = $('#name');
             $.each(data.dosen, function(index, item) {
-            console.log(item);
+            // console.log(item);
                 var option = $('<option></option>');
                 option.val(item.kode);
                 option.text(item.kode + '-' +item.dosen);

@@ -7,6 +7,7 @@ use App\Models\Jadwal;
 use App\Models\HapusHistoryJadwal;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
+use App\Models\RiwayatPerubahanJadwal;
 
 class HapusJadwalController extends Controller
 {
@@ -15,7 +16,6 @@ class HapusJadwalController extends Controller
         $user_id = Auth::user()->name;
         if (isset($role) && in_array($role,[1,2])) {
             $datetime = date('Y-m-d H:i:s');
-
             $countData = Jadwal::count();
             if ($countData) {
                 HapusHistoryJadwal::create([
@@ -23,6 +23,8 @@ class HapusJadwalController extends Controller
                     'jumlah_data' => $countData,
                     'time' => $datetime
                 ]);
+                // TRUNCATE TABLE HISTORY
+                RiwayatPerubahanJadwal::truncate();
                 // TRUCATE TABLE JAWDAL
                 Jadwal::truncate();
                 

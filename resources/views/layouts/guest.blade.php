@@ -28,22 +28,27 @@
     {{-- END Alertify --}}
 
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page fit-custom" style="height:90vh !important;">
 <div class="login-box">
     <div class="login-logo">
-        {{-- <a href="#">{{ config('app.name', 'Laravel') }}</a> --}}
+        <img src="{{ asset('images/logo_gundar_hd.png') }}" alt="logo universitas gunadarma" width="200" height="200" class="d-inline-block align-top">
+    </div>
+    <div class="login-logo">
         <h2>Sistem Penjadwalan Perkuliahan</h2>
     </div>
     <!-- /.login-logo -->
     <div class="card">
         @yield('content')
     </div>
+    <div class="login-logo mt-3">
+        <h2 class="font-weight-bold">Universitas Gunadarma</h2>
+    </div>
 </div>
 <!-- /.login-box -->
 
 {{-- @vite('resources/js/app.js') --}}
 <!-- Bootstrap 4 -->
-<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+{{-- <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script> --}}
 <!-- AdminLTE App -->
 <script src="{{ asset('js/adminlte.min.js') }}" defer></script>
 <!-- Alertify -->

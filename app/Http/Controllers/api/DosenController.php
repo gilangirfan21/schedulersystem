@@ -40,7 +40,6 @@ class DosenController extends Controller
 
     public function show(Request $request)
     {
-        
         if(isset($request->kodeDosen) && $request->kodeDosen != '-') {
             $kode = $request->kodeDosen;
             try {
@@ -58,8 +57,18 @@ class DosenController extends Controller
             }
         } else {
             try {
-                $dosen = Dosen::orderBy('dosen', 'asc')
-                        ->get();
+                if (strtoupper($request->isRegisterd) == 'Y') {
+                    $dosen = Dosen::orderBy('dosen', 'asc')
+                            ->where('isRegisterd','=','Y')
+                            ->get();
+                } else if (strtoupper($request->isRegisterd) == 'N') {
+                    $dosen = Dosen::orderBy('dosen', 'asc')
+                            ->whereNull('isRegisterd')
+                            ->get();
+                } else {
+                    $dosen = Dosen::orderBy('dosen', 'asc')
+                            ->get();
+                }
                 return response()->json([
                     'status' => '200',
                     'dosen' => $dosen

@@ -26,9 +26,9 @@ class TanggalMerahController extends Controller
                 'tanggal_merah' => $request->tanggal,
                 'ket' => $request->keterangan
             ]);
-            return redirect('/tanggalmerah')->with('success','Berhasil menambah tanggal ' . $request->tanggal);
+            return redirect('/menu/tanggalmerah')->with('success','Berhasil menambah tanggal ' . $request->tanggal);
         } else {
-            return redirect('/tanggalmerah')->with('failed','Gagal menambahkan tanggal merah');
+            return redirect('/menu/tanggalmerah')->with('failed','Gagal menambahkan tanggal merah');
 
         }
     }
@@ -36,9 +36,9 @@ class TanggalMerahController extends Controller
     public function Hapus(Request $request) {
         if ($request->tanggalmerah) {
             TanggalMerah::where('tanggal_merah', $request->tanggalmerah)->delete();
-            return redirect('/tanggalmerah')->with('success','Berhasil menghapus tanggal ' . $request->tanggalmerah);
+            return redirect('/menu/tanggalmerah')->with('success','Berhasil menghapus tanggal ' . $request->tanggalmerah);
         } else {
-            return redirect('/tanggalmerah')->with('failed','Gagal hapus tanggal merah');
+            return redirect('/menu/tanggalmerah')->with('failed','Gagal hapus tanggal merah');
         }
     }
 }

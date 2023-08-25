@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="ml-2">PERUBAHAN JADWAL MENGAJAR</h1>
+                    <h1 class="ml-2">PERUBAHAN JADWAL MENGAJAR MANUAL</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -58,7 +58,6 @@
                                         <div class="input-group row mb-2">
                                             <div class="col-lg-2"></div>
                                             <div class="col lg 4">
-                                                <h5 id="titlePerubahanJadwal" class="text-center">PERUBAHAN JADWAL {{ strtoupper($perubahanData['type']) }}</h5>
                                             </div>
                                         </div>
                                         <form id="formFilter">
@@ -96,7 +95,7 @@
                                                 <input type="date" data-date="" data-date-format="DD MMMM YYYY" value="2030-12-31" name="endDate" id="endDate" data-provide="datepicker" class="col-sm-5 datepicker form-control">
                                             </div>
                                             <div class="text-right mr-2">
-                                                <button id="submitBtn" type="submit" class="btn btn-primary btn-custom-submit">Submit</button>
+                                                <button id="submitBtn" type="submit" class="btn fit-bg-color-primary btn-custom-submit">Submit</button>
                                             </div>
                                         </form>
                                     </div>
@@ -107,18 +106,17 @@
                                         <div class="table-responsive">
                                             <h5 id="" class="text-center">DATA JADWAL AWAL</h5>
                                             <table id="tableDataAwal" class="table w100p">
-                                                <thead>
+                                                <thead class="fit-bg-color-primary">
                                                     <th>No</th>
                                                     <th>Hari</th>
                                                     <th>Tanggal</th>
+                                                    <th>Kelas</th>
+                                                    <th>Waktu</th>
+                                                    <th>Ruang</th>
                                                     <th>Mata Kuliah</th>
-                                                    <th>Jam</th>
-                                                    <th>Kode Ruangan</th>
-                                                    <th>Kode Kelas</th>
                                                     <th>Pertemuan</th>
                                                 </thead>
                                                 <tbody>
-
                                                 </tbody>
                                             </table>
                                         </div>
@@ -129,14 +127,15 @@
                                         <div class="table-responsive">
                                             <h5 id="" class="text-center">DATA JADWAL YANG TERSEDIA</h5>
                                             <table id="dataTable" class="table w100p">
-                                                <thead>
+                                                <thead class="fit-bg-color-primary">
                                                     <tr>
                                                         <th>No</th>
                                                         <th>Hari</th>
                                                         <th>Tanggal</th>
+                                                        <th>Kelas</th>
+                                                        <th>Waktu</th>
+                                                        <th>Ruang</th>
                                                         <th>Mata Kuliah</th>
-                                                        <th>Jam</th>
-                                                        <th>Kode Ruangan</th>
                                                         <th>Pertemuan</th>
                                                         <th>Pindah Jadwal</th>
                                                     </tr>
@@ -447,7 +446,7 @@ $( document ).ready(function() {
                         "data": "tanggal"
                     },
                     {
-                        "data": "matkul"
+                        "data": "kode_kelas"
                     },
                     {
                         "data": "concat_jam"
@@ -456,17 +455,12 @@ $( document ).ready(function() {
                         "data": "kode_ruangan"
                     },
                     {
-                        "data": "kode_kelas"
+                        "data": "matkul"
                     },
                     {
                         "data": "pertemuan"
                     },
                 ],
-                "rowCallback": function(row, data, index) {
-                    if (index === 0) {
-                        $(row).addClass('bg-color-lightgray');
-                    }
-                }
                 });
             }
         });
@@ -504,7 +498,7 @@ $( document ).ready(function() {
                         "data": "tanggal"
                     },
                     {
-                        "data": "kode_matkul"
+                        "data": "kode_kelas"
                     },
                     {
                         "data": "concat_jam"
@@ -513,12 +507,15 @@ $( document ).ready(function() {
                         "data": "kode_ruangan"
                     },
                     {
+                        "data": "matkul"
+                    },
+                    {
                         "data": "pertemuan"
                     },
                     {
                         "data": "concat_kode_jam", "width" : "50px", 
                         "render": function (data) {
-                            return '<button type="button" id="btnPindah' + data + '" class="btn btn-primary open-modal" data-toggle="modal" data-target="#modal' + data + '">Pindah</button>'
+                            return '<button type="button" id="btnPindah' + data + '" class="btn fit-bg-color-primary open-modal" data-toggle="modal" data-target="#modal' + data + '">Pilih</button>'
                         }
                     }
                 ]
